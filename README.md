@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Sistema de División Politica Adminsitrativa
 
 Las tecnologias utilizadas son:
@@ -49,3 +50,6 @@ De lo anterior se desprenden los siguientes requerimientos:
 
 1. node 4.x o 5.x
 
+=======
+# testEjs
+testEjs
