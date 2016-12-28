@@ -4,7 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import logger from "./logger.js";
 // import socket from 'socket.io';
-
+import ejsLayouts from "express-ejs-layouts";
 
 // var io = socket(http);
 module.exports = (app,console) => {
@@ -22,7 +22,8 @@ module.exports = (app,console) => {
     },
   }))
   // usa un motor de renderizado de plantillas, puede usarse jade(descomentar para usar como engine)
-  // app.set('view engine', 'ejs');
+  app.set('view engine', 'ejs');
+  app.use(ejsLayouts);
   // Showtests
   app.use((req, res, next) => {
     res.locals.showTests = app.get('env') !== 'production' &&

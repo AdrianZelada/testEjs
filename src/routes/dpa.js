@@ -152,14 +152,23 @@ module.exports = app => {
     */
     .put(sequelizeHandlers.update(dpa));
 
-    app.route('/api/getAll').get(function (req,res) {
+    app.route('/').get(function (req,res) {
         // var text='hola como estan de casa'
         // organizacion.searchOrganizacion(text).then(function (re) {
         //     console.info(re)
         //     res.json({data:re});
         // })
         dpa.listDpa(tipo_dpa).then(function (array) {
-            res.json({data:array});
+            console.info('go')
+            // res.json(
+            //   {
+            //       elementos:array
+            //   });
+
+
+            res.render('pages/inicio', {
+                elementos:array,
+            });
         })
     });
 

@@ -177,19 +177,20 @@ module.exports = (sequelize, DataTypes) => {
         let objsOficiales
       },
         listDpa:(tipo_dpa)=> {
-            var paragraph = "bolivia de vivienda";
-            var words = paragraph.split(" ").filter(function (word) {
-                return word.length >= 4;
-            });
-
-            var arrayLike = words.map(function (word) {
-                return '%' + word + '%'
-            })
-            words = words.concat(arrayLike);
-
+            // var paragraph = "bolivia de vivienda";
+            // var words = paragraph.split(" ").filter(function (word) {
+            //     return word.length >= 4;
+            // });
+            //
+            // var arrayLike = words.map(function (word) {
+            //     return '%' + word + '%'
+            // })
+            // words = words.concat(arrayLike);
+            //
             // return dpa.findAll({
             //   include:[{
-            //       model: tipo_dpa
+            //       model: tipo_dpa,
+            //       required:true
             //   }],
             //     where:{
             //         nombre:{
@@ -206,14 +207,9 @@ module.exports = (sequelize, DataTypes) => {
             return dpa.findAll({
                 include: [{
                     model: tipo_dpa,
-                    where: {
-                        url: 'provincias'
+                    required:true,
                     }
-                }
-                ],
-                where: {
-                    id_dpa:11
-                },
+                ]
             })
         },
     instanceMethods: {},
