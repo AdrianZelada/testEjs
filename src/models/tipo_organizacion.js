@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        id_superior_tipo_organizacion: {
+        id_tipo_organizacion_superior: {
             type: DataTypes.STRING,
             allowNull: false,
         }

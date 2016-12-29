@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        id_superior_organizacion: {
+        id_organizacion_superior: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         id_tipo_organizacion: {
             type: DataTypes.INTEGER,
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         codigo_organizacion: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         nombre_organizacion: {
             type: DataTypes.STRING,
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        codigo_superior_organizacion_ge: {
+        codigo_organizacion_superior_ge: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -40,25 +40,25 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        mision_organizacion: {
+        mision: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
-        vision_organizacion: {
+        vision: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         sigla_organizacion: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
-        autoridad_organizacion: {
+        autoridad: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
-        logo_organizacion: {
+        logo: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         }
     },{
         timestamps: false,
@@ -109,6 +109,14 @@ module.exports = (sequelize, DataTypes) => {
                     url:type
                 };
                 return _buildJoinOrganization({},whereType)
+            },
+
+            getOrganizacion:(urlType,urlOrg)=>{
+                return _buildJoinOrganization({
+                    url_organizacion:urlOrg,
+                },{
+                    url_tipo_organizacion:urlType
+                })
             }
         },
     });
@@ -118,12 +126,12 @@ module.exports = (sequelize, DataTypes) => {
         let valor_campo_organizacion=sequelize.models.valor_campo_organizacion;
         let tipo_campo_organizacion=sequelize.models.tipo_campo_organizacion;
 
-        console.info(where)
         return organizacion.findAll({
             include:[
                 {
                     model:tipo_organizacion,
                     required:true,
+                    as:'tipo_organizacion',
                     where:tipo_organizacion_where
                 },
                 {
@@ -135,11 +143,12 @@ module.exports = (sequelize, DataTypes) => {
                             required:true,
                         }
                     ],
+                    attributes:['valor_campo_organizacion']
                 }],
-            where:where
+            where:where,
+            attributes:['nombre_organizacion','codigo_organizacion_ge','url_organizacion']
         })
     }
-
     return organizacion;
 };
 

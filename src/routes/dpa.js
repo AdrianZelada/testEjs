@@ -152,7 +152,7 @@ module.exports = app => {
     */
     .put(sequelizeHandlers.update(dpa));
 
-    app.route('/').get(function (req,res) {
+    app.route('/dpa/getAll').get(function (req,res) {
         // var text='hola como estan de casa'
         // organizacion.searchOrganizacion(text).then(function (re) {
         //     console.info(re)

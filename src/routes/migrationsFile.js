@@ -16,17 +16,42 @@ module.exports = app => {
     const poblacion_objeto = app.src.db.models.poblacion_objeto;
     const tipo_organizacion = app.src.db.models.tipo_organizacion;
     const organizacion = app.src.db.models.organizacion;
+    const tipo_campo_organizacion= app.src.db.models.tipo_campo_organizacion;
+    const valor_campo_organizacion = app.src.db.models.valor_campo_organizacion;
+
+    var notMerge=[];
 
 
     app.route('/api/upload').post(function (req,res) {
         // organizaciones
-        // _uploadFile(req,res,_migrateData);
-        console.info(organizacion.getSchema())
+        console.info(organizacion.getSchema());
+        _uploadFile(req,res,_migrateData);
+
     });
 
     app.route('/api/update').post(function (req,res) {
         // organizaciones actualizacion
-        _uploadFile(req,res,_updateMigrate);
+
+
+        // organizacion.describe().then(function(resp){
+        //     console.info(resp)
+        //     res.json({error_code:1,err_desc:"Corupted excel file"});
+        // });
+
+        notMerge=[];
+
+        tipo_campo_organizacion.getAll().then((listTipoCampo)=>{
+            var tipoCampoReduce={};
+            listTipoCampo.reduce(function (result,val,ind) {
+                result[val.tipo_campo_organizacion]=val.id_tipo_campo_organizacion;
+                return result;
+            },tipoCampoReduce);
+            console.info(tipoCampoReduce)
+            _uploadFile(req,res,_updateOrganizacionMigrate,tipoCampoReduce);
+        });
+
+
+        // _uploadFile(req,res,_updateMigrate);
     });
 
     app.route('/api/upload/moneda').post(function (req,res) {
@@ -55,16 +80,29 @@ module.exports = app => {
 
     function _migrateData(poolData,ind,res){
         if(poolData[ind]){
-            let newDpa={
-                nombre:     poolData[ind].nombre,
-                id_tipo_dpa:   31,
-                tipo:       poolData[ind].tipo,
-                codigo_gbe: poolData[ind].codigo_gbe
+            let newOrg={
+                nombre_organizacion:     poolData[ind].nombre_organizacion,
+                id_tipo_organizacion:   poolData[ind].id_tipo_organizacion,
+                codigo_organizacion_ge: poolData[ind].codigo_organizacion_ge,
+                codigo_organizacion_superior_ge: poolData[ind].codigo_organizacion_superior_ge,
+                url_organizacion:"/"+poolData[ind].nombre_organizacion.toLowerCase().replace(" ","_"),
             };
-            if(poolData[ind].codigo_padre_gbe=='null'){
+
+            newOrg.url_organizacion = newOrg.url_organizacion.replace(/á/gi,"a");
+            newOrg.url_organizacion = newOrg.url_organizacion.replace(/é/gi,"e");
+            newOrg.url_organizacion = newOrg.url_organizacion.replace(/í/gi,"i");
+            newOrg.url_organizacion = newOrg.url_organizacion.replace(/ó/gi,"o");
+            newOrg.url_organizacion = newOrg.url_organizacion.replace(/ú/gi,"u");
+            newOrg.url_organizacion = newOrg.url_organizacion.replace(/ñ/gi,"n");
+            // return cadena;
+
+            console.info(newOrg)
+
+            if(poolData[ind].codigo_organizacion_superior_ge=='null'){
                 //  creamos el dpa
                 //  luego volvemos a llamar a la misama funcion para recursividad
-                dpa.create(newDpa).then(function(){
+                newOrg.id_organizacion_superior = 0;
+                organizacion.create(newOrg).then(function(){
                     ind=ind+1;
                     _migrateData(poolData,ind,res)
                 })
@@ -72,17 +110,17 @@ module.exports = app => {
                 //   primero buscamos en la tabla dpa mediante poolData[ind].codigo_padre_gbe == dpa.codigo_gbe,
                 //    sacamos el id_dpa, y lo ponemos en el modelo a insertarce con el id_dpa_superior = id_dpa
                 //    termina de llamar el promise y llamamos por recursividad a la misma funcion aumentando en indice
-                if(poolData[ind].codigo_padre_gbe==''){
-                    poolData[ind].codigo_padre_gbe='0'
+                if(poolData[ind].codigo_organizacion_superior_ge==''){
+                    poolData[ind].codigo_organizacion_superior_ge='0'
                 }
-                dpa.findOne({
+                organizacion.findOne({
                     where:{
-                        codigo_gbe:poolData[ind].codigo_padre_gbe
+                        codigo_organizacion_ge:poolData[ind].codigo_organizacion_superior_ge
                     }
-                }).then(function(respDpa){
-                    newDpa.id_dpa_superior = respDpa.id_dpa;
-                    newDpa.codigo_padre_gbe =poolData[ind].codigo_padre_gbe;
-                    dpa.create(newDpa).then(function () {
+                }).then(function(respOrg){
+                    newOrg.id_organizacion_superior = respOrg.id_organizacion;
+                    newOrg.codigo_organizacion_superior_ge =poolData[ind].codigo_organizacion_superior_ge;
+                    organizacion.create(newOrg).then(function () {
                         ind=ind+1;
                         _migrateData(poolData,ind,res)
                     })
@@ -93,7 +131,7 @@ module.exports = app => {
         }
     }
 
-    function _updateMigrate(poolData,ind,res){
+    function _updateMigrate(poolData,ind,res,arrayTipoCampo){
         if(poolData[ind]){
             if(poolData[ind].codigo_gbe){
                 dpa.findOne({
@@ -123,6 +161,49 @@ module.exports = app => {
             res.json({error_code:0,err_desc:null, data:{
                 msg:'Update Data Complete',
                 result:poolData
+            }});
+        }
+    }
+
+    function _updateOrganizacionMigrate(poolData,ind,res,objectReduce) {
+        if(poolData[ind]){
+            organizacion.findOne({
+                where:{
+                    codigo_organizacion_ge:poolData[ind].codigo_organizacion_ge
+                }
+            }).then((organizacionData)=>{
+                if(organizacionData){
+                    organizacionData.updateAttributes({
+                        sigla_organizacion:poolData[ind].sigla
+                    }).then(()=>{
+                        for(let key in objectReduce){
+                            if(poolData[ind][key]){
+                                let objCreate={
+                                    id_organizacion:organizacionData.id_organizacion,
+                                    id_tipo_campo_organizacion:objectReduce[key],
+                                    // codigo_organizacion_ge:poolData[ind].codigo_organizacion_ge,
+                                    valor_campo_organizacion:poolData[ind][key]
+                                };
+                                valor_campo_organizacion.create(objCreate).then(()=>{
+                                    console.info(objCreate)
+                                })
+                            }
+                        }
+                    });
+                }else{
+                    if(poolData[ind].codigo_organizacion_ge!=''){
+                        notMerge.push(poolData[ind].codigo_organizacion_ge)
+                    }
+                }
+                ind=ind+1;
+                _updateOrganizacionMigrate(poolData,ind,res,objectReduce)
+            });
+
+        }else{
+            res.json({error_code:0,err_desc:null, data:{
+                msg:'Update Data Complete',
+                result:poolData,
+                notMerge:notMerge
             }});
         }
     }
@@ -217,6 +298,7 @@ module.exports = app => {
                     if(err) {
                         return res.json({error_code:1,err_desc:err, data: null});
                     }
+                    console.info(result)
                     fn(result,0,res,key,model);
                 });
             } catch (e){
@@ -267,3 +349,5 @@ module.exports = app => {
     }
 
 };
+
+

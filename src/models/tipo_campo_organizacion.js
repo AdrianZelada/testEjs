@@ -23,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
             tableName: 'tipo_campo_organizacion',
             associate: (models) => {
             },
+            getAll:()=>{
+                return tipo_campo_organizacion.findAll()
+            }
         },
     });
     return tipo_campo_organizacion;

@@ -7,17 +7,21 @@
 
 module.exports = (sequelize, DataTypes) => {
     const valor_campo_organizacion = sequelize.define("valor_campo_organizacion", {
-        id_lugar_pago: {
+        id_valor_campo_organizacion: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
         },
-        nombre_lugar_pago: {
+        id_organizacion: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        id_tipo_campo_organizacion: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        sigla_lugar_pago: {
+        valor_campo_organizacion: {
             type: DataTypes.STRING,
             allowNull: true,
         }
@@ -28,7 +32,9 @@ module.exports = (sequelize, DataTypes) => {
             // definir el nombre de la tabla
             tableName: 'valor_campo_organizacion',
             associate: (models) => {
+
                 valor_campo_organizacion.belongsTo(models.tipo_campo_organizacion,{foreignKey:'id_tipo_campo_organizacion'})
+                valor_campo_organizacion.belongsTo(models.organizacion,{foreignKey:'id_organizacion'})
             },
         },
     });

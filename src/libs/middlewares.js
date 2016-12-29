@@ -25,6 +25,22 @@ module.exports = (app,console) => {
   app.set('view engine', 'ejs');
   app.use(ejsLayouts);
   // Showtests
+
+  // app.param('busqueda', function(req, res, next, busqueda) {
+  //
+  //     // check if the user with that name exists
+  //     // do some validations
+  //     // add -dude to the name
+  //     var modified = busqueda + '-dude';
+  //     console.info(busqueda)
+  //     console.log(busqueda)
+  //     // save name to the request
+  //     req.busqueda = modified;
+  //
+  //     next();
+  // });
+
+
   app.use((req, res, next) => {
     res.locals.showTests = app.get('env') !== 'production' &&
     req.query.test === '1';
