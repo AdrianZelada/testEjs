@@ -50,6 +50,10 @@ module.exports = app => {
             _uploadFile(req,res,_updateOrganizacionMigrate,tipoCampoReduce);
         });
 
+        // organizacion.findAll().then((listOrg)=>{
+        //     _updateUrlOrganizacion(listOrg,0,res);
+        // });
+
 
         // _uploadFile(req,res,_updateMigrate);
     });
@@ -85,7 +89,7 @@ module.exports = app => {
                 id_tipo_organizacion:   poolData[ind].id_tipo_organizacion,
                 codigo_organizacion_ge: poolData[ind].codigo_organizacion_ge,
                 codigo_organizacion_superior_ge: poolData[ind].codigo_organizacion_superior_ge,
-                url_organizacion:"/"+poolData[ind].nombre_organizacion.toLowerCase().replace(" ","_"),
+                url_organizacion:poolData[ind].nombre_organizacion.toLowerCase().replace(/ /g,'_'),
             };
 
             newOrg.url_organizacion = newOrg.url_organizacion.replace(/á/gi,"a");
@@ -161,6 +165,25 @@ module.exports = app => {
             res.json({error_code:0,err_desc:null, data:{
                 msg:'Update Data Complete',
                 result:poolData
+            }});
+        }
+    }
+
+    function _updateUrlOrganizacion(poolData,ind,res){
+        if(poolData[ind]){
+            organizacion.findOne({
+                id_organizacion:poolData[ind].id_organizacion
+            }).then((organizacionData)=>{
+                organizacionData.updateAttributes({
+                    url_organizacion:organizacionData.url_organizacion.replace(/ /g,'_').substring(1)
+                }).then(()=>{
+                    ind=ind+1;
+                    _updateUrlOrganizacion(poolData,ind,res)
+                })
+            })
+        }else{
+            res.json({error_code:0,err_desc:null, data:{
+                msg:'Update Data Complete',
             }});
         }
     }

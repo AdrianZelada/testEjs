@@ -17,7 +17,7 @@ module.exports = app => {
     const tipo_organizacion = app.src.db.models.tipo_organizacion;
     const organizacion = app.src.db.models.organizacion;
 
-    app.route('/organizacion/:tipo_organizacion/:nombre_organizacion').get(function (req,res) {
+    app.route('/organizacion/:tipo_organizacion/:nombre_organizacion').get((req,res) =>{
         // var text='hola como estan de casa'
         console.log(req.params.tipo_organizacion,req.params.nombre_organizacion)
         organizacion.getOrganizacion(req.params.tipo_organizacion,req.params.nombre_organizacion).then(function (re) {
@@ -25,6 +25,15 @@ module.exports = app => {
             res.json({data:re});
         })
     });
+
+
+    app.route('/organizacion/url_update').get((req,res)=>{
+        organizacion.findAll().then((listOrg)=>{
+            for(var ind=1;ind<=listOrg.length;ind++){
+
+            }
+        })
+    })
 
 
 
