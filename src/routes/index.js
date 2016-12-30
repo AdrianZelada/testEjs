@@ -37,11 +37,24 @@ module.exports = app => {
                //      organizacion:resultOrg
                // })
 
-                res.render('pages/busqueda', {
-                    path:req.protocol + '://' + req.get('host'),
-                    pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-                    organizacion:resultOrg
+
+                organizacion.findJerarquia(2,1).then((jerarquiaData)=>{
+                    console.log(jerarquiaData)
+                    res.render('pages/busqueda', {
+                        path:req.protocol + '://' + req.get('host'),
+                        pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
+                        pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
+                        organizacion:resultOrg,
+                        jerarquia_organizacion:jerarquiaData
+                    });
                 });
+
+                // res.render('pages/busqueda', {
+                //     path:req.protocol + '://' + req.get('host'),
+                //     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
+                //     organizacion:resultOrg,
+                //     // jerarquia_organizacion:
+                // });
             });
             // res.send(req.params.busqueda);
         });

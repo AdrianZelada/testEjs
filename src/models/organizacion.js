@@ -48,6 +48,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: true,
         },
+        codigo_sigma: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         sigla_organizacion: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -117,11 +121,30 @@ module.exports = (sequelize, DataTypes) => {
                 },{
                     url_tipo_organizacion:urlType
                 })
+            },
+            findJerarquia:(jerarquia,idOrganizacion)=>{
+                let tipo_organizacion=sequelize.models.tipo_organizacion;
+
+                return organizacion.findAll({
+                    include:[
+                        {
+                            model:tipo_organizacion,
+                            required:true,
+                            as:'tipo_organizacion',
+                            where:{
+                                jerarquia:jerarquia
+                            }
+                        }
+                    ],
+                    where:{
+                        id_organizacion_superior:idOrganizacion
+                    }
+                })
             }
         },
     });
 
-    function _buildJoinOrganization(where={},tipo_organizacion_where={},){
+    function _buildJoinOrganization(where={},tipo_organizacion_where={}){
         let tipo_organizacion=sequelize.models.tipo_organizacion;
         let valor_campo_organizacion=sequelize.models.valor_campo_organizacion;
         let tipo_campo_organizacion=sequelize.models.tipo_campo_organizacion;
@@ -132,7 +155,7 @@ module.exports = (sequelize, DataTypes) => {
                     model:tipo_organizacion,
                     required:true,
                     as:'tipo_organizacion',
-                    where:tipo_organizacion_where
+                    // where:tipo_organizacion_where
                 },
                 {
                     model:valor_campo_organizacion,
@@ -146,7 +169,7 @@ module.exports = (sequelize, DataTypes) => {
                     attributes:['valor_campo_organizacion']
                 }],
             where:where,
-            attributes:['nombre_organizacion','codigo_organizacion_ge','url_organizacion']
+            attributes:['id_organizacion','nombre_organizacion','codigo_organizacion_ge','url_organizacion']
         })
     }
     return organizacion;

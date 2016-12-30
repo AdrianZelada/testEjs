@@ -1,48 +1,43 @@
 /**
+ * Created by iZel on 12/29/16.
+ */
+/**
  * Created by iZel on 12/24/16.
  */
 
 module.exports = (sequelize, DataTypes) => {
-    const tipo_organizacion = sequelize.define("tipo_organizacion", {
-        id_tipo_organizacion: {
+    const pasos = sequelize.define("pasos", {
+        id_paso: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
         },
-        nombre_tipo_organizacion: {
-            type: DataTypes.STRING,
+        id_tramite: {
+            type: DataTypes.INTEGER,
             allowNull: false
         },
-        codigo_tipo_organizacion: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        jerarquia: {
+        orden_paso: {
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        url_tipo_organizacion: {
+        nombre_paso: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        id_tipo_organizacion_superior: {
+        descripcion_paso: {
             type: DataTypes.STRING,
             allowNull: false,
         }
-
     },{
         timestamps: false,
         freezeTableName: true,
         classMethods: {
             // definir el nombre de la tabla
-            tableName: 'tipo_organizacion',
+            tableName: 'pasos',
             associate: (models) => {
-                // tipo_organizacion.hasMany(models.organizacion, { as: 'children', foreignKey: 'id_tipo_dpa' });
-            }
+            },
         },
     });
-    return tipo_organizacion;
+    return pasos;
 };
-
-

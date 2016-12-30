@@ -35,7 +35,20 @@
                     </span>
                     </div>
                     <% } %>
-                    <h2>Página no encontrada</h2>
+                    <h2>jerarquia_organizacion</h2>
+
+                            <div>
+                                <% for(var j=0; j < jerarquia_organizacion.length; j++) {
+                                    var objeto = jerarquia_organizacion[j];
+                                    %>
+                                <div>
+                                    <h2> <b> <%= objeto.nombre_organizacion %> </b> - </h2>
+                                    <a href="<%=pathJerarquia + '/'+(objeto.tipo_organizacion.jerarquia+1).toFixed()+'/'+objeto.id_organizacion%>"> <%= objeto.nombre_organizacion %></a>
+                                </div>
+                                <%
+                                    }
+                                %>
+                            </div>
                     <div class="mid_center">
                     </div>
                 </div>

@@ -1,48 +1,51 @@
 /**
+ * Created by iZel on 12/29/16.
+ */
+/**
  * Created by iZel on 12/24/16.
  */
 
 module.exports = (sequelize, DataTypes) => {
-    const tipo_organizacion = sequelize.define("tipo_organizacion", {
-        id_tipo_organizacion: {
+    const requisito = sequelize.define("requisito", {
+        id_requisito: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
         },
-        nombre_tipo_organizacion: {
-            type: DataTypes.STRING,
+        id_tramite: {
+            type: DataTypes.INTEGER,
             allowNull: false
         },
-        codigo_tipo_organizacion: {
+        id_tramite_requisito: {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        jerarquia: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
-        },
-        url_tipo_organizacion: {
+        nombre_requisito: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        id_tipo_organizacion_superior: {
+        papel_original: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        papel_fotocopia: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        papel_fotocopia_legalizada: {
             type: DataTypes.STRING,
             allowNull: false,
         }
-
     },{
         timestamps: false,
         freezeTableName: true,
         classMethods: {
             // definir el nombre de la tabla
-            tableName: 'tipo_organizacion',
+            tableName: 'requisito',
             associate: (models) => {
-                // tipo_organizacion.hasMany(models.organizacion, { as: 'children', foreignKey: 'id_tipo_dpa' });
-            }
+            },
         },
     });
-    return tipo_organizacion;
+    return requisito;
 };
-
-
