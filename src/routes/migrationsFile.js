@@ -18,6 +18,8 @@ module.exports = app => {
     const organizacion = app.src.db.models.organizacion;
     const tipo_campo_organizacion= app.src.db.models.tipo_campo_organizacion;
     const valor_campo_organizacion = app.src.db.models.valor_campo_organizacion;
+    const tramite = app.src.db.models.tramite;
+
 
     var notMerge=[];
 
@@ -30,16 +32,7 @@ module.exports = app => {
     });
 
     app.route('/api/update').post(function (req,res) {
-        // organizaciones actualizacion
-
-
-        // organizacion.describe().then(function(resp){
-        //     console.info(resp)
-        //     res.json({error_code:1,err_desc:"Corupted excel file"});
-        // });
-
         notMerge=[];
-
         tipo_campo_organizacion.getAll().then((listTipoCampo)=>{
             var tipoCampoReduce={};
             listTipoCampo.reduce(function (result,val,ind) {
@@ -49,13 +42,6 @@ module.exports = app => {
             console.info(tipoCampoReduce)
             _uploadFile(req,res,_updateOrganizacionMigrate,tipoCampoReduce);
         });
-
-        // organizacion.findAll().then((listOrg)=>{
-        //     _updateUrlOrganizacion(listOrg,0,res);
-        // });
-
-
-        // _uploadFile(req,res,_updateMigrate);
     });
 
     app.route('/api/upload/moneda').post(function (req,res) {
@@ -81,6 +67,48 @@ module.exports = app => {
     app.route('/api/upload/tipoOrganizacion').post(function (req,res) {
         _uploadFile(req,res,_migrateParametric,'id_tipo_organizacion',tipo_organizacion)
     });
+
+    app.route('/api/upload/tramite').post(function (req,res) {
+        _uploadFile(req,res,_migrateTramite,'id_tramite',tramite)
+    });
+
+    function _migrateTramite(poolData,ind,res) {
+        if(poolData[ind]){
+
+
+            // tramite.findOne({
+            //     codigo_organizacion_ge:poolData[ind].codigo_organizacion_ge
+            // }).then((tramiteData)=>{
+            //     // if()
+            // });
+
+            //hay buscar la organizacion por el codigo_organizacion_ge
+            console.info(poolData[ind]);
+            poolData[ind].categoria_tramite=    _validateParseJson(_replaceMarksBrackets(poolData[ind].categoria_tramite),res);
+            poolData[ind].forma_pago=           _validateParseJson(_replaceFormaPago(_replaceMarksBrackets(poolData[ind].forma_pago)),res);
+            poolData[ind].pasos=                _validateParseJson(_replaceMarksDouble(poolData[ind].pasos),res);
+            poolData[ind].poblacion_objeto=     _validateParseJson(_replaceMarksBrackets(poolData[ind].poblacion_objeto),res);
+            poolData[ind].requisitos=           _validateParseJson(_replaceMarksBrackets(poolData[ind].requisitos),res);
+            poolData[ind].tipo_resultado_tramite=_validateParseJson(_replaceMarksBrackets(poolData[ind].tipo_resultado_tramite),res);
+            //
+            // _migrateFormaPago(poolData[ind].forma_pago);
+            //
+            // _migratePasos(poolData[ind].pasos);
+            //
+            // _migratePoblacionObjeto(poolData[ind].poblacion_objeto);
+
+
+            //aun no se tiene los requisitos de manera buena jua jua jua jjajajjaa sonsos
+            // _migrateRequisitos(poolData[ind].requisitos);
+
+            // _migrateTipoResultadoTramite(poolData[ind].tipo_resultado_tramite);
+            // console.info(poolData[ind]);
+            ind=ind+1;
+            _migrateTramite(poolData,ind,res)
+        }else{
+            _complete(res,poolData)
+        }
+    }
 
     function _migrateData(poolData,ind,res){
         if(poolData[ind]){
@@ -330,6 +358,17 @@ module.exports = app => {
         })
     }
 
+    function _validateParseJson(text,res){
+        try{
+            return JSON.parse(text);
+        }catch (e){
+            console.log(e)
+            console.log(text)
+            console.info(text)
+            res.json({error:e});
+        }
+    }
+
     function _organizationMigrate(poolData,ind,res,key,model){
         if(poolData[ind]){
             if(poolData[ind].codigo_superior_organizacion_ge){
@@ -371,6 +410,43 @@ module.exports = app => {
         }
     }
 
+
+    function _replaceMarksBrackets(text){
+        text=text.replace(/'/g,'"');
+        text=text.replace(/, , ]/g,']');
+        text=text.replace(/, ]/g,']');
+        text=text.replace(/,]/g,']');
+        return text;
+    }
+
+    function _replaceFormaPago(text){
+        text=text.replace(/Ninguno/g,0);
+        text=text.replace(/Según trámite y tipo societario./g,0);
+        text=text.replace(/a": ,/g,'a":null,');
+
+        var arrayText=text.split(',')
+
+        if(parseInt(arrayText[1])){
+            var regex = new RegExp("," + arrayText[1], "g");
+
+            text=text.replace(regex,'.'+arrayText[1])
+        }
+
+        return text;
+    }
+
+    function _replaceMarksDouble(text){
+
+
+        text=text.replace(/"/g,'-');
+        text=text.replace(/'/g,'"');
+        text=text.replace(/\n/g,' ');
+
+        text=text.replace(/""/g,'","');
+        text=text.replace(/-.-}/g,'"}');
+        text=text.replace(/, "2.9" : "Proceso para el ciudadano", /g,'');
+
+        return text;
+    }
+
 };
-
-

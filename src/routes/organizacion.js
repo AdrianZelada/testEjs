@@ -18,24 +18,33 @@ module.exports = app => {
     const organizacion = app.src.db.models.organizacion;
 
     app.route('/organizacion/:tipo_organizacion/:nombre_organizacion').get((req,res) =>{
-        // var text='hola como estan de casa'
-        console.log(req.params.tipo_organizacion,req.params.nombre_organizacion)
         organizacion.getOrganizacion(req.params.tipo_organizacion,req.params.nombre_organizacion).then(function (re) {
+<<<<<<< HEAD
             console.info(re)
             //res.json({data:re});
             res.render('pages/vist')
+=======
+            res.json({data:re});
+>>>>>>> 5e83d6278449ccff903a7b8b23d045cfe0a06601
         })
     });
 
-
-    app.route('/organizacion/url_update').get((req,res)=>{
-        organizacion.findAll().then((listOrg)=>{
-            for(var ind=1;ind<=listOrg.length;ind++){
-
-            }
-        })
+    app.route('/organizacion/jerarquia/:jerarquia/:idOrganizacion').get((req,res)=>{
+        organizacion.findJerarquia(req.params.jerarquia,req.params.idOrganizacion).then((jerarquiaData)=>{
+            console.log(jerarquiaData)
+            res.json({
+                pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
+                jerarquia_organizacion:jerarquiaData
+            });
+            // res.render('pages/busqueda', {
+            //     path:req.protocol + '://' + req.get('host'),
+            //     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
+            //     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
+            //     organizacion:resultOrg,
+            //     jerarquia_organizacion:jerarquiaData
+            // });
+        });
     })
-
 
 
 
