@@ -1,20 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!-- Meta, title, CSS, favicons, etc. -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Página no encontrada</title>
-        <!-- Bootstrap core CSS -->
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Custom styling plus plugins -->
-        <link href="/css/custom.css" rel="stylesheet">
-
-    </head>
-    <body class="nav-md">
+    
 
         <div class="container body">
             <div class="main_container">
@@ -22,19 +7,19 @@
 
                 <div class="col-md-12">
                     <div class="col-middle">
-                        <div class="text-center text-center">
+                        <div class="text-left">
                             <% for(var j=0; j < organizacion.length; j++){
-                            var objeto = organizacion[j];
-                        %>
+                                var objeto = organizacion[j];
+                            %>
                             <div id="searchableProv" class="single_progress_bar">
-                        <span>
-                        <div>
-                            <h2> <b> <%= objeto.nombre_organizacion %> </b> - </h2>
-                            <a href="<%=pathOrganizacion + '/'+objeto.tipo_organizacion.url_tipo_organizacion+'/'+objeto.url_organizacion%>"> <%= objeto.nombre_organizacion %></a>
-                        </div>
-                    </span>
-                    </div>
-                    <% } %>
+                                <span>
+                                    <div>
+                                        <h5> <b> <%= objeto.nombre_organizacion %> </b> - </h5>
+                                        <a href="<%=pathOrganizacion + '/'+objeto.tipo_organizacion.url_tipo_organizacion+'/'+objeto.url_organizacion%>"> <%= objeto.nombre_organizacion %></a>
+                                    </div>
+                                </span>
+                            </div>
+                        <% } %>
                     <h2>Página no encontrada</h2>
                     <div class="mid_center">
                     </div>
@@ -51,5 +36,4 @@
             <div class="clearfix"></div>
             <div id="notif-group" class="tabbed_notifications"></div>
         </div> 
-    </body>
-</html>
+

@@ -1,0 +1,50 @@
+@charset "UTF-8";
+/* CSS Document */
+.tabla{
+	width:100%;
+	}
+td, th, .tabla{
+	border-width:0px;
+	/*border-color:#000000;*/
+	border-color:blue;
+	border-style:solid;
+	}
+@media screen and (max-width:720px){
+	table, thead, tr, th, tbody, td{
+		display:block;
+	}
+	
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	td { 
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		/*padding-left: 50%;*/ 
+	}
+	td:before { 
+		position: absolute;
+	
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+        
+        /*mostramos titulos la tabla descrita para responsive*/
+         /*td:nth-of-type(1):before { content: "Nombre:"; }*/  
+         td:nth-of-type(1):before { content: ""; }  
+         
+	/*td:nth-of-type(2):before { content: "Edad"; }*/
+	td:nth-of-type(3):before { content: ""; }
+	/*td:nth-of-type(4):before { content: "Ciudad"; }*/
+        
+        
+        
+        
+	}

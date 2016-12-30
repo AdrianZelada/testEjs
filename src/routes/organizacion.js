@@ -22,7 +22,8 @@ module.exports = app => {
         console.log(req.params.tipo_organizacion,req.params.nombre_organizacion)
         organizacion.getOrganizacion(req.params.tipo_organizacion,req.params.nombre_organizacion).then(function (re) {
             console.info(re)
-            res.json({data:re});
+            //res.json({data:re});
+            res.render('pages/vist')
         })
     });
 

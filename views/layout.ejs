@@ -39,30 +39,37 @@
               <!--<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
             <!--<![endif]&ndash;&gt;-->
         <!--<link href="<%= locals.carpetaInstalacion %>css/estilo.css" rel="stylesheet" type="text/css" />-->
-         <script>
-function search() {
- 
-   var name = document.getElementById("searchForm").elements["searchItem"].value;
-   var pattern = name.toLowerCase();
-   var targetId = "";
- 
-   var divs = document.getElementsByClassName("col-md-2");
-   for (var i = 0; i < divs.length; i++) {
-      var para = divs[i].getElementsByTagName("p");
-      var index = para[0].innerText.toLowerCase().indexOf(pattern);
-      if (index != -1) {
-         targetId = divs[i].parentNode.id;
-         document.getElementById(targetId).scrollIntoView();
-         break;
-      }
-   }  
-}
-</script>
+        <% include ../views/partials/head %>
+        <script>
+            function search() {
+             
+               var name = document.getElementById("searchForm").elements["searchItem"].value;
+               var pattern = name.toLowerCase();
+               var targetId = "";
+             
+               var divs = document.getElementsByClassName("col-md-2");
+               for (var i = 0; i < divs.length; i++) {
+                  var para = divs[i].getElementsByTagName("p");
+                  var index = para[0].innerText.toLowerCase().indexOf(pattern);
+                  if (index != -1) {
+                     targetId = divs[i].parentNode.id;
+                     document.getElementById(targetId).scrollIntoView();
+                     break;
+                  }
+               }  
+            }
+            </script>
     </head>
     <body>
+        <% include ../views/partials/header %>
         <%- body %>
         <% include ../views/partials/footer %>
-
+        <script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.nicescroll.js"></script> 
+<script src="../js/owl.carousel.js"></script>
+<script src="../js/wow.js"></script>
+<script src="../js/script.js"></script>
         <!-- =========================
              SCRIPTS
         ============================== -->
@@ -72,5 +79,6 @@ function search() {
         <!--<script src="<%= locals.carpetaInstalacion %>js/owl.carousel.js"></script>-->
         <!--<script src="<%= locals.carpetaInstalacion %>js/wow.js"></script>-->
         <!--<script src="<%= locals.carpetaInstalacion %>js/script.js"></script>-->
+        
     </body>
 </html>

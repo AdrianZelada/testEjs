@@ -1,0 +1,140 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "fecha_actualizacion": {
+      "type": "string"
+    },
+    "clase": {
+      "type": "string"
+    },
+    "descripcion": {
+      "type": "string"
+    },
+    "tipo": {
+      "type": "string"
+    },
+    "codigo": {
+      "type": "string"
+    },
+    "fuente": {
+      "type": "string"
+    },
+    "nombre": {
+      "type": "object",
+      "properties": {
+        "valor": {
+          "type": "string"
+        },
+        "fuente": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "valor",
+        "fuente"
+      ]
+    },
+    "jerarquia": {
+      "type": "object",
+      "properties": {
+        "clase": {
+          "type": "object",
+          "properties": {
+            "clase": {
+              "type": "string"
+            },
+            "codigo": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "clase",
+            "codigo",
+            "url"
+          ]
+        },
+        "grupo": {
+          "type": "object",
+          "properties": {
+            "grupo": {
+              "type": "string"
+            },
+            "codigo": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "grupo",
+            "codigo",
+            "url"
+          ]
+        },
+        "division": {
+          "type": "object",
+          "properties": {
+            "division": {
+              "type": "string"
+            },
+            "codigo": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "division",
+            "codigo",
+            "url"
+          ]
+        },
+        "seccion": {
+          "type": "object",
+          "properties": {
+            "seccion": {
+              "type": "string"
+            },
+            "codigo": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "seccion",
+            "codigo",
+            "url"
+          ]
+        }
+      },
+      "required": [
+        "clase",
+        "grupo",
+        "division",
+        "seccion"
+      ]
+    }
+  },
+  "required": [
+    "version",
+    "fecha_actualizacion",
+    "clase",
+    "descripcion",
+    "tipo",
+    "codigo",
+    "fuente",
+    "nombre",
+    "jerarquia"
+  ]
+}

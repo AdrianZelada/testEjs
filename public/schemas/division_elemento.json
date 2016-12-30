@@ -1,0 +1,22 @@
+{
+
+    "version": "1.0",
+    "fecha_actualizacion": "16-06-2016",
+    "clase": "elemento",
+    "descripcion": "Este conjunto de datos representa a un clasificador de productos por actividad económica de Bolivia",
+    "tipo": "division",
+    "codigo": "01",
+    "fuente": "",
+    "nombre": {
+        "valor": "AGRICULTURA, GANADERÍA, CAZA Y SERVICIOS CONEXOS",
+        "fuente": "http://anda.ine.gob.bo/ANDA4_2/index.php/catalog/274/download/1076"
+    },
+    "jerarquia": {
+        "seccion": {
+            "seccion": "AGRICULTURA, GANADERÍA, CAZA Y SILVICULTURA",
+            "codigo": "A",
+            "url": "codigos.gob.bo/cpaeb_secciones/'A'"
+        }
+    }
+
+}

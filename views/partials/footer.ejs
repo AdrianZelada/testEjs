@@ -1,40 +1,115 @@
-<footer>
-    <div class="container">
+ <footer class="footer footer-big footer-color-black" data-color="black">
         <div class="container">
+
             <div class="row">
-                <div class="col-md-12 text-center"  >
-                    <div class="footer_logo   wow fadeInUp animated" >
-                        <img src="<%= locals.carpetaInstalacion %>images/logo_agetic.png" alt="" >
+                <div class="col-md-1 col-sm-1">
+                    <div class="info">
+                        <h5 class="title">Nosotros</h5>
+                        <br>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <b>Misión</b>
+                                        <hr class="hr-small">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <b>Visión</b>
+
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-md-3 col-md-offset-1 col-sm-3">
+                    <div class="info">
+                        <h5 class="title"> Reportar Problemas</h5>
+                         <nav>
+                            <p>Si encuentra algun problema con la página puede reportarlo. </p>
+                            <a data-toggle="modal" href="#shortModal" class="btn btn-primary">Reportar Errores</a>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <div class="info">
+                        <h5 class="title">Comunidad</h5>
+                        <br>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                         <i class="fa fa-question-circle-o"></i> Preguntas Frecuentes
+                                    </a>
+                                    <hr class="hr-small">
+                                <li>
+                                    <a href="#" >
+                                        <i class="fa fa-ravelry"></i> &nbsp; Desarrolladores
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-md-2 col-md-offset-1 col-sm-3">
+                    <div class="info">
+                        <h5 class="title">Redes Sociales:</h5>
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#" class="btn btn-social btn-facebook btn-simple">
+                                        <i class="fa fa-facebook-square"></i> Facebook
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="btn btn-social btn-twitter btn-simple">
+                                        <i class="fa fa-twitter"></i> Twitter
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="btn btn-social btn-reddit btn-simple">
+                                        <i class="fa fa-google-plus-square"></i> Google+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="btn btn-social btn-dribbble btn-simple">
+                                        <i class="fa fa-envelope-square fa-3x social"></i> Correo
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                
-                <!--OCULTAMOS GEOHASH, DATO A MOSTRAR UNICAMENTE PARA GEOBOLIVIA-->
-                <!--                
-                <div class="col-md-12 text-center   wow fadeInUp animated">
-                    <div class="social">
-                        <h2>Código GeoHash</h2>
-                        <ul class="icon_list">
-                                <a href="http://geohash.2ch.to/6mpd1sdnm" target="_blank">6MPD1SDNM</a>
-                        </ul>
-                    </div>
-                </div>
-                -->
+            <hr/>
+            <div class="copyright">
+                 © <script> document.write(new Date().getFullYear()) </script> Agetic 
+                 <br>
+                 Teléfono: (591) (2) 2128706
+                 <br>
+                 Correo Electrónico: contacto@agetic.gob.bo
+                 <br>
+                 Obrajes, Calle 9 esquina Costanerita # 104 Edificio Ministerio de Deportes Piso 4, La Paz - Bolivia
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="copyright_text   wow fadeInUp animated">
-                        <p>&copy; Agetic - <a href="http://www.agetic.gob.bo/" target="_blank"> Visitar </a></p>
-                        <!--<p>2016</p>-->
-                        <p>Teléfono: <a href="tel:591 2 2142013"> (591) (2) 2128706 </a><br/>Correo Electrónico: <a href="mailto:contacto@agetic.gob.bo" >contacto@agetic.gob.bo</a><br/>Obrajes, Calle 9 esquina Costanerita # 104 Edificio Ministerio de Deportes Piso 4, La Paz - Bolivia</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
+
+<!--script src="<%= locals.carpetaInstalacion %>js/jquery.min.js"></script>
+<script src="<%= locals.carpetaInstalacion %>js/bootstrap.min.js"></script>
+<script src="<%= locals.carpetaInstalacion %>js/jquery.nicescroll.js"></script> 
+<script src="<%= locals.carpetaInstalacion %>js/owl.carousel.js"></script>
+<script src="<%= locals.carpetaInstalacion %>js/wow.js"></script>
+<script src="<%= locals.carpetaInstalacion %>js/script.js"></script-->
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.nicescroll.js"></script> 
+<script src="../js/owl.carousel.js"></script>
+<script src="../js/wow.js"></script>
+<script src="../js/script.js"></script>
+
+<!--   file where we handle all the script from the Gaia - Bootstrap Template   -->
+<script type="text/javascript" src="../js/gaia.js"></script>

@@ -7,7 +7,7 @@ module.exports = {
   //   database: "gob_bo",
     database: "sisDpa_Desarollo",
     username: "postgres",
-    password: "",
+    password: "030883",
   params: {
     dialect: "postgres",
     port: 5432,

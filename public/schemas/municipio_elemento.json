@@ -1,0 +1,112 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "Esquema definido para municipios.",
+    "description": "Este esquema define la informacion que deberia tener un documento JSON oficial.",
+    "properties": {
+        "version": {
+            "type": "string",
+            "title": "Version schema.",
+            "description": "Dato que se refiere a la version de documento obtenido."
+        },
+        "fecha_actualizacion": {
+            "type": "string",
+            "title": "Fecha_actualizacion schema.",
+            "description": "Fecha de actualizacion del esquema."
+        },
+        "clase": {
+            "type": "string",
+            "title": "Clase schema.",
+            "description": "Clase de objeto obtenido, si es OBJETO o COLECCION."
+        },
+        "descripcion": {
+            "type": "string",
+            "title": "Descripcion schema.",
+            "description": "Pequenia descripcion del documento."
+        },
+        "tipo": {
+            "type": "string",
+            "title": "Tipo schema.",
+            "description": "Tipo de OBJETO o COLECCION visualizada."
+        },
+        "codigo": {
+            "type": "string",
+            "title": "Codigo schema.",
+            "description": "Codigo unico del objeto."
+        },
+        "fuente": {
+            "type": "string",
+            "title": "Fuente schema.",
+            "description": "URL que indica quien suministro la informacion."
+        },
+        "nombre": {
+            "type": "object",
+            "title": "Nombre schema.",
+            "description": "Nombre del objeto.",
+            "properties": {
+                "valor": {
+                    "type": "string",
+                    "title": "Valor schema.",
+                    "description": "Valor del nombre."
+                },
+                "fuente": {
+                    "type": "string",
+                    "title": "Fuente schema.",
+                    "description": "URL que indica quien suministro la informacion."
+                }
+            },
+            "required": [
+                "valor",
+                "fuente"
+            ]
+        },
+        "jerarquia": {
+            "type": "object",
+            "title": "Jerarquia schema.",
+            "description": "Jerarquia que tiene el objeto.",
+            "properties": {
+                "departamento": {
+                    "type": "object",
+                    "title": "Departamento schema.",
+                    "description": "Valor referente a departamento.",
+                    "properties": {
+                        "departamento": {
+                            "type": "string",
+                            "title": "Departamento schema.",
+                            "description": "Valor referente a departamento."
+                        },
+                        "codigo": {
+                            "type": "string",
+                            "title": "Codigo schema.",
+                            "description": "Codigo del departamento."
+                        },
+                        "url": {
+                            "type": "string",
+                            "title": "Url schema.",
+                            "description": "URL que indica quien suministro la informacion."
+                        }
+                    },
+                    "required": [
+                        "departamento",
+                        "codigo",
+                        "url"
+                    ]
+                }
+            },
+            "required": [
+                "departamento"
+            ]
+        }
+    },
+    "required": [
+        "version",
+        "fecha_actualizacion",
+        "clase",
+        "descripcion",
+        "tipo",
+        "codigo",
+        "fuente",
+        "nombre",
+        "jerarquia"
+    ]
+}

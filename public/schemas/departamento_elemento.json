@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Esquema definido para departamentos.",
+  "description": "Este esquema define la informacion que deberia tener un documento JSON oficial.",
+  "properties": {
+    "version": {
+      "type": "string",
+      "title": "Version schema.",
+      "description": "Dato que se refiere a la version de documento obtenido."
+    },
+    "fecha_actualizacion": {
+      "type": "string",
+      "title": "Fecha_actualizacion schema.",
+      "description": "Fecha de actualizacion del esquema."
+    },
+    "clase": {
+      "type": "string",
+      "title": "Clase schema.",
+      "description": "Clase de objeto obtenido, si es OBJETO o COLECCION."
+    },
+    "descripcion": {
+      "type": "string",
+      "title": "Descripcion schema.",
+      "description": "Pequenia descripcion del documento."
+    },
+    "tipo": {
+      "type": "string",
+      "title": "Tipo schema.",
+      "description": "Tipo de OBJETO o COLECCION visualizada."
+    },
+    "codigo": {
+      "type": "string",
+      "title": "Codigo schema.",
+      "description": "Codigo unico del objeto."
+    },
+    "fuente": {
+      "type": "string",
+      "title": "Fuente schema.",
+      "description": "URL que indica quien suministro la informacion."
+    },
+    "nombre": {
+      "type": "object",
+      "title": "Nombre schema.",
+      "description": "An explanation about the purpose of this instance.",
+      "properties": {
+        "valor": {
+          "type": "string",
+          "title": "Valor schema.",
+          "description": "Nombre del objeto."
+        },
+        "fuente": {
+          "type": "string",
+          "title": "Fuente schema.",
+          "description": "URL que indica quien suministro la informacion."
+        }
+      },
+      "required": [
+        "valor",
+        "fuente"
+      ]
+    }
+  },
+  "required": [
+    "version",
+    "fecha_actualizacion",
+    "clase",
+    "descripcion",
+    "tipo",
+    "codigo",
+    "fuente",
+    "nombre"
+  ]
+}

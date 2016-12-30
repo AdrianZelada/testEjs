@@ -1,0 +1,95 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+ <!-- <link rel="stylesheet" href="css/styles.css?v=1.0">-->
+  <style id="cm-font-size">
+  html {
+                zoom: 0.55;
+            }
+ table { 
+  color: #333;
+  font-family: Helvetica, Arial, sans-serif;
+  width: 640px;
+  /* Table reset stuff */
+  border-collapse: collapse; border-spacing: 0; 
+}
+		
+td, th {  border: 0 none; height: 30px; }
+			
+th {
+  /* Gradient Background */
+	background: linear-gradient(#333 0%,#444 100%);
+	color: #FFF; font-weight: bold;
+	height: 40px;
+    padding:10px;
+}
+		
+td { background: #FAFAFA; text-align: center; }
+
+/* Zebra Stripe Rows */
+		
+tr:nth-child(even) td { background: #EEE; } 
+tr:nth-child(odd) td { background: #FDFDFD; }
+
+/* First-child blank cells! */
+/*tr td:first-child, tr th:first-child { 
+	background: none; 
+	font-style: italic;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: right;
+	padding-right: 10px;
+	width: 80px; 
+}*/
+
+/* Add border-radius to specific cells! */
+tr:first-child th:nth-child(2) { 
+  border-radius: 5px 0 0 0; 
+} 
+
+tr:first-child th:last-child { 
+  border-radius: 0 5px 0 0; 
+}
+</style>
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<h2>Datos</h2>
+ <table>
+   <tr>
+    <% for (var j=0; j < datos[0].length;j++ ){ 
+          var registroPiezas = datos[0][j].split(/[\s.]+/);
+          var ultimaPieza = registroPiezas[registroPiezas.length-1];
+          if(registroPiezas.length > 1){
+                  ultimaPieza = registroPiezas[registroPiezas.length-2]+"_"+ultimaPieza;
+          }
+        %>
+	<th><%= ultimaPieza %>  
+    </th>
+    <% } %>
+</tr>
+ <% for(var  i=1; i < datos.length; i++) { %>
+     <tr>
+    <% for (var j=0; j < datos[i].length;j++ ){ 
+        %>
+	<td>
+    <%= datos[i][j] %>  
+    </td>
+    <% } %>
+</tr>
+ <% } %>
+</table>
+<!-- <script src="js/scripts.js"></script> -->
+</body>
+</html>

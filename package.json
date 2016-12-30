@@ -4,7 +4,7 @@
   "description": "Sistema ",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js",
+    "start": "./node_modules/babel-cli/bin/babel-node.js index.js",
     "test": "NODE_ENV=test mocha test/**/*.js",
     "lint": "eslint *.js, src/**/*.js",
     "apidoc": "apidoc -i routes/ -o public/apidoc",
@@ -47,6 +47,7 @@
     "q": "^1.4.1",
     "sequelize": "^3.21.0",
     "sequelize-handlers": "^0.3.0",
+    "socket.io": "^1.7.2",
     "winston": "^2.2.0",
     "xls-to-json-lc": "^0.3.3",
     "xlsx-to-json-lc": "^0.2.5"
