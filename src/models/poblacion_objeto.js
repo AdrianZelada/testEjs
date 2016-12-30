@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         nombre_poblacion_objeto: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         }
     },{
         timestamps: false,

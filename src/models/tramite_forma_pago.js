@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         id_tramite: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        costo_tramite:{
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     },{
         timestamps: false,

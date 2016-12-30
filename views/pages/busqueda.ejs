@@ -1,18 +1,18 @@
 
-    
 
-        <div class="container body">
-            <div class="main_container">
-                <!-- page content -->
 
-                <div class="col-md-12">
-                    <div class="col-middle">
-                        
-                        <div class="text-left">
-                            <% for(var j=0; j < organizacion.length; j++){
-                                var objeto = organizacion[j];
-                            %>
-                            <div id="searchableProv" class="single_progress_bar">
+<div class="container body">
+    <div class="main_container">
+        <!-- page content -->
+
+        <div class="col-md-12">
+            <div class="col-middle">
+
+                <div class="text-left">
+                    <% for(var j=0; j < organizacion.length; j++){
+                        var objeto = organizacion[j];
+                    %>
+                    <div id="searchableProv" class="single_progress_bar">
 
                                 <span>
                                     <div>
@@ -20,40 +20,40 @@
                                         <a href="<%=pathOrganizacion + '/'+objeto.tipo_organizacion.url_tipo_organizacion+'/'+objeto.url_organizacion%>"> <%= objeto.nombre_organizacion %></a>
                                     </div>
                                 </span>
-                            </div>
-                        <% } %>
-                        <h2>Página no encontrada</h2>
-                            
-                        </div>
-
-                        <h2>jerarquia_organizacion</h2>
-
-                            <div>
-                                <% for(var j=0; j < jerarquia_organizacion.length; j++) {
-                                    var objeto = jerarquia_organizacion[j];
-                                    %>
-                                <div>
-                                    <h4> <b> <%= objeto.nombre_organizacion %> </b> - </h4>
-                                    <a href="<%=pathJerarquia + '/'+(objeto.tipo_organizacion.jerarquia+1).toFixed()+'/'+objeto.id_organizacion%>"> <%= objeto.nombre_organizacion %></a>
-                                </div>
-                                <%
-                                    }
-                                %>
-                            </div>
-
-                    <div class="mid_center">
                     </div>
+                    <% } %>
+                    <h2>Página no encontrada</h2>
+
+                </div>
+
+                <h2>jerarquia_organizacion</h2>
+
+                <div>
+                    <% for(var j=0; j < jerarquia_organizacion.length; j++) {
+                        var objeto = jerarquia_organizacion[j];
+                    %>
+                    <div>
+                        <h4> <b> <%= objeto.nombre_organizacion %> </b> - </h4>
+                        <a href="<%=pathJerarquia + '/'+(objeto.tipo_organizacion.jerarquia+1).toFixed()+'/'+objeto.id_organizacion%>"> <%= objeto.nombre_organizacion %></a>
+                    </div>
+                    <%
+                    }
+                    %>
+                </div>
+
+                <div class="mid_center">
                 </div>
             </div>
         </div>
-                <!-- /page content -->
-            </div>
-            <!-- footer content -->
-        </div>
-        <div id="custom_notifications" class="custom-notifications dsp_none">
-            <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
-            </ul>
-            <div class="clearfix"></div>
-            <div id="notif-group" class="tabbed_notifications"></div>
-        </div> 
+    </div>
+    <!-- /page content -->
+</div>
+<!-- footer content -->
+</div>
+<div id="custom_notifications" class="custom-notifications dsp_none">
+    <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
+    </ul>
+    <div class="clearfix"></div>
+    <div id="notif-group" class="tabbed_notifications"></div>
+</div>
 

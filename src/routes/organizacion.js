@@ -44,6 +44,20 @@ module.exports = app => {
             //     jerarquia_organizacion:jerarquiaData
             // });
         });
+    });
+
+    app.route('/entidades').get((req,res)=>{
+        organizacion.findAll({
+            where:{
+                id_tipo_organizacion:3
+            }
+        }).then((organizacionData)=>{
+            res.json({
+                path:req.protocol + '://' + req.get('host'),
+                pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
+                organizacion:organizacionData
+            })
+        })
     })
 
 

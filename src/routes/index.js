@@ -13,6 +13,8 @@ module.exports = app => {
     const poblacion_objeto = app.src.db.models.poblacion_objeto;
     const tipo_organizacion = app.src.db.models.tipo_organizacion;
     const organizacion = app.src.db.models.organizacion;
+    const tramite = app.src.db.models.tramite;
+
     app.route('/')
         .get((req,res)=>{
             res.render('pages/inicio', {
@@ -38,16 +40,33 @@ module.exports = app => {
                // })
 
 
-                organizacion.findJerarquia(2,1).then((jerarquiaData)=>{
-                    console.log(jerarquiaData)
-                    res.render('pages/busqueda', {
-                        path:req.protocol + '://' + req.get('host'),
-                        pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-                        pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
-                        organizacion:resultOrg,
-                        jerarquia_organizacion:jerarquiaData
+                tramite.searchTramite(textToSearch).then((resultTramite)=>{
+
+                    organizacion.findJerarquia(2,1).then((jerarquiaData)=>{
+                        console.log(jerarquiaData)
+                        res.render('pages/busqueda', {
+                            path:req.protocol + '://' + req.get('host'),
+                            pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
+                            pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
+                            organizacion:resultOrg,
+                            jerarquia_organizacion:jerarquiaData,
+                            tramite:resultTramite
+                        });
+
+                        // res.json({
+                        //     path:req.protocol + '://' + req.get('host'),
+                        //     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
+                        //     pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
+                        //     organizacion:resultOrg,
+                        //     tramite:resultTramite,
+                        //     jerarquia_organizacion:jerarquiaData,
+                        //
+                        // })
                     });
+
                 });
+
+
 
                 // res.render('pages/busqueda', {
                 //     path:req.protocol + '://' + req.get('host'),

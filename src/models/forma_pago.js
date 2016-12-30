@@ -10,12 +10,28 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true,
         },
+        id_tramite: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         id_lugar_pago: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
         id_moneda: {
             type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        costo: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        nombre_cuenta: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        numero_cuenta: {
+            type: DataTypes.STRING,
             allowNull: true,
         }
     },{
