@@ -7,7 +7,7 @@
 
                 <div class="col-md-12">
                     <div class="col-middle">
-                        
+                        <%= %>
                         <div class="text-left">
                             <% for(var j=0; j < organizacion.length; j++){
                                 var objeto = organizacion[j];
@@ -22,18 +22,19 @@
                                 </span>
                             </div>
                         <% } %>
-                        <h2>Página no encontrada</h2>
-                            
-                        </div>
+                    <h2>Página no encontrada</h2>
 
-                        <h2>jerarquia_organizacion</h2>
+                        
+                    </div>
+                    <% } %>
+                    <h2>jerarquia_organizacion</h2>
 
                             <div>
                                 <% for(var j=0; j < jerarquia_organizacion.length; j++) {
                                     var objeto = jerarquia_organizacion[j];
                                     %>
                                 <div>
-                                    <h4> <b> <%= objeto.nombre_organizacion %> </b> - </h4>
+                                    <h2> <b> <%= objeto.nombre_organizacion %> </b> - </h2>
                                     <a href="<%=pathJerarquia + '/'+(objeto.tipo_organizacion.jerarquia+1).toFixed()+'/'+objeto.id_organizacion%>"> <%= objeto.nombre_organizacion %></a>
                                 </div>
                                 <%

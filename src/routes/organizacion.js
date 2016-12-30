@@ -19,13 +19,13 @@ module.exports = app => {
 
     app.route('/organizacion/:tipo_organizacion/:nombre_organizacion').get((req,res) =>{
         organizacion.getOrganizacion(req.params.tipo_organizacion,req.params.nombre_organizacion).then(function (re) {
-<<<<<<< HEAD
+
             console.info(re)
             //res.json({data:re});
-            res.render('pages/vist')
-=======
+           // res.render('pages/vist')
+
             res.json({data:re});
->>>>>>> 5e83d6278449ccff903a7b8b23d045cfe0a06601
+
         })
     });
 
