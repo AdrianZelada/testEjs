@@ -1510,6 +1510,15 @@ body p {
 #tallModal .modal-body p { margin-bottom: 900px }
 
  /* -------------------------- nuevos css ----------------------------------------*/
+
+ .contenEntidOrgan{
+    height:450px;
+    overflow:scroll;
+ }
+ .maginBod{
+    padding-top:40px;
+ }
+
  .media-heading ,h1, h2, h3, h4{
      font: 180% sans-serif;
      /*color: #354c6c;*/

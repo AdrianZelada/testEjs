@@ -1,59 +1,116 @@
+    <div class="maginBod">        
 
-    
-
-        <div class="container body">
-            <div class="main_container">
-                <!-- page content -->
-
-                <div class="col-md-12">
-                    <div class="col-middle">
-                        
-                        <div class="text-left">
-                            <% for(var j=0; j < organizacion.length; j++){
-                                var objeto = organizacion[j];
-                            %>
-                            <div id="searchableProv" class="single_progress_bar">
-
-                                <span>
-                                    <div>
-                                        <h5> <b> <%= objeto.nombre_organizacion %> </b> - </h5>
-                                        <a href="<%=pathOrganizacion + '/'+objeto.tipo_organizacion.url_tipo_organizacion+'/'+objeto.url_organizacion%>"> <%= objeto.nombre_organizacion %></a>
-                                    </div>
-                                </span>
+        <div class="container ">
+            <div class="row">
+                        <div class="col-md-4" >
+                             <!-- Blog Search Well -->
+                            <div class="well ol-md-12">
+                                <h4>Buscar trámite o entidad</h4>
+                                <div class="input-group">
+                                    <input type="text" placeholder="Busque trámite">
+                                    <span class="input">
+                                        <button class="btn btn-default" type="button">
+                                            <span class="fa fa-search"></span>
+                                        </button>
+                                    </span> 
+                                </div>
+                                <!-- /.input-group -->
                             </div>
-                        <% } %>
-                        <h2>Página no encontrada</h2>
-                            
+
+                            <div class="col-md-12 well">
+                                <div class="col-middle">
+                                    
+                                    
+
+                                    <h4>Jerarquía organización</h4>
+
+                                        <div>
+                                            <% for(var j=0; j < jerarquia_organizacion.length; j++) {
+                                                var objeto = jerarquia_organizacion[j];
+                                                %>
+                                            <div>
+                                                <!--h4> <b> <%= objeto.nombre_organizacion %> </b> - </h4-->
+                                                <b><a href="<%=pathJerarquia + '/'+(objeto.tipo_organizacion.jerarquia+1).toFixed()+'/'+objeto.id_organizacion%>"> <%= objeto.nombre_organizacion %></a></b>
+                                            </div>
+                                            <%
+                                                }
+                                            %>
+                                        </div>
+
+                                </div>
+                            </div>
                         </div>
 
-                        <h2>jerarquia_organizacion</h2>
+                        <div class="col-md-8 tab-content">
 
-                            <div>
-                                <% for(var j=0; j < jerarquia_organizacion.length; j++) {
-                                    var objeto = jerarquia_organizacion[j];
-                                    %>
-                                <div>
-                                    <h4> <b> <%= objeto.nombre_organizacion %> </b> - </h4>
-                                    <a href="<%=pathJerarquia + '/'+(objeto.tipo_organizacion.jerarquia+1).toFixed()+'/'+objeto.id_organizacion%>"> <%= objeto.nombre_organizacion %></a>
-                                </div>
-                                <%
-                                    }
-                                %>
+                            <div role="tabpanel" class="" id="seite1">
+                                <article class=" panel-default contenEntidOrgan">
+                                    <header class="bloq">
+                                        <h1 class="text-muted text-center"><p> Resultados de búsqueda de entidades </p></h1>
+                                    </header>
+                                    <div class="panel-body">
+                                        
+                                        <!-- Comment -->
+                                        <div class="text-left">
+                                            <% for(var j=0; j < organizacion.length; j++){
+                                                var objeto = organizacion[j];
+                                            %>
+                                            <div id="searchableProv" class="single_progress_bar">
+                                                <span>
+                                                    <div>
+                                                        <h5> <b> <%= objeto.nombre_organizacion %> </b> - </h5>
+                                                        <a href="<%=pathOrganizacion + '/'+objeto.tipo_organizacion.url_tipo_organizacion+'/'+objeto.url_organizacion%>"> <%= objeto.nombre_organizacion %></a>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <% } %>
+                                            <h2>Página no encontrada</h2>
+                                            
+                                        </div>
+                                     </div>
+
+                                <footer class="panel-footer clearfix "><!--address class="pull-right">Written by me at <time>10:00 am</time></address--></footer>
+                                </article>
+
+                           </div>
+                           <br>
+                           <div role="tabpanel" class="" id="seite1">
+                                <article class=" panel-default contenEntidOrgan">
+                                    <header class="bloq">
+                                        <h1 class="text-muted text-center"><p> Resultados de búsqueda de trámites </p></h1>
+                                    </header>
+                                    <div class="panel-body">
+                                        <% 
+                                            if(organizacion.length != 0){
+                                        %>
+                                        <!-- Comment -->
+                                        <div class="text-left">
+                                            <% for(var j=0; j < organizacion.length; j++){
+                                                var objeto = organizacion[j];
+                                            %>
+                                            <div id="searchableProv" class="single_progress_bar">
+                                                <span>
+                                                    <div>
+                                                        <h5> <b> <%= objeto.nombre_organizacion %> </b> - </h5>
+                                                        <a href="<%=pathOrganizacion + '/'+objeto.tipo_organizacion.url_tipo_organizacion+'/'+objeto.url_organizacion%>"> <%= objeto.nombre_organizacion %></a>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <%  }
+                                              }else{
+                                             %>
+                                                <h2>Página no encontrada</h2>
+                                             <% }%>
+                                            
+                                        </div>
+                                     </div>
+
+                                <footer class="panel-footer clearfix "><!--address class="pull-right">Written by me at <time>10:00 am</time></address--></footer>
+                                </article>
+
                             </div>
-
-                    <div class="mid_center">
-                    </div>
-                </div>
+                            <br>
+                        </div>       
             </div>
         </div>
-                <!-- /page content -->
-            </div>
-            <!-- footer content -->
-        </div>
-        <div id="custom_notifications" class="custom-notifications dsp_none">
-            <ul class="list-unstyled notifications clearfix" data-tabbed_notifications="notif-group">
-            </ul>
-            <div class="clearfix"></div>
-            <div id="notif-group" class="tabbed_notifications"></div>
-        </div> 
-
+    </div>
