@@ -175,7 +175,7 @@ module.exports = (sequelize, DataTypes) => {
                 // },
                 {
                     model:tramite,
-                    required:true,
+                    // required:true,
                 }
             ],
             where:where,
