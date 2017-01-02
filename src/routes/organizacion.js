@@ -6,6 +6,7 @@ import multer from 'multer';
 import xlstojson from "xls-to-json-lc";
 import xlsxtojson from "xlsx-to-json-lc";
 import q from 'q';
+import util from '../../src/libs/useful.js';
 module.exports = app => {
     const dpa = app.src.db.models.dpa;
     const tipo_dpa = app.src.db.models.tipos_dpa;
@@ -17,15 +18,11 @@ module.exports = app => {
     const tipo_organizacion = app.src.db.models.tipo_organizacion;
     const organizacion = app.src.db.models.organizacion;
 
-    app.route('/organizacion/:tipo_organizacion/:nombre_organizacion').get((req,res) =>{
-        organizacion.getOrganizacion(req.params.tipo_organizacion,req.params.nombre_organizacion).then(function (re) {
-
-            console.info(re)
-            //res.json({data:re});
-           // res.render('pages/vist')
-
-            res.json({data:re});
-
+    app.route('/organizacion/:tipo_organizacion/:id_organizacion').get((req,res) =>{
+        organizacion.getOrganizacion(req.params.tipo_organizacion,req.params.id_organizacion).then(function (organizacionData) {
+            util.serverResponse(res,{
+                organizacion:organizacionData
+            },'pages/vist')
         })
     });
 
@@ -44,6 +41,21 @@ module.exports = app => {
             //     jerarquia_organizacion:jerarquiaData
             // });
         });
+
+    });
+
+    app.route('/entidades').get((req,res)=>{
+        organizacion.findAll({
+            where:{
+                id_tipo_organizacion:3
+            }
+        }).then((organizacionData)=>{
+            util.serverResponse(res,{
+                path:req.protocol + '://' + req.get('host'),
+                pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
+                organizacion:organizacionData
+            },'')
+        })
     })
 
 

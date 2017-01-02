@@ -73,6 +73,7 @@ module.exports = (sequelize, DataTypes) => {
             associate: (models) => {
                 organizacion.belongsTo(models.tipo_organizacion, { foreignKey: 'id_tipo_organizacion' });
                 organizacion.hasMany(models.valor_campo_organizacion, { foreignKey: 'id_organizacion' });
+                organizacion.hasMany(models.tramite, { foreignKey: 'id_organizacion' });
             },
 
             getSchema:(models)=>{
@@ -88,7 +89,11 @@ module.exports = (sequelize, DataTypes) => {
             },
 
             searchOrganizacion:(paragraph)=>{
-                var words=paragraph.split(" ").filter(function(word){
+                var newparagraph=paragraph.toLowerCase()
+
+                console.log(newparagraph)
+
+                var words=newparagraph.split(" ").filter(function(word){
                     return word.length >=4 ;
                 });
 
@@ -96,7 +101,7 @@ module.exports = (sequelize, DataTypes) => {
                     return '%'+word+'%'
                 })
                 words=words.concat(arrayLike);
-
+                console.log(words)
                 var where={
                     nombre_organizacion:{
                         $ilike:{
@@ -115,9 +120,9 @@ module.exports = (sequelize, DataTypes) => {
                 return _buildJoinOrganization({},whereType)
             },
 
-            getOrganizacion:(urlType,urlOrg)=>{
+            getOrganizacion:(urlType,idOrg)=>{
                 return _buildJoinOrganization({
-                    url_organizacion:urlOrg,
+                    id_organizacion:idOrg,
                 },{
                     url_tipo_organizacion:urlType
                 })
@@ -148,6 +153,7 @@ module.exports = (sequelize, DataTypes) => {
         let tipo_organizacion=sequelize.models.tipo_organizacion;
         let valor_campo_organizacion=sequelize.models.valor_campo_organizacion;
         let tipo_campo_organizacion=sequelize.models.tipo_campo_organizacion;
+        let tramite=sequelize.models.tramite;
 
         return organizacion.findAll({
             include:[
@@ -157,16 +163,21 @@ module.exports = (sequelize, DataTypes) => {
                     as:'tipo_organizacion',
                     // where:tipo_organizacion_where
                 },
+                // {
+                //     model:valor_campo_organizacion,
+                //     required:true,
+                //     include:[
+                //         {
+                //             model:tipo_campo_organizacion,
+                //             required:true,
+                //         }
+                //     ],
+                // },
                 {
-                    model:valor_campo_organizacion,
-                    required:true,
-                    include:[
-                        {
-                            model:tipo_campo_organizacion,
-                            required:true,
-                        }
-                    ],
-                }],
+                    model:tramite,
+                    // required:true,
+                }
+            ],
             where:where,
         })
     }
