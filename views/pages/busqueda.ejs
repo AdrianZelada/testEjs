@@ -1,5 +1,6 @@
     <div class="maginBod">        
 
+
         <div class="container ">
             <div class="row">
                         <div class="col-md-4" >
@@ -81,18 +82,18 @@
                                     </header>
                                     <div class="panel-body">
                                         <% 
-                                            if(organizacion.length != 0){
+                                            if(tramite.length != 0){
                                         %>
                                         <!-- Comment -->
                                         <div class="text-left">
-                                            <% for(var j=0; j < organizacion.length; j++){
-                                                var objeto = organizacion[j];
+                                            <% for(var p=0; p < tramite.length; p++){
+                                                var objeto = tramite[p];
                                             %>
                                             <div id="searchableProv" class="single_progress_bar">
                                                 <span>
                                                     <div>
-                                                        <h5> <b> <%= objeto.nombre_organizacion %> </b> - </h5>
-                                                        <a href="<%=pathOrganizacion + '/'+objeto.tipo_organizacion.url_tipo_organizacion+'/'+objeto.url_organizacion%>"> <%= objeto.nombre_organizacion %></a>
+                                                        <h5> <b> <%= objeto.nombre_tramite %> </b> - </h5>
+                                                        
                                                     </div>
                                                 </span>
                                             </div>

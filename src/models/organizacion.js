@@ -166,10 +166,8 @@ module.exports = (sequelize, DataTypes) => {
                             required:true,
                         }
                     ],
-                    attributes:['valor_campo_organizacion']
                 }],
             where:where,
-            attributes:['id_organizacion','nombre_organizacion','codigo_organizacion_ge','url_organizacion']
         })
     }
     return organizacion;

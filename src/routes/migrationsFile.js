@@ -19,6 +19,11 @@ module.exports = app => {
     const tipo_campo_organizacion= app.src.db.models.tipo_campo_organizacion;
     const valor_campo_organizacion = app.src.db.models.valor_campo_organizacion;
     const tramite = app.src.db.models.tramite;
+    const pasos = app.src.db.models.pasos;
+    const tramite_categoria_tramite = app.src.db.models.tramite_categoria_tramite;
+    const tramite_poblacion_objeto = app.src.db.models.tramite_poblacion_objeto;
+    const tramite_tipo_tramite = app.src.db.models.tramite_tipo_tramite;
+    const forma_pago = app.src.db.models.forma_pago;
 
 
     var notMerge=[];
@@ -75,21 +80,137 @@ module.exports = app => {
     function _migrateTramite(poolData,ind,res) {
         if(poolData[ind]){
 
+            let newTransact={
+                codigo_tramite_ge:poolData[ind].codigo_tramite_ge,
+                nombre_tramite:poolData[ind].nombre_tramite,
+                descripcion_tramite:poolData[ind].descripcion_tramite,
+                duracion:poolData[ind].duracion,
+                fecha_actualizacion:poolData[ind].fecha_actualizacion,
+            };
 
-            // tramite.findOne({
-            //     codigo_organizacion_ge:poolData[ind].codigo_organizacion_ge
-            // }).then((tramiteData)=>{
-            //     // if()
-            // });
+            poolData[ind].categoria_tramite=        _validateParseJson(_replaceMarksBrackets(poolData[ind].categoria_tramite),res);
+
+            poolData[ind].forma_pago=               _validateParseJson(_replaceFormaPago(_replaceMarksBrackets(poolData[ind].forma_pago)),res);
+
+            poolData[ind].pasos=                    _validateParseJson(_replaceMarksDouble(poolData[ind].pasos),res);
+
+            poolData[ind].poblacion_objeto=         _validateParseJson(_replaceMarksBrackets(poolData[ind].poblacion_objeto),res);
+
+            poolData[ind].tipo_resultado_tramite=   _validateParseJson(_replaceMarksBrackets(poolData[ind].tipo_resultado_tramite),res);
+
+            organizacion.findOne({
+                where:{
+                    codigo_organizacion_ge:poolData[ind].codigo_organizacion_ge
+                }
+            }).then((organizacionData)=>{
+                if(organizacionData){
+                    newTransact.id_organizacion=organizacionData.id_organizacion;
+                    tramite.create(newTransact).then((transactData)=>{
+
+                        // Creacion de ----- tramite_categoria_tramite
+                        newTransact.id_tramite=transactData.id_tramite;
+                        let bulkCreateTransact = poolData[ind].categoria_tramite.Categorias.map((val)=>{
+                            return {
+                                id_tramite:parseInt(newTransact.id_tramite),
+                                id_categoria_tramite:parseInt(val)
+                            }
+                        });
+
+                        tramite_categoria_tramite.bulkCreate(bulkCreateTransact).then(()=>{
+                            //creacion pasos
+                            let bulkCreateSteps=[];
+
+                            for(let key in poolData[ind].pasos){
+                                if(parseInt(key)){
+                                    bulkCreateSteps.push({
+                                        id_tramite:parseInt(newTransact.id_tramite),
+                                        orden_tramite:parseInt(key),
+                                        nombre_paso:"",
+                                        descripcion_paso:poolData[ind].pasos[key]
+                                    });
+                                }
+                            }
+
+                            pasos.bulkCreate(bulkCreateSteps).then(()=>{
+                                //    creacion tramite_poblacion_objeto
+
+                                let bulkCreatePeople=poolData[ind].poblacion_objeto.PoblacionObjeto.map((val)=>{
+                                    return{
+                                        id_tramite:parseInt(newTransact.id_tramite),
+                                        id_poblacion_objeto:parseInt(val)
+                                    }
+                                });
+                                tramite_poblacion_objeto.bulkCreate(bulkCreatePeople).then(()=>{
+                                    //    Creacion Forma de Pago ---
+                                    let bulkCreateFormaPago = poolData[ind].forma_pago.map((val)=>{
+                                        let bulkCreatePago=val.LugarPago.map((item)=>{
+                                            return {
+                                                id_moneda:parseInt(val.Moneda),
+                                                id_lugar_pago:parseInt(item),
+                                                id_tramite:parseInt(newTransact.id_tramite),
+                                                costo:val.Costo,
+                                                nombre_cuenta:val.NombreCuenta,
+                                                numero_cuenta:val.NumeroCuenta
+                                            }
+                                        });
+                                        forma_pago.bulkCreate(bulkCreatePago).then(()=>{
+
+                                        })
+                                    });
+
+                                    let bulkCreateResultTramite=poolData[ind].tipo_resultado_tramite.ResultadoTramite.map((val)=>{
+                                       return {
+                                           id_tramite:parseInt(newTransact.id_tramite),
+                                           id_tipo_tramite:parseInt(val)
+                                       }
+                                    });
+
+                                    tramite_tipo_tramite.bulkCreate(bulkCreateResultTramite).then(()=>{
+                                        ind=ind+1;
+                                        _migrateTramite(poolData,ind,res)
+                                    }).catch((e)=>{
+                                        console.log('tipo_tramite')
+                                        console.log(e)
+                                        console.log(bulkCreatePeople)
+                                        console.log(poolData[ind])
+                                    });
+
+
+
+                                }).catch((e)=>{
+                                    console.log('gente')
+                                    console.log(e)
+                                    console.log(bulkCreatePeople)
+                                    console.log(poolData[ind])
+                                });
+                                //    end tramite_poblacion_objeto
+                            }).catch((e)=>{
+                                console.log('pasos')
+                                console.log(e)
+                                console.log(bulkCreateSteps)
+                                console.log(poolData[ind])
+                            });
+                            //end pasos
+                        }).catch((e)=>{
+                            console.log(tramite)
+                            console.log(e)
+                            console.log(bulkCreateTransact)
+                            console.log(poolData[ind])
+                        });
+                        // end Creacion
+                    });
+                }
+            });
+
 
             //hay buscar la organizacion por el codigo_organizacion_ge
-            console.info(poolData[ind]);
-            poolData[ind].categoria_tramite=    _validateParseJson(_replaceMarksBrackets(poolData[ind].categoria_tramite),res);
-            poolData[ind].forma_pago=           _validateParseJson(_replaceFormaPago(_replaceMarksBrackets(poolData[ind].forma_pago)),res);
-            poolData[ind].pasos=                _validateParseJson(_replaceMarksDouble(poolData[ind].pasos),res);
-            poolData[ind].poblacion_objeto=     _validateParseJson(_replaceMarksBrackets(poolData[ind].poblacion_objeto),res);
-            poolData[ind].requisitos=           _validateParseJson(_replaceMarksBrackets(poolData[ind].requisitos),res);
-            poolData[ind].tipo_resultado_tramite=_validateParseJson(_replaceMarksBrackets(poolData[ind].tipo_resultado_tramite),res);
+            // poolData[ind].categoria_tramite=    _validateParseJson(_replaceMarksBrackets(poolData[ind].categoria_tramite),res);
+            // poolData[ind].forma_pago=           _validateParseJson(_replaceFormaPago(_replaceMarksBrackets(poolData[ind].forma_pago)),res);
+            // poolData[ind].pasos=                _validateParseJson(_replaceMarksDouble(poolData[ind].pasos),res);
+            // poolData[ind].poblacion_objeto=     _validateParseJson(_replaceMarksBrackets(poolData[ind].poblacion_objeto),res);
+            // poolData[ind].requisitos=           _validateParseJson(_replaceMarksBrackets(poolData[ind].requisitos),res);
+            // poolData[ind].tipo_resultado_tramite=_validateParseJson(_replaceMarksBrackets(poolData[ind].tipo_resultado_tramite),res);
+
             //
             // _migrateFormaPago(poolData[ind].forma_pago);
             //
@@ -103,8 +224,6 @@ module.exports = app => {
 
             // _migrateTipoResultadoTramite(poolData[ind].tipo_resultado_tramite);
             // console.info(poolData[ind]);
-            ind=ind+1;
-            _migrateTramite(poolData,ind,res)
         }else{
             _complete(res,poolData)
         }
