@@ -99,8 +99,59 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     function _buildJoinOrganization(where={},tipo_organizacion_where={}){
-
+        const tramite_categoria_tramite = sequelize.models.tramite_categoria_tramite;
+        const categoria_tramite = sequelize.models.categoria_tramite;
+        const requisito = sequelize.models.requisito;
+        const forma_pago = sequelize.models.forma_pago;
+        const pasos = sequelize.models.pasos;
+        const lugar_pago = sequelize.models.lugar_pago;
+        const moneda = sequelize.models.moneda;
+        const tramite_poblacion_objeto = sequelize.models.tramite_poblacion_objeto;
+        const poblacion_objeto = sequelize.models.poblacion_objeto;
         return tramite.findAll({
+            include:[
+                {
+                    model:tramite_categoria_tramite,
+                    required:true,
+                    include:[
+                        {
+                            model:categoria_tramite,
+                            required:true,
+                        }
+                    ]
+                },
+                {
+                    model:requisito,
+                },
+                {
+                    model:pasos,
+                    required:true,
+                },
+                {
+                    model:forma_pago,
+                    // required:true,
+                    include:[
+                        {
+                            model:lugar_pago,
+                            // required:true,
+                        },
+                        {
+                            model:moneda,
+                            // required:true,
+                        }
+                    ]
+                },
+                {
+                    model:tramite_poblacion_objeto,
+                    required:true,
+                    include:[
+                        {
+                            model:poblacion_objeto,
+                            required:true
+                        }
+                    ]
+                }
+            ],
             where:where,
         })
     }

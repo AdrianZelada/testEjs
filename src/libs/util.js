@@ -19,5 +19,5 @@ const funcionCabeceras = (objs) => {
 };
 
 module.exports = {
-  funcionCabeceras,
+  funcionCabeceras
 };

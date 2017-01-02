@@ -3,6 +3,7 @@ import multer from 'multer';
 import xlstojson from "xls-to-json-lc";
 import xlsxtojson from "xlsx-to-json-lc";
 import q from 'q';
+import util from '../../src/libs/useful.js';
 module.exports = app => {
     const dpa = app.src.db.models.dpa;
     const tipo_dpa = app.src.db.models.tipos_dpa;
@@ -24,7 +25,8 @@ module.exports = app => {
 
     app.route('/buscar')
         .get((req,res)=>{
-            var busqueda=req.query.busqueda.replace(" ","_");
+            var busqueda=req.query.busqueda.replace(" ","_").toLowerCase();
+
             res.redirect('/buscar/'+busqueda);
         });
 
@@ -33,49 +35,31 @@ module.exports = app => {
             // aun falta integrar las busqueda de tramites
             var textToSearch=req.params.busqueda.replace("_"," ");
             organizacion.searchOrganizacion(textToSearch).then((resultOrg)=>{
-               // res.json({
-               //      path:req.protocol + '://' + req.get('host'),
-               //      pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-               //      organizacion:resultOrg
-               // })
-
-
                 tramite.searchTramite(textToSearch).then((resultTramite)=>{
 
                     organizacion.findJerarquia(2,1).then((jerarquiaData)=>{
-                        console.log(jerarquiaData)
-                        res.render('pages/busqueda', {
+                        var newResult=resultOrg.map((organizacionItem)=>{
+                            return {
+                                url_view_organizacion:req.protocol + '://' + req.get('host') +'/organizacion/'+organizacionItem.tipo_organizacion.url_tipo_organizacion+'/'+organizacionItem.id_organizacion,
+                                nombre_organizacion:organizacionItem.nombre_organizacion,
+                                codigo_organizacion:organizacionItem.id_organizacion,
+                                sigla_organizacion:organizacionItem.sigla_organizacion,
+                                codigo_sigma:organizacionItem.codigo_sigma,
+                                tramites:organizacionItem.tramites
+                            }
+                        });
+                        util.serverResponse(res,{
                             path:req.protocol + '://' + req.get('host'),
                             pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
                             pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
-                            organizacion:resultOrg,
+                            organizacion:newResult,
                             jerarquia_organizacion:jerarquiaData,
                             tramite:resultTramite
-                        });
-
-                        // res.json({
-                        //     path:req.protocol + '://' + req.get('host'),
-                        //     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-                        //     pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
-                        //     organizacion:resultOrg,
-                        //     tramite:resultTramite,
-                        //     jerarquia_organizacion:jerarquiaData,
-                        //
-                        // })
+                        },'pages/busqueda');
                     });
 
                 });
-
-
-
-                // res.render('pages/busqueda', {
-                //     path:req.protocol + '://' + req.get('host'),
-                //     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-                //     organizacion:resultOrg,
-                //     // jerarquia_organizacion:
-                // });
             });
-            // res.send(req.params.busqueda);
         });
     app.route('/api/v1/dpas/:id')
     // Descomentar la siguiente linea para implementar autenticacion JWT
