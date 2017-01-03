@@ -97,9 +97,9 @@ module.exports = (sequelize, DataTypes) => {
 
                 var arrayLike=words.map(function (word) {
                     return '%'+word+'%'
-                })
+                });
+
                 words=words.concat(arrayLike);
-                console.log(words)
                 var where={
                     nombre_organizacion:{
                         $ilike:{
@@ -195,16 +195,16 @@ module.exports = (sequelize, DataTypes) => {
                     as:'tipo_organizacion',
                     // where:tipo_organizacion_where
                 },
-                // {
-                //     model:valor_campo_organizacion,
-                //     required:true,
-                //     include:[
-                //         {
-                //             model:tipo_campo_organizacion,
-                //             required:true,
-                //         }
-                //     ],
-                // },
+                {
+                    model:valor_campo_organizacion,
+                    // required:true,
+                    include:[
+                        {
+                            model:tipo_campo_organizacion,
+                            // required:true,
+                        }
+                    ],
+                },
                 {
                     model:tramite,
                     // required:true,

@@ -80,6 +80,7 @@ module.exports = (app,console) => {
   //// verifica si hay errores en el formato json
   app.use((err, req, res, next) => {
     if (err instanceof SyntaxError) {
+
       res.status(400).json({ mensaje: "Problemas en el formato JSON" });
     } else {
       res.status(500).send('Error interno!');

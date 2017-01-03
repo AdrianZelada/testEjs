@@ -22,6 +22,9 @@ module.exports = app => {
 
             });
         });
+    // app.get('/*', function(req, res) {
+    //     res.render('pages/404');
+    // });
 
     app.route('/buscar')
         .get((req,res)=>{
