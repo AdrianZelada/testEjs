@@ -4,6 +4,7 @@ import util from '../../src/libs/useful.js';
 module.exports = app => {
   const tramite = app.src.db.models.tramite;
   const categoria_tramite = app.src.db.models.categoria_tramite;
+  const organizacion = app.src.db.models.organizacion;
   const tramite_categoria_tramite = app.src.db.models.categoria_tramite;
   // app.route('/tramites').get((req,res)=>{
   //     categoria_tramite.findAll({}).then((resultCate)=>{
@@ -54,24 +55,26 @@ module.exports = app => {
         tramite.getOneTransc(idTransc).then((transc)=>{
             // var buildCategory=_.clone(transc[0].tramite_categoria_tramites);
             // var newCategories=buildCategories(buildCategory)
-            var transcBuild={
-                codigo_tramite:transc[0].codigo_tramite,
-                codigo_tramite_ge:transc[0].codigo_tramite_ge,
-                nombre_tramite:transc[0].nombre_tramite,
-                descripcion_tramite:transc[0].descripcion_tramite,
-                duracion:transc[0].duracion,
-                fecha_actualizacion:transc[0].fecha_actualizacion,
-                tramite_categoria_tramites:buildArray(transc[0].tramite_categoria_tramites,'categoria_tramite'),
-                requisitos:transc[0].requisitos,
-                pasos:transc[0].pasos,
-                tramite_poblacion_objetos:buildArray(transc[0].tramite_poblacion_objetos,'poblacion_objeto'),
-                organizacion:buildOrganizacion(transc[0].organizacion)
-            };
-
-
-            util.serverResponse(res,{
-                tramites:transcBuild
-            },'')
+            console.log(transc[0].organizacion.id_organizacion);
+            organizacion.getHierarchy(transc[0].organizacion.id_organizacion).then((hierarchy)=>{
+                var transcBuild={
+                    codigo_tramite:transc[0].codigo_tramite,
+                    codigo_tramite_ge:transc[0].codigo_tramite_ge,
+                    nombre_tramite:transc[0].nombre_tramite,
+                    descripcion_tramite:transc[0].descripcion_tramite,
+                    duracion:transc[0].duracion,
+                    fecha_actualizacion:transc[0].fecha_actualizacion,
+                    tramite_categoria_tramites:buildArray(transc[0].tramite_categoria_tramites,'categoria_tramite'),
+                    requisitos:buildRequisito(transc[0].requisitos),
+                    pasos:transc[0].pasos,
+                    tramite_poblacion_objetos:buildArray(transc[0].tramite_poblacion_objetos,'poblacion_objeto'),
+                    organizacion:buildOrganizacion(transc[0].organizacion),
+                    jerarquia:hierarchy
+                };
+                util.serverResponse(res,{
+                    tramites:transcBuild
+                },'')
+            });
         });
 
         function buildArray(array,key) {
@@ -90,6 +93,19 @@ module.exports = app => {
                 sigla_organizacion:organizacionItem.sigla_organizacion,
                 codigo_sigma:organizacionItem.codigo_sigma,
             }
+        }
+        function buildRequisito(array) {
+            var newRequisito=[];
+            array.forEach((transcData)=>{
+                newRequisito.push({
+                    url_view_tramite:req.protocol + '://' + req.get('host') +'/tramite/'+transcData.id_tramite,
+                    nombre_requisito:transcData.nombre_requisito,
+                    papel_original:transcData.papel_original,
+                    papel_fotocopia:transcData.papel_fotocopia,
+                    papel_fotocopia_legalizada:transcData.papel_fotocopia_legalizada,
+                });
+            });
+            return newRequisito;
         }
     });
 

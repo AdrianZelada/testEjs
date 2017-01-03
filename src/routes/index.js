@@ -48,13 +48,23 @@ module.exports = app => {
                                 tramites:organizacionItem.tramites
                             }
                         });
+                        var newTransc=
+                            resultTramite.map((transcData)=>{
+                                return{
+                                    nombre_tramite:transcData.nombre_tramite,
+                                    codigo_tramite_ge:transcData.codigo_tramite_ge,
+                                    codigo_tramite:transcData.id_tramite,
+                                    descripcion_tramite:transcData.descripcion_tramite,
+                                    url_view_tramite:req.protocol + '://' + req.get('host') +'/tramite/'+transcData.id_tramite
+                                }
+                            });
                         util.serverResponse(res,{
                             path:req.protocol + '://' + req.get('host'),
                             pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-                            pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
+                            // pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
                             organizacion:newResult,
                             jerarquia_organizacion:jerarquiaData,
-                            tramite:resultTramite
+                            tramite:newTransc
                         },'pages/busqueda');
                     });
 
@@ -164,6 +174,10 @@ module.exports = app => {
                 elementos:array,
             });
         })
+    });
+
+    app.route('/error').get((req,res)=>{
+       res.render('pages/404')
     });
 
 
