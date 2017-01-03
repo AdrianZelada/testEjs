@@ -23,7 +23,7 @@ module.exports = app => {
                 var newCategories=
                     resultCate.map((category)=> {
                         return{
-                            url_tramites:req.protocol + '://' + req.get('host') +'/tramites/'+category.id_categoria_tramite+'/'+category.url_categoria_tramite,
+                            url_list_tramites:req.protocol + '://' + req.get('host') +'/tramites/'+category.id_categoria_tramite+'/'+category.url_categoria_tramite,
                             nombre_categoria_tramite: category.nombre_categoria_tramite,
                             codigo_categoria_tramite: category.codigo_categoria_tramite,
                             logo_categoria_tramite: category.logo_categoria_tramite,
