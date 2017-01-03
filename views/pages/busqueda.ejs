@@ -5,33 +5,36 @@
             <div class="row">
                         <div class="col-md-4" >
                              <!-- Blog Search Well -->
-                            <div class="well ol-md-12">
+                            <div class="ol-md-12">
+                            <hr>
                                 <h4>Buscar trámite o entidad</h4>
-                                <div class="input-group">
-                                    <input type="text" placeholder="Busque trámite">
-                                    <span class="input">
-                                        <button class="btn btn-default" type="button">
-                                            <span class="fa fa-search"></span>
-                                        </button>
-                                    </span> 
+                                <!-- buscador -->
+                                <div class="col-md-12" >
+                                    <div class="col-middle">
+                                        <form action="/buscar" method="get" >
+
+                                            <input type="text" name="busqueda" placeholder="Busque Tramite o Entidad" class="" style="color:#000; width:200px" required>
+                                            <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                                        </form>
+                                    </div>
                                 </div>
                                 <!-- /.input-group -->
                             </div>
-
-                            <div class="col-md-12 well">
+                            <br><hr>
+                            <div class="col-md-12">
                                 <div class="col-middle">
-                                    
-                                    
 
                                     <h4>Jerarquía organización</h4>
 
-                                        <div>
-                                            <% for(var j=0; j < jerarquia_organizacion.length; j++) {
+                                        <div class="txtIzq">
+                                            <% 
+                                               var cantList = 4;
+                                               for(var j=0; j < jerarquia_organizacion.length; j++) {
                                                 var objeto = jerarquia_organizacion[j];
                                                 %>
                                             <div>
                                                 <!--h4> <b> <%= objeto.nombre_organizacion %> </b> - </h4-->
-                                                <b><a href="<%=pathJerarquia + '/'+(objeto.tipo_organizacion.jerarquia+1).toFixed()+'/'+objeto.id_organizacion%>"> <%= objeto.nombre_organizacion %></a></b>
+                                                <b><a href="<%=objeto.url_view_organizacion%>"> <%= objeto.nombre_organizacion %></a></b>
                                             </div>
                                             <%
                                                 }
@@ -45,73 +48,74 @@
                         <div class="col-md-8 tab-content">
 
                             <div role="tabpanel" class="" id="seite1">
-                                <article class=" panel-default contenEntidOrgan">
-                                    <header class="bloq">
+                                
                                         <h1 class="text-muted text-center"><p> Resultados de búsqueda de entidades </p></h1>
-                                    </header>
+                  
                                     <div class="panel-body">
                                         
                                         <!-- Comment -->
                                         <div class="text-left">
-                                            <% for(var j=0; j < organizacion.length; j++){
-                                                var objeto = organizacion[j];
+                                            <% if(organizacion.length !== 0){
+                                                for(var j=0; j < organizacion.length; j++){
+                                                    var objeto = organizacion[j];
                                             %>
                                             <div id="searchableProv" class="single_progress_bar">
                                                 <span>
                                                     <div>
                                                         <h5> <b> <%= objeto.nombre_organizacion %> </b> - </h5>
-                                                        <a href="<%=pathOrganizacion + '/'+objeto.tipo_organizacion.url_tipo_organizacion+'/'+objeto.url_organizacion%>"> <%= objeto.nombre_organizacion %></a>
+                                                        <a href="<%=objeto.url_view_organizacion%>"> <%= objeto.nombre_organizacion %></a>
                                                     </div>
                                                 </span>
                                             </div>
+                                            <%      if(j === cantList){
+                                                            break;
+                                                        }
+                                                    }
+                                                } else{%>
+                                            <h4>Sin resultados</h4>
                                             <% } %>
-                                            <h2>Página no encontrada</h2>
-                                            
                                         </div>
                                      </div>
 
-                                <footer class="panel-footer clearfix "><!--address class="pull-right">Written by me at <time>10:00 am</time></address--></footer>
-                                </article>
 
                            </div>
                            <br>
                            <div role="tabpanel" class="" id="seite1">
-                                <article class=" panel-default contenEntidOrgan">
-                                    <header class="bloq">
-                                        <h1 class="text-muted text-center"><p> Resultados de búsqueda de trámites </p></h1>
-                                    </header>
+                                
+                                <h1 class="text-muted text-center"><p> Resultados de búsqueda de trámites </p></h1>
+
                                     <div class="panel-body">
-                                        <% 
-                                            if(tramite.length != 0){
-                                        %>
+                                        
                                         <!-- Comment -->
                                         <div class="text-left">
-                                            <% for(var p=0; p < tramite.length; p++){
-                                                var objeto = tramite[p];
+                                            <% 
+                                            if(tramite.length != 0){
+                                              for(var j=0; j < tramite.length; j++){
+                                                var objeto = tramite[j];
                                             %>
                                             <div id="searchableProv" class="single_progress_bar">
                                                 <span>
                                                     <div>
                                                         <h5> <b> <%= objeto.nombre_tramite %> </b> - </h5>
-                                                        
+                                                        <a href="<%=objeto.url_view_tramite%>"> <%= objeto.codigo_tramite_ge %></a>
                                                     </div>
                                                 </span>
                                             </div>
-                                            <%  }
-                                              }else{
-                                             %>
-                                                <h2>Página no encontrada</h2>
-                                             <% }%>
+                                            <%      if(j === cantList){
+                                                            break;
+                                                        }
+                                                    }
+                                                } else{%>
+                                            <h4>Sin resultados</h4>
+                                            <% } %>
                                             
                                         </div>
                                      </div>
-
-                                <footer class="panel-footer clearfix "><!--address class="pull-right">Written by me at <time>10:00 am</time></address--></footer>
-                                </article>
-
                             </div>
                             <br>
                         </div>       
             </div>
         </div>
     </div>
+    <br><hr>
+    

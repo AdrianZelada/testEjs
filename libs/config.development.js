@@ -4,11 +4,11 @@ console.log("configuracion de test activada");
 module.exports = {
     database: "sisDpa_Desarollo",
     username: "postgres",
-    password: "123456",
+    password: "030883",
     params: {
         dialect: "postgres",
         port: 5432,
-        host: "192.168.27.63",
+        host: "localhost",
         logging: (sql) => {
             logger.info(`[${new Date()}] ${sql}`);
         },

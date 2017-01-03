@@ -1511,6 +1511,9 @@ body p {
 
  /* -------------------------- nuevos css ----------------------------------------*/
 
+.txtIzq{
+    text-align: left;
+}
  .contenEntidOrgan{
     height:450px;
     overflow:scroll;
