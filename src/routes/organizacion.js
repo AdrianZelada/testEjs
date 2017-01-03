@@ -18,9 +18,9 @@ module.exports = app => {
     const tipo_organizacion = app.src.db.models.tipo_organizacion;
     const organizacion = app.src.db.models.organizacion;
 
-    app.route('/organizacion/:tipo_organizacion/:id_organizacion').get((req,res) =>{
-        organizacion.getOrganizacion(req.params.tipo_organizacion,req.params.id_organizacion).then(function (organizacionData) {
-            organizacion.getHierarchy(req.params.id_organizacion).then((hierarchy)=>{
+    app.route('/organizacion/:tipoOrganizacion/:idOrganizacion').get((req,res) =>{
+        organizacion.getOrganizacion(req.params.tipoOrganizacion,req.params.idOrganizacion).then(function (organizacionData) {
+            organizacion.getHierarchy(req.params.idOrganizacion).then((hierarchy)=>{
                 util.serverResponse(res,{
                     path:req.protocol + '://' + req.get('host'),
                     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',

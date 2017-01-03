@@ -54,6 +54,10 @@ module.exports = (app,console) => {
         }
     });
     app.param('idTramite',/^\d+$/);
+    app.param('idOrganizacion',/^\d+$/);
+    app.param('idSuperior',/^\d+$/);
+    app.param('idCategoria',/^\d+$/);
+    app.param('tipoOrganizacion',/^[a-zA-Z\s]*$/);
   app.use((req, res, next) => {
     res.locals.showTests = app.get('env') !== 'production' &&
     req.query.test === '1';
