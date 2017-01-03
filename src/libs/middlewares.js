@@ -40,7 +40,19 @@ module.exports = (app,console) => {
   //     next();
   // });
 
-
+    // app.param(function(name, fn){
+    //     if (fn instanceof RegExp) {
+    //         return function(req, res, next, val){
+    //             var captures;
+    //             if (captures = fn.exec(String(val))) {
+    //                 req.params[name] = captures;
+    //                 next();
+    //             } else {
+    //                 next('route');
+    //             }
+    //         }
+    //     }
+    // });
   app.use((req, res, next) => {
     res.locals.showTests = app.get('env') !== 'production' &&
     req.query.test === '1';

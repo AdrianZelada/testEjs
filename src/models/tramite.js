@@ -62,6 +62,23 @@ module.exports = (sequelize, DataTypes) => {
                 tramite.hasMany(models.forma_pago, { foreignKey: 'id_tramite' });
             },
 
+            getTranscForCategory: (idCategory)=> {
+// console.log(idCategory)
+                var idCategoriaWhere={
+                    id_categoria_tramite:idCategory
+                }
+
+
+                return _buildJoinOrganization({},idCategoriaWhere);
+            },
+
+            getOneTransc:(idTransc)=>{
+                var where={
+                    id_tramite:idTransc
+                }
+                return _buildJoinOrganization(where);
+            },
+
             searchTramite:(paragraph)=>{
                 var words=paragraph.split(" ").filter(function(word){
                     return word.length >=3 ;
@@ -69,11 +86,9 @@ module.exports = (sequelize, DataTypes) => {
 
                 var arrayLike=words.map(function (word) {
                     return '%'+word+'%'
-                })
+                });
                 words=words.concat(arrayLike);
-
                 console.log(words)
-
                 var where={
                     $or:{
                         nombre_tramite:{
@@ -98,7 +113,7 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
-    function _buildJoinOrganization(where={},tipo_organizacion_where={}){
+    function _buildJoinOrganization(where={},tramite_categoria_where={},categoria_where={}){
         const tramite_categoria_tramite = sequelize.models.tramite_categoria_tramite;
         const categoria_tramite = sequelize.models.categoria_tramite;
         const requisito = sequelize.models.requisito;
@@ -108,6 +123,11 @@ module.exports = (sequelize, DataTypes) => {
         const moneda = sequelize.models.moneda;
         const tramite_poblacion_objeto = sequelize.models.tramite_poblacion_objeto;
         const poblacion_objeto = sequelize.models.poblacion_objeto;
+        const organizacion = sequelize.models.organizacion;
+        const tipo_organizacion=sequelize.models.tipo_organizacion;
+
+
+        console.log(categoria_where)
         return tramite.findAll({
             include:[
                 {
@@ -117,15 +137,18 @@ module.exports = (sequelize, DataTypes) => {
                         {
                             model:categoria_tramite,
                             required:true,
+                            where:categoria_where
                         }
-                    ]
+                    ],
+                    where:tramite_categoria_where
+
                 },
                 {
                     model:requisito,
                 },
                 {
                     model:pasos,
-                    required:true,
+                    // required:true,
                 },
                 {
                     model:forma_pago,
@@ -143,11 +166,21 @@ module.exports = (sequelize, DataTypes) => {
                 },
                 {
                     model:tramite_poblacion_objeto,
-                    required:true,
+                    // required:true,
                     include:[
                         {
                             model:poblacion_objeto,
-                            required:true
+                            // required:true
+                        }
+                    ]
+                },
+                {
+                    model:organizacion,
+                    required:true,
+                    include:[
+                        {
+                            model: tipo_organizacion,
+                            required: true
                         }
                     ]
                 }

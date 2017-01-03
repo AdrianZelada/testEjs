@@ -80,8 +80,6 @@ module.exports = (sequelize, DataTypes) => {
                 organizacion.describe().then(function(resp){
                     console.info(resp)
                 });
-                // console.log(organizacion.describe())
-                // console.log(organizacion)
             },
 
             listAll:()=>{
@@ -109,15 +107,21 @@ module.exports = (sequelize, DataTypes) => {
                         }
                     }
                 };
-
                 return _buildJoinOrganization(where)
             },
 
-            tipoOrganizacion:(type)=>{
-                var whereType={
-                    url:type
+            tipoOrganizacion:(id_tipo_organizacion)=>{
+                var where={
+                    id_tipo_organizacion:id_tipo_organizacion
                 };
-                return _buildJoinOrganization({},whereType)
+                return _buildJoinOrganization(where)
+            },
+
+            getChildrens:(id_superior)=>{
+                var where={
+                    id_organizacion_superior:id_superior
+                };
+                return _buildJoinOrganization(where)
             },
 
             getOrganizacion:(urlType,idOrg)=>{
@@ -127,6 +131,16 @@ module.exports = (sequelize, DataTypes) => {
                     url_tipo_organizacion:urlType
                 })
             },
+
+            getHierarchy:function(idOrganizacion){
+                var hierarchy=[];
+                var defer = q.defer();
+                _getHierarchy(idOrganizacion,hierarchy,(hierarchyData)=>{
+                    defer.resolve(hierarchyData);
+                });
+                return defer.promise;
+            },
+
             findJerarquia:(jerarquia,idOrganizacion)=>{
                 let tipo_organizacion=sequelize.models.tipo_organizacion;
 
@@ -148,6 +162,24 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
     });
+
+    function _getHierarchy(idOrganizacion,hierarchy,fn){
+        organizacion.findOne({
+           where:{
+               id_organizacion:idOrganizacion
+           }
+       }).then((organizacionData)=>{
+           if(organizacionData.id_organizacion_superior != 0 ){
+               _getHierarchy(organizacionData.id_organizacion_superior,hierarchy,fn);
+               hierarchy.push(organizacionData);
+           }else{
+               hierarchy.push(organizacionData);
+               fn(hierarchy);
+           }
+       })
+    }
+
+
 
     function _buildJoinOrganization(where={},tipo_organizacion_where={}){
         let tipo_organizacion=sequelize.models.tipo_organizacion;
