@@ -22,8 +22,8 @@ module.exports = app => {
         organizacion.getOrganizacion(req.params.tipoOrganizacion,req.params.idOrganizacion).then(function (organizacionData) {
             organizacion.getHierarchy(req.params.idOrganizacion).then((hierarchy)=>{
                 util.serverResponse(res,{
-                    path:req.protocol + '://' + req.get('host'),
-                    pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
+                    // path:req.protocol + '://' + req.get('host'),
+                    // pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
                     organizacion:organizacionData,
                     // organizacion:buildOrganizacion(organizacionData),
                     jerarquia:hierarchy
@@ -88,23 +88,13 @@ module.exports = app => {
     // })
 
     function buildOrganizacion(array){
-        console.info(array)
-        console.info('-------->')
-        console.info(array[0].codigo_organizacion_ge)
-        console.info('----------------->')
-        console.info(array[0].valor_campo_organizacions )
-        console.info('--------------------------->')
         var valorDatos=array[0].valor_campo_organizacions.map(function (orgData) {
             return{
                 valor_campo_organizacion:orgData.valor_campo_organizacion,
                 tipo_campo_organizacion:orgData.tipo_campo_organizacion
             }
         });
-
-        console.info(valorDatos)
-
         array[0].valor_campo_organizacions=valorDatos;
-        console.info(array[0])
         return array;
     }
 };

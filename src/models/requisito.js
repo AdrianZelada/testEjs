@@ -18,12 +18,16 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         id_tramite_requisito: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: true,
         },
         nombre_requisito: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        codigo_tramite_ge: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         papel_original: {
             type: DataTypes.STRING,

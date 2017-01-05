@@ -24,6 +24,7 @@ module.exports = app => {
     const tramite_poblacion_objeto = app.src.db.models.tramite_poblacion_objeto;
     const tramite_tipo_tramite = app.src.db.models.tramite_tipo_tramite;
     const forma_pago = app.src.db.models.forma_pago;
+    const requisito = app.src.db.models.requisito;
 
 
     var notMerge=[];
@@ -74,8 +75,309 @@ module.exports = app => {
     });
 
     app.route('/api/upload/tramite').post(function (req,res) {
-        _uploadFile(req,res,_migrateTramite,'id_tramite',tramite)
+        _uploadFile(req,res,_migrateTramitePartials,'id_tramite',tramite)
     });
+
+    app.route('/api/upload/tramite_categoria_tramite').post(function (req,res) {
+        _uploadFile(req,res,_migrateTramiteCategoriaTramite,'id_tramite_categoria_tramite',tramite_categoria_tramite)
+    });
+
+    app.route('/api/upload/forma_pago').post(function (req,res) {
+        _uploadFile(req,res,_migrateFormaPago,'id_forma_pago',forma_pago)
+    });
+
+    app.route('/api/upload/pasos').post(function (req,res) {
+        _uploadFile(req,res,_migratePasos,'id_paso',pasos)
+    });
+
+    app.route('/api/upload/poblacionObjetoTramite').post(function (req,res) {
+        _uploadFile(req,res,_migratePoblacionObjeto,'id_tramite_poblacion_objeto',tramite_poblacion_objeto)
+    });
+
+    app.route('/api/upload/tipoResultadoTramite').post(function (req,res) {
+        _uploadFile(req,res,_migrateTipoResultado,'id_tramite_tipo_tramite',tramite_tipo_tramite)
+    });
+
+    app.route('/api/upload/requisitos').post(function (req,res) {
+        _uploadFile(req,res,_migrateRequisitos,'id_requisito',requisito)
+    });
+
+    app.route('/api/update/updateRequisito').post(function (req,res) {
+        requisito.findAll().then((requisitosData)=>{
+            _updateRequisitos(requisitosData,0,res)
+        })
+    });
+
+
+    function _updateRequisitos(poolData,ind,res) {
+        if (poolData[ind]) {
+            tramite.findOne({
+                where: {
+                    codigo_tramite_ge: poolData[ind].codigo_tramite_ge
+                }
+            }).then((transactData) => {
+                if(transactData){
+
+                    requisito.findOne({
+                        where:{
+                            id_requisito:poolData[ind].id_requisito
+                        }
+                    }).then((requisitoData)=>{
+                        requisitoData.updateAttributes({
+                            id_tramite_requisito:parseInt(transactData.id_tramite)
+                        }).then(()=>{
+                            console.info(transactData.id_tramite);
+                            ind=ind+1;
+                            _updateRequisitos(poolData,ind,res)
+                        });
+                    })
+                }else{
+                    ind=ind+1;
+                    _updateRequisitos(poolData,ind,res)
+                }
+            })
+        }else{
+            _complete(res,poolData)
+        }
+    }
+
+
+    function _migrateRequisitos(poolData,ind,res){
+        if (poolData[ind]) {
+            tramite.findOne({
+                where: {
+                    codigo_tramite_ge: poolData[ind].codigo_tramite_ge
+                }
+            }).then((transactData) => {
+                if(transactData){
+                    poolData[ind].requisitos=           _validateParseJson(_replaceMarksBrackets(poolData[ind].requisitos),res);
+
+                    let bulkCreateRequisito=poolData[ind].requisitos.map((val,ind)=>{
+                        return {
+                            id_tramite:parseInt(transactData.id_tramite),
+                            codigo_tramite_ge:val.CodTramite,
+                            nombre_requisito:val.Requisito,
+                            papel_original:val.Original,
+                            papel_fotocopia:val.Copia,
+                            papel_fotocopia_legalizada:val.CopiaLegalizada,
+                        };
+                    });
+
+                    requisito.bulkCreate(bulkCreateRequisito).then(()=>{
+                        ind=ind+1;
+                        _migrateRequisitos(poolData,ind,res);
+                    });
+
+                }else{
+                    console.info(poolData[ind])
+                }
+            })
+        }else{
+            _complete(res,poolData)
+        }
+    }
+
+    function _migrateTipoResultado(poolData,ind,res){
+        if (poolData[ind]) {
+            tramite.findOne({
+                where: {
+                    codigo_tramite_ge: poolData[ind].codigo_tramite_ge
+                }
+            }).then((transactData) => {
+                if(transactData){
+                    poolData[ind].tipo_resultado_tramite=   _validateParseJson(_replaceMarksBrackets(poolData[ind].tipo_resultado_tramite),res);
+
+                    let bulkCreateResultTramite=poolData[ind].tipo_resultado_tramite.ResultadoTramite.map((val)=>{
+                        return {
+                            id_tramite:parseInt(transactData.id_tramite),
+                            id_tipo_tramite:parseInt(val)
+                        }
+                    });
+
+                    tramite_tipo_tramite.bulkCreate(bulkCreateResultTramite).then(()=>{
+                        ind=ind+1;
+                        _migrateTipoResultado(poolData,ind,res);
+                    });
+                    // ind=ind+1;
+                    // _migrateTipoResultado(poolData,ind,res);
+                }else{
+                    console.info(poolData[ind])
+                }
+
+
+            })
+        }else{
+            _complete(res,poolData)
+        }
+    }
+
+    function _migratePoblacionObjeto(poolData,ind,res){
+        if (poolData[ind]) {
+            tramite.findOne({
+                where: {
+                    codigo_tramite_ge: poolData[ind].codigo_tramite_ge
+                }
+            }).then((transactData) => {
+                if(transactData){
+                    poolData[ind].poblacion_objeto=         _validateParseJson(_replaceMarksBrackets(poolData[ind].poblacion_objeto),res);
+
+                    let bulkCreatePeople=poolData[ind].poblacion_objeto.PoblacionObjeto.map((val)=>{
+                        return{
+                            id_tramite:parseInt(transactData.id_tramite),
+                            id_poblacion_objeto:parseInt(val)
+                        }
+                    });
+                    tramite_poblacion_objeto.bulkCreate(bulkCreatePeople).then(()=>{
+                        ind=ind+1;
+                        _migratePoblacionObjeto(poolData,ind,res);
+                    });
+                    // ind=ind+1;
+                    // _migratePoblacionObjeto(poolData,ind,res);
+                }else{
+                    console.info(poolData[ind])
+                }
+            })
+        }else{
+            _complete(res,poolData)
+        }
+    }
+
+    function _migratePasos(poolData,ind,res){
+        if (poolData[ind]) {
+            tramite.findOne({
+                where: {
+                    codigo_tramite_ge: poolData[ind].codigo_tramite_ge
+                }
+            }).then((transactData) => {
+                if(transactData){
+                    poolData[ind].pasos=                    _validateParseJson(_replaceMarksDouble(poolData[ind].pasos),res);
+
+                    let bulkCreateSteps=[];
+
+                    for(let key in poolData[ind].pasos){
+                        if(parseInt(key)){
+                            bulkCreateSteps.push({
+                                id_tramite:parseInt(transactData.id_tramite),
+                                orden_paso:parseInt(key),
+                                nombre_paso:"",
+                                descripcion_paso:poolData[ind].pasos[key]
+                            });
+                        }
+                    }
+
+                    pasos.bulkCreate(bulkCreateSteps).then(()=>{
+                        ind=ind+1;
+                        _migratePasos(poolData,ind,res);
+                    });
+                    // ind=ind+1;
+                    // _migratePasos(poolData,ind,res);
+                }else{
+
+                }
+            })
+        }else{
+            _complete(res,poolData)
+        }
+    }
+
+
+    function _migrateFormaPago(poolData,ind,res){
+        if (poolData[ind]) {
+            tramite.findOne({
+                where: {
+                    codigo_tramite_ge: poolData[ind].codigo_tramite_ge
+                }
+            }).then((transactData) => {
+                if(transactData){
+                    poolData[ind].forma_pago= _validateParseJson(_replaceFormaPago(_replaceMarksBrackets(poolData[ind].forma_pago)),res);
+
+                    let bulkCreateFormaPago = poolData[ind].forma_pago.map((val)=>{
+                        let bulkCreatePago=val.LugarPago.map((item)=>{
+                            return {
+                                id_moneda:parseInt(val.Moneda),
+                                id_lugar_pago:parseInt(item),
+                                id_tramite:parseInt(transactData.id_tramite),
+                                costo:val.Costo,
+                                nombre_cuenta:val.NombreCuenta,
+                                numero_cuenta:val.NumeroCuenta
+                            }
+                        });
+                        forma_pago.bulkCreate(bulkCreatePago).then(()=>{
+                            ind=ind+1;
+                            _migrateFormaPago(poolData,ind,res);
+                        });
+                        return val;
+                    });
+                    // ind=ind+1;
+                    // _migrateFormaPago(poolData,ind,res);
+                }else{
+                    console.info(poolData[ind])
+                }
+            })
+        }else{
+            _complete(res,poolData)
+        }
+    }
+
+    function _migrateTramiteCategoriaTramite(poolData,ind,res){
+        if (poolData[ind]) {
+            tramite.findOne({
+                where: {
+                    codigo_tramite_ge: poolData[ind].codigo_tramite_ge
+                }
+            }).then((transactData) => {
+                if(transactData){
+                    poolData[ind].categoria_tramite= _validateParseJson(_replaceMarksBrackets(poolData[ind].categoria_tramite),res);
+
+
+                    let bulkCreateTransact = poolData[ind].categoria_tramite.Categorias.map((val)=>{
+                        return {
+                            id_tramite:parseInt(transactData.id_tramite),
+                            id_categoria_tramite:parseInt(val)
+                        }
+                    });
+
+                    tramite_categoria_tramite.bulkCreate(bulkCreateTransact).then(()=>{
+                        ind=ind+1;
+                        _migrateTramiteCategoriaTramite(poolData,ind,res)
+                    })
+                }else{
+
+                }
+            })
+        }else{
+            _complete(res,poolData)
+        }
+    }
+
+    function _migrateTramitePartials(poolData,ind,res) {
+        if (poolData[ind]) {
+
+            let newTransact = {
+                codigo_tramite_ge: poolData[ind].codigo_tramite_ge,
+                nombre_tramite: poolData[ind].nombre_tramite,
+                descripcion_tramite: poolData[ind].descripcion_tramite,
+                duracion: poolData[ind].duracion,
+                fecha_actualizacion: poolData[ind].fecha_actualizacion,
+            };
+
+            organizacion.findOne({
+                where: {
+                    codigo_organizacion_ge: poolData[ind].codigo_organizacion_ge
+                }
+            }).then((organizacionData) => {
+                if (organizacionData) {
+                    newTransact.id_organizacion = organizacionData.id_organizacion;
+                    tramite.create(newTransact).then((transactData) => {
+                        ind=ind+1;
+                        _migrateTramitePartials(poolData,ind,res)
+                    })
+                }
+            })
+        }else{
+            _complete(res,poolData)
+        }
+    }
 
     function _migrateTramite(poolData,ind,res) {
         if(poolData[ind]){
@@ -535,6 +837,7 @@ module.exports = app => {
         text=text.replace(/, , ]/g,']');
         text=text.replace(/, ]/g,']');
         text=text.replace(/,]/g,']');
+        text=text.replace(/\n/g,' ');
         return text;
     }
 
