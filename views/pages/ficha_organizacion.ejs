@@ -1,78 +1,130 @@
-<div class="section">
-        <div class="container">
-            <div >
-                <div class="panel">
-                    <h3 class="title">DIRECCIÓN GENERAL DE MIGRACIÓN</h3>
-                </div>
+<div class="maginBod">        
+
+        <div class="container ">
+            <div class="row text-left">
+                <ol class="breadcrumb">
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="/organizaciones">Organizaciones</a></li>
+                    <li class="active">Ficha organización</li>
+                </o>
             </div>
-            
-
             <div class="row">
-                <section id="features" class="feature-wrapper">
-                    <div class="container">
-                    
-                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 text-center animate-box">
+                        <div class="col-md-4" >
+                             <!-- Blog Search Well -->
+                            <div class="ol-md-12">
                             
-                                <div class="card card-member">
-                                            <div class="content">
-                                                <div class="">
-                                                    <img alt="..." class="" src="assets/img/segip.png"/>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        SITIO WEB          www.segip.gob.bo/
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    
-                                                    <p class="small-text">DESCRIPCIÓN: La Cédula de Identidad de Extranjero es un documento público, individual, único e intransferible que acredita la identificación de la persona extranjera con permanencia, temporal o definitiva vigente en el país, individualizándola del resto de personas extranjeras radicadas o que están de paso por el territorio nacional.
+                                <h4>Buscar trámite o entidad</h4>
+                                <!-- buscador -->
+                                <div class="col-md-12" >
+                                    <div class="col-middle">
+                                        <form action="/buscar" method="get" >
 
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        DIRECCIÓN          
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        CORREO ELECTRÓNICO          lapaz@migracion.gob.bo
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        TELÉFONOS DE REFERENCIA          2110960
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        OFICIAL DE OPERACIONES Martín Nuñez Bellot
-                                                    </p>
-                                                </div>  
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        AEROPUERTO EL ALTO          Villa Bolivar - 2814441
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        REGIONAL CHARAÑA          Visviri (Chile) - 75273963
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        REGIONAL DESAGUADERO          Puente Internacional - 71902966
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            <input type="text" name="busqueda" placeholder="Busque Tramite o Entidad" class="" style="color:#000; width:200px" autocomplete="off" required>
+                                            <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                                        </form>
+                                    </div>
                                 </div>
-                            
-                        </div><!-- end col-lg-6 -->
-                        
-                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
-                            
-                        </div><!-- end col-lg-6 -->
-                    </div><!-- end container -->
-                </section><!-- end grey-wrapper -->
+
+                            </div>
+                            <br><hr>
+                            <div class="col-md-12">
+                                <div class="col-middle">
+                                    <hr>
+                                    <h4>Trámites ofrecidos </h4>
+                                    <div class="text-left">
+                                        <%  tramitesOfrecidos = organizacion[0].tramites;
+                                            if(tramitesOfrecidos.length !== 0){
+                                                for(var j=0; j < tramitesOfrecidos.length; j++){
+                                                    var objeto = tramitesOfrecidos[j];
+                                        %>
+                                        <div id="searchableProv" class="single_progress_bar">
+                                            <span>
+                                                <div>
+                                                    <h5> <b> <%= objeto.nombre_tramite %> </b> - </h5>
+                                                        
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <%      }
+                                            } else{
+                                        %>
+                                            <p> Esta entidad no cuenta con trámites por el momento</p>
+                                        <%  } %>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <br><hr>
+                            <div class="col-md-12">
+                                <div class="col-middle">
+                                    <hr>
+                                    <h4>Está organización depende de:</h4>
+
+                                        <div class="txtIzq">
+                                            <% 
+                                               for(var j=0; j < jerarquia.length; j++) {
+                                                var objeto = jerarquia[j];
+                                                %>
+                                            <div>
+                                                <b><a href="<%=objeto.url_view_organizacion%>"> <%= objeto.nombre_organizacion %></a></b>
+                                            </div>
+                                            <%
+                                                }
+                                            %>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 tab-content">
+                            <hr>
+                            <div class="txtIzq" id="seite1">
+                                <div class="form-group col-md-12 text-center">
+                                    <div class="form-group col-md-12 ">
+                                        <img src="../images/sinImagen.jpg" alt="" width="40" height="50">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                  <!--label class="col-md-4 control-label">Nombre organización:</label-->
+                                  <div class="col-md-12">                     
+                                    <p><%= organizacion[0].nombre_organizacion %></p>
+                                  </div>
+                                </div>
+                                <hr>----------
+                                <div class="form-group col-md-12">
+                                    <!--label class="col-md-4 control-label">Sitio web:</label-->
+                                    <% 
+                                      if(organizacion[0].valor_campo_organizacions.length !== 0){
+                                        for(var j=0; j < organizacion[0].valor_campo_organizacions.length; j++) {
+                                                
+                                    %>    
+                                  <div class="col-md-7">            
+                                    <%= organizacion[0].valor_campo_organizacions[j].tipo_campo_organizacion.tipo_campo_or %>
+                                  </div>
+                                  
+                                  <%    }
+                                      }%>
+                                  
+                                </div>
+
+                                 <hr>----------
+                                
+                                
+                                <div class="form-group col-md-12">
+                                  <label class="col-md-4 control-label">Tipo de organización:</label>
+                                  <div class="col-md-7">                     
+                                    <%= organizacion[0].tipo_organizacion.nombre_tipo_organizacion %>
+                                  </div>
+                                </div>
+                                <hr>
+                                
+
+                           </div>
+                           <br>
+                            <br>
+                        </div>       
             </div>
         </div>
-    </div>
+</div>
+<br><hr>

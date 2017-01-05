@@ -2,61 +2,43 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-md-1 col-sm-1">
-                    <div class="info">
-                        <h5 class="title">Nosotros</h5>
-                        <br>
-                        <nav>
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        <b>Misión</b>
-                                        <hr class="hr-small">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <b>Visión</b>
-
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-                <div class="col-md-3 col-md-offset-1 col-sm-3">
+                
+                <div class="col-md-4 col-md-offset-1 col-sm-4">
                     <div class="info">
                         <h5 class="title"> Reportar Problemas</h5>
                          <nav>
                             <p>Si encuentra algun problema con la página puede reportarlo. </p>
-                            <a data-toggle="modal" href="#shortModal" class="btn btn-primary">Reportar Errores</a>
+                            <a data-toggle="modal" href="#" class="btn btn-primary">Reportar Errores</a>
                         </nav>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3">
                     <div class="info">
-                        <h5 class="title">Comunidad</h5>
+                        <h5 class="title">Más..</h5>
                         <br>
                         <nav>
                             <ul>
                                 <li>
-                                    <a href="#">
-                                         <i class="fa fa-question-circle-o"></i> Preguntas Frecuentes
-                                    </a>
-                                    <hr class="hr-small">
-                                <li>
                                     <a href="https://test.adsib.gob.bo/codigos/" >
                                         <i class="fa fa-ravelry"></i> &nbsp; Desarrolladores
                                     </a>
+                                     <hr class="hr-small">
                                 </li>
+                                <li>
+                                    <a href="/preguntas">
+                                         <i class="fa fa-question-circle-o"></i> Preguntas Frecuentes
+                                    </a>
+                                    <hr class="hr-small">
+                                </li>
+                                
                                 
                             </ul>
                         </nav>
                     </div>
                 </div>
                 <div class="col-md-2 col-md-offset-1 col-sm-3">
-                    <div class="info">
-                        <h5 class="title">Redes Sociales:</h5>
+                    <div class="info text-left">
+                        <h5 class="title">Contacto:</h5>
                         <nav>
                             <ul>
                                 <li>
@@ -86,30 +68,42 @@
             </div>
             <hr/>
             <div class="copyright">
-                 © <script> document.write(new Date().getFullYear()) </script> Agetic 
-                 <br>
-                 Teléfono: (591) (2) 2128706
-                 <br>
-                 Correo Electrónico: contacto@agetic.gob.bo
-                 <br>
-                 Obrajes, Calle 9 esquina Costanerita # 104 Edificio Ministerio de Deportes Piso 4, La Paz - Bolivia
+                <script> document.write(new Date().getFullYear()) </script> AGETIC 
+                <br>
+                Teléfono: (591) (2) 2128706
+                <br>
+                Correo Electrónico: contacto@agetic.gob.bo
+                <br>
+                Obrajes, Calle 9 esquina Costanerita # 104 Edificio Ministerio de Deportes Piso 4, La Paz - Bolivia
             </div>
         </div>
     </footer>
 
 <!--script src="<%= locals.carpetaInstalacion %>js/jquery.min.js"></script>
-<script src="<%= locals.carpetaInstalacion %>js/bootstrap.min.js"></script>
+<script  src="<%= locals.carpetaInstalacion %>js/bootstrap.min.js"></script>
 <script src="<%= locals.carpetaInstalacion %>js/jquery.nicescroll.js"></script> 
 <script src="<%= locals.carpetaInstalacion %>js/owl.carousel.js"></script>
 <script src="<%= locals.carpetaInstalacion %>js/wow.js"></script>
 <script src="<%= locals.carpetaInstalacion %>js/script.js"></script-->
 
-<script src="../js/jquery.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/jquery.nicescroll.js"></script> 
-<script src="../js/owl.carousel.js"></script>
-<script src="../js/wow.js"></script>
-<script src="../js/script.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/jquery.nicescroll.js"></script> 
+<script type="text/javascript" src="/js/owl.carousel.js"></script>
+<script type="text/javascript" src="/js/wow.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
 
 <!--   file where we handle all the script from the Gaia - Bootstrap Template   -->
-<script type="text/javascript" src="../js/gaia.js"></script>
+<script type="text/javascript" type="text/javascript" src="/js/gaia.js"></script>
+
+<script type="text/javascript">
+        $('form input[type=text]').on('change invalid', function() {
+            var textfield = $(this).get(0);
+
+            textfield.setCustomValidity('');
+            
+            if (!textfield.validity.valid) {
+              textfield.setCustomValidity('Por favor rellene este campo.');  
+            }
+        });
+</script>

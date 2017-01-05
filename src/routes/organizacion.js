@@ -27,7 +27,7 @@ module.exports = app => {
                     organizacion:organizacionData,
                     // organizacion:buildOrganizacion(organizacionData),
                     jerarquia:hierarchy
-                },'pages/vist')
+                },'pages/ficha_organizacion')
             });
         })
     });
@@ -73,7 +73,7 @@ module.exports = app => {
                     path:req.protocol + '://' + req.get('host'),
                     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
                     organizacion:organizaciones
-                },'')
+                },'pages/organizacion')
         })
     });
 
