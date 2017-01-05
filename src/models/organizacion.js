@@ -132,11 +132,19 @@ module.exports = (sequelize, DataTypes) => {
                 })
             },
 
-            getHierarchy:function(idOrganizacion){
+            getHierarchy:function(idOrganizacion,req){
                 var hierarchy=[];
                 var defer = q.defer();
                 _getHierarchy(idOrganizacion,hierarchy,(hierarchyData)=>{
-                    defer.resolve(hierarchyData);
+
+                    defer.resolve(hierarchyData.map((org)=>{
+                        return{
+                            codigo_organizacion: org.codigo_organizacion,
+                            nombre_organizacion: org.nombre_organizacion,
+                            codigo_organizacion_ge: org.codigo_organizacion_ge,
+                            url_view_organizacion:req.protocol + '://' + req.get('host') +'/organizacion/'+org.tipo_organizacion.url_tipo_organizacion+'/'+org.id_organizacion,
+                        }
+                    }));
                 });
                 return defer.promise;
             },
@@ -164,10 +172,18 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     function _getHierarchy(idOrganizacion,hierarchy,fn){
+        let tipo_organizacion=sequelize.models.tipo_organizacion;
         organizacion.findOne({
            where:{
                id_organizacion:idOrganizacion
-           }
+           },
+            include:[
+                {
+                    model:tipo_organizacion,
+                    required:true,
+                    as:'tipo_organizacion'
+                }
+            ]
        }).then((organizacionData)=>{
            if(organizacionData.id_organizacion_superior != 0 ){
                _getHierarchy(organizacionData.id_organizacion_superior,hierarchy,fn);
