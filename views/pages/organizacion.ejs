@@ -28,12 +28,26 @@
                             <br><hr>
                             <div class="col-md-12">
                                 <div class="col-middle breadcrumb bloq">
-
+                                    <hr>
                                     <h4>Poderes del estado</h4>
 
                                         <div class="txtIzq">
-                                            <p>No se encontraron organizaciones.</p>
+                                            <div class="txtIzq">
+                                            <% 
+                                               var cantList = 4;
+                                               for(var j=0; j < organos.length; j++) {
+                                                var objeto = organos[j];
+                                                %>
+                                            <div>
+                                                <b><%= j+1%>.- <a href="<%=objeto.url_list_organizacion%>"> <%= objeto.nombre_organizacion %></a></b>
+                                            </div>
+                                            <%
+                                                }
+                                            %>
                                         </div>
+                                            <!--p>No se encontraron organizaciones.</p-->
+                                        <hr>
+                                    </div>
 
                                 </div>
                             </div>
