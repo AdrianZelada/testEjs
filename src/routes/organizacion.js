@@ -14,10 +14,8 @@ module.exports = app => {
     app.route('/organizacion/:tipoOrganizacion/:idOrganizacion').get((req,res) =>{
         organizacion.getOrganizacion(req.params.tipoOrganizacion,req.params.idOrganizacion).then(function (organizacionData) {
             organizacion.getHierarchy(req.params.idOrganizacion,req).then((hierarchy)=>{
+
                 util.serverResponse(res,{
-                    // path:req.protocol + '://' + req.get('host'),
-                    // pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-                    // organizacion:organizacionData,
                     organizacion:buildOrganizacion(organizacionData,req),
                     jerarquia:hierarchy
                 },'pages/vist')
@@ -29,23 +27,36 @@ module.exports = app => {
         var idSuperior=req.params.idSuperior || 2;
         organizacion.getChildrens(idSuperior)
             .then((organizacionData)=>{
+                organizacion.findJerarquia(2,1).then((organos)=> {
 
-                let organizaciones=organizacionData.map((organizacionItem)=> {
-                    return {
-                        url_list_organizacion:req.protocol + '://' + req.get('host') +'/organizaciones/'+organizacionItem.id_organizacion,
-                        url_view_organizacion:req.protocol + '://' + req.get('host') +'/organizacion/'+organizacionItem.tipo_organizacion.url_tipo_organizacion+'/'+organizacionItem.id_organizacion,
-                        nombre_organizacion:organizacionItem.nombre_organizacion,
-                        codigo_organizacion:organizacionItem.id_organizacion,
-                        sigla_organizacion:organizacionItem.sigla_organizacion,
-                        codigo_sigma:organizacionItem.codigo_sigma
-                    }
-                });
+                    let organizaciones = organizacionData.map((organizacionItem) => {
+                        return {
+                            url_list_organizacion: req.protocol + '://' + req.get('host') + '/organizaciones/' + organizacionItem.id_organizacion,
+                            url_view_organizacion: req.protocol + '://' + req.get('host') + '/organizacion/' + organizacionItem.tipo_organizacion.url_tipo_organizacion + '/' + organizacionItem.id_organizacion,
+                            nombre_organizacion: organizacionItem.nombre_organizacion,
+                            codigo_organizacion: organizacionItem.id_organizacion,
+                            sigla_organizacion: organizacionItem.sigla_organizacion,
+                            codigo_sigma: organizacionItem.codigo_sigma
+                        }
+                    });
 
-                util.serverResponse(res,{
-                    path:req.protocol + '://' + req.get('host'),
-                    pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-                    organizacion:organizaciones
-                },'')
+                    let organosMap = organos.map((organizacionItem)=>{
+                       return{
+                           url_view_organizacion: req.protocol + '://' + req.get('host') + '/organizacion/' + organizacionItem.tipo_organizacion.url_tipo_organizacion + '/' + organizacionItem.id_organizacion,
+                           nombre_organizacion: organizacionItem.nombre_organizacion,
+                           codigo_organizacion: organizacionItem.id_organizacion,
+                           sigla_organizacion: organizacionItem.sigla_organizacion,
+                           codigo_sigma: organizacionItem.codigo_sigma
+                       }
+                    });
+
+                    util.serverResponse(res, {
+                        path: req.protocol + '://' + req.get('host'),
+                        pathOrganizacion: req.protocol + '://' + req.get('host') + '/organizacion',
+                        organizacion: organizaciones,
+                        organos:organosMap
+                    }, '')
+            })
         })
     });
 
