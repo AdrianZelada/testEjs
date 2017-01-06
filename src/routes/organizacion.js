@@ -106,14 +106,14 @@ module.exports = app => {
             tipo_organizacion:{
                 nombre_tipo_organizacion: org.tipo_organizacion.nombre_tipo_organizacion,
                 codigo_tipo_organizacion: org.tipo_organizacion.codigo_tipo_organizacion
-            }
+            },
+            tramites:org.tramites
         };
 
         orgReturn.campo_organizacion=[];
 
         org.valor_campo_organizacions.forEach((val)=>{
             let tipoCampo=val.tipo_campo_organizacion.toJSON();
-
             orgReturn.campo_organizacion.push(
                 {
                     valor_campo:val.valor_campo_organizacion,
