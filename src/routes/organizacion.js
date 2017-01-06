@@ -8,14 +8,7 @@ import xlsxtojson from "xlsx-to-json-lc";
 import q from 'q';
 import util from '../../src/libs/useful.js';
 module.exports = app => {
-    const dpa = app.src.db.models.dpa;
-    const tipo_dpa = app.src.db.models.tipos_dpa;
-    const lugar_pago = app.src.db.models.lugar_pago;
-    const moneda = app.src.db.models.moneda;
-    const tipo_tramite = app.src.db.models.tipo_tramite;
-    const categoria_tramite = app.src.db.models.categoria_tramite;
-    const poblacion_objeto = app.src.db.models.poblacion_objeto;
-    const tipo_organizacion = app.src.db.models.tipo_organizacion;
+
     const organizacion = app.src.db.models.organizacion;
 
     app.route('/organizacion/:tipoOrganizacion/:idOrganizacion').get((req,res) =>{
@@ -32,26 +25,6 @@ module.exports = app => {
         })
     });
 
-    //
-    // app.route('/organizacion/jerarquia/:jerarquia/:idOrganizacion').get((req,res)=>{
-    //     organizacion.findJerarquia(req.params.jerarquia,req.params.idOrganizacion).then((jerarquiaData)=>{
-    //         console.log(jerarquiaData)
-    //         res.json({
-    //             pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
-    //             jerarquia_organizacion:jerarquiaData
-    //         });
-    //         // res.render('pages/busqueda', {
-    //         //     path:req.protocol + '://' + req.get('host'),
-    //         //     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-    //         //     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-    //         //     organizacion:resultOrg,
-    //         //     jerarquia_organizacion:jerarquiaData
-    //         // });
-    //     });
-    //
-    // });
-
-
     app.route('/organizaciones/:idSuperior?').get((req,res)=>{
         var idSuperior=req.params.idSuperior || 2;
         organizacion.getChildrens(idSuperior)
@@ -64,8 +37,7 @@ module.exports = app => {
                         nombre_organizacion:organizacionItem.nombre_organizacion,
                         codigo_organizacion:organizacionItem.id_organizacion,
                         sigla_organizacion:organizacionItem.sigla_organizacion,
-                        codigo_sigma:organizacionItem.codigo_sigma,
-                        // tramites:organizacionItem.tramites
+                        codigo_sigma:organizacionItem.codigo_sigma
                     }
                 });
 
@@ -77,15 +49,6 @@ module.exports = app => {
         })
     });
 
-    // app.route('/getJerarquia').get((req,res)=>{
-    //     organizacion.getHierarchy(3).then((hierarchy)=>{
-    //         util.serverResponse(res,{
-    //             path:req.protocol + '://' + req.get('host'),
-    //             pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-    //             jerarquia:hierarchy
-    //         },'')
-    //     });
-    // })
 
     function buildOrganizacion(array,req){
         var org=array[0];
@@ -121,17 +84,10 @@ module.exports = app => {
             )
         });
 
-        orgReturn.tramites=[]
+        orgReturn.tramites=[];
+
         org.tramites.forEach((tramite)=>{
-            // let transcData=tramite.toJSON();
             orgReturn.tramites.push(
-            //     {
-            //         nombre_tramite:transcData.nombre_tramite,
-            //         codigo_tramite_ge:transcData.codigo_tramite_ge,
-            //         codigo_tramite:transcData.id_tramite,
-            //         descripcion_tramite:transcData.descripcion_tramite,
-            //         url_view_tramite:req.protocol + '://' + req.get('host') +'/tramite/'+transcData.id_tramite
-            //     }
                 {
                     nombre_tramite:tramite.nombre_tramite,
                     codigo_tramite_ge:tramite.codigo_tramite_ge,
@@ -141,16 +97,6 @@ module.exports = app => {
                 }
             )
         });
-        // orgReturn.tramites=tramites.map((transcData)=>{
-        //     // var transcData=tramite.toJSON();
-        //     return{
-        //         nombre_tramite:transcData.nombre_tramite,
-        //         codigo_tramite_ge:transcData.codigo_tramite_ge,
-        //         codigo_tramite:transcData.id_tramite,
-        //         descripcion_tramite:transcData.descripcion_tramite,
-        //         url_view_tramite:req.protocol + '://' + req.get('host') +'/tramite/'+transcData.id_tramite
-        //     }
-        // });
         return orgReturn;
     }
 };

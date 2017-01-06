@@ -5,18 +5,9 @@ module.exports = app => {
   const tramite = app.src.db.models.tramite;
   const categoria_tramite = app.src.db.models.categoria_tramite;
   const organizacion = app.src.db.models.organizacion;
-  const tramite_categoria_tramite = app.src.db.models.categoria_tramite;
-  // app.route('/tramites').get((req,res)=>{
-  //     categoria_tramite.findAll({}).then((resultCate)=>{
-  //         res.json({
-  //             categorias:resultCate
-  //         })
-  //     });
-  // });
 
     app.route('/tramites/:idCategoria?/:nombreCategoria?').get((req,res)=>{
         var categoryTransc = req.params.idCategoria;
-        console.log('--->',categoryTransc)
         tramite.getTranscForCategory(categoryTransc).then((transc)=>{
             categoria_tramite.findAll({}).then((resultCate)=>{
 
@@ -53,9 +44,6 @@ module.exports = app => {
         var idTransc = req.params.idTramite;
 
         tramite.getOneTransc(idTransc).then((transc)=>{
-            // var buildCategory=_.clone(transc[0].tramite_categoria_tramites);
-            // var newCategories=buildCategories(buildCategory)
-            console.log(transc[0].organizacion.id_organizacion);
             organizacion.getHierarchy(transc[0].organizacion.id_organizacion,req).then((hierarchy)=>{
                 var transcBuild={
                     codigo_tramite:transc[0].codigo_tramite,
@@ -68,8 +56,7 @@ module.exports = app => {
                     requisitos:buildRequisito(transc[0].requisitos),
                     pasos:transc[0].pasos,
                     poblacion_objeto:buildPoblacion(transc[0].tramite_poblacion_objetos,'poblacion_objeto'),
-                    organizacion:buildOrganizacion(transc[0].organizacion),
-                    // jerarquia:hierarchy
+                    organizacion:buildOrganizacion(transc[0].organizacion)
                 };
                 util.serverResponse(res,{
                     tramites:transcBuild
@@ -120,7 +107,4 @@ module.exports = app => {
             return newRequisito;
         }
     });
-
-
-
 };
