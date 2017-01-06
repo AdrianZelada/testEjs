@@ -86,8 +86,12 @@
                                         
                                     %>  
                                     
-                                        <div class="col-md-12">  <%= j+1%>                                
-                                            - <%= objeto.nombre_requisito %> <br>( <%= papel%> )
+                                        <div class="col-md-12"> 
+                                            <% if(objeto.url_view_tramite !== null){ %>
+                                                <h5> <%= j+1%>.- <u><a href="<%= objeto.url_view_tramite %>" class="enlBusq"><%= objeto.nombre_requisito %></a> </u></h5><b>( <%= papel%> )</b>
+                                            <% }else{ %>
+                                                <h5> <%= j+1%>.- <%= objeto.nombre_requisito %></h5><b>( <%= papel%> )</b>
+                                            <% } %>
                                         </div>
                                         <hr>
                                         <br>
