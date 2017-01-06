@@ -8,14 +8,7 @@ import xlsxtojson from "xlsx-to-json-lc";
 import q from 'q';
 import util from '../../src/libs/useful.js';
 module.exports = app => {
-    const dpa = app.src.db.models.dpa;
-    const tipo_dpa = app.src.db.models.tipos_dpa;
-    const lugar_pago = app.src.db.models.lugar_pago;
-    const moneda = app.src.db.models.moneda;
-    const tipo_tramite = app.src.db.models.tipo_tramite;
-    const categoria_tramite = app.src.db.models.categoria_tramite;
-    const poblacion_objeto = app.src.db.models.poblacion_objeto;
-    const tipo_organizacion = app.src.db.models.tipo_organizacion;
+
     const organizacion = app.src.db.models.organizacion;
 
     app.route('/organizacion/:tipoOrganizacion/:idOrganizacion').get((req,res) =>{
@@ -25,32 +18,12 @@ module.exports = app => {
                     // path:req.protocol + '://' + req.get('host'),
                     // pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
                     // organizacion:organizacionData,
-                    organizacion:buildOrganizacion(organizacionData),
+                    organizacion:buildOrganizacion(organizacionData,req),
                     jerarquia:hierarchy
                 },'pages/ficha_organizacion')
             });
         })
     });
-
-    //
-    // app.route('/organizacion/jerarquia/:jerarquia/:idOrganizacion').get((req,res)=>{
-    //     organizacion.findJerarquia(req.params.jerarquia,req.params.idOrganizacion).then((jerarquiaData)=>{
-    //         console.log(jerarquiaData)
-    //         res.json({
-    //             pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
-    //             jerarquia_organizacion:jerarquiaData
-    //         });
-    //         // res.render('pages/busqueda', {
-    //         //     path:req.protocol + '://' + req.get('host'),
-    //         //     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-    //         //     pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-    //         //     organizacion:resultOrg,
-    //         //     jerarquia_organizacion:jerarquiaData
-    //         // });
-    //     });
-    //
-    // });
-
 
     app.route('/organizaciones/:idSuperior?').get((req,res)=>{
         var idSuperior=req.params.idSuperior || 2;
@@ -64,8 +37,7 @@ module.exports = app => {
                         nombre_organizacion:organizacionItem.nombre_organizacion,
                         codigo_organizacion:organizacionItem.id_organizacion,
                         sigla_organizacion:organizacionItem.sigla_organizacion,
-                        codigo_sigma:organizacionItem.codigo_sigma,
-                        // tramites:organizacionItem.tramites
+                        codigo_sigma:organizacionItem.codigo_sigma
                     }
                 });
 
@@ -77,17 +49,8 @@ module.exports = app => {
         })
     });
 
-    // app.route('/getJerarquia').get((req,res)=>{
-    //     organizacion.getHierarchy(3).then((hierarchy)=>{
-    //         util.serverResponse(res,{
-    //             path:req.protocol + '://' + req.get('host'),
-    //             pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-    //             jerarquia:hierarchy
-    //         },'')
-    //     });
-    // })
 
-    function buildOrganizacion(array){
+    function buildOrganizacion(array,req){
         var org=array[0];
 
 
@@ -113,7 +76,6 @@ module.exports = app => {
 
         org.valor_campo_organizacions.forEach((val)=>{
             let tipoCampo=val.tipo_campo_organizacion.toJSON();
-
             orgReturn.campo_organizacion.push(
                 {
                     valor_campo:val.valor_campo_organizacion,
@@ -122,18 +84,19 @@ module.exports = app => {
             )
         });
 
+        orgReturn.tramites=[];
 
-        // var valorDatos=array[0].valor_campo_organizacions.map(function (orgData) {
-        //
-        //
-        //     org=orgData.valor_campo_organizacion.JSON();
-        //
-        //     return{
-        //         valor_campo_organizacion:org.valor_campo_organizacion,
-        //         tipo_campo_organizacion:org.tipo_campo_organizacion
-        //     }
-        // });
-        // array[0].valor_campo_organizacions=org;
+        org.tramites.forEach((tramite)=>{
+            orgReturn.tramites.push(
+                {
+                    nombre_tramite:tramite.nombre_tramite,
+                    codigo_tramite_ge:tramite.codigo_tramite_ge,
+                    codigo_tramite:tramite.id_tramite,
+                    descripcion_tramite:tramite.descripcion_tramite,
+                    url_view_tramite:req.protocol + '://' + req.get('host') +'/tramite/'+tramite.id_tramite
+                }
+            )
+        });
         return orgReturn;
     }
 };

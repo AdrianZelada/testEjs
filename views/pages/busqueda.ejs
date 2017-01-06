@@ -52,10 +52,10 @@
                         <div class="col-md-8 tab-content">
                             <div class="row breadcrumb">
                                 <ul class="nav nav-pills ">
-                                    <li role="presentation" class="btn-link">
+                                    <li role="presentation" class="btn-link bloq">
                                         <a href="#resulBusq1" >( <%= organizacion.length %>) organizaciones encontradas</a>
                                     </li>
-                                    <li role="presentation" class="btn-link">
+                                    <li role="presentation" class="btn-link bloq">
                                         <a href="#resulBusq2">( <%= tramite.length %>) trámites encontrados</a>
                                     </li>
                                 </ul>
@@ -76,8 +76,8 @@
                                             <div id="searchableProv" class="single_progress_bar">
                                                 <span>
                                                     <div>
-                                                        <h5> <b> <%= objeto.nombre_organizacion %> </b> - </h5>
-                                                        <a href="<%=objeto.url_view_organizacion%>"> <%= objeto.nombre_organizacion %></a>
+                                                        <label><u> <a href="<%=objeto.url_view_organizacion%>" class="enlBusq"> <%= objeto.nombre_organizacion %> </a></u> </label>
+                                                         <h6><%= objeto.nombre_organizacion %></h6>
                                                     </div>
                                                 </span>
                                             </div>
@@ -121,8 +121,8 @@
                                             <div id="searchableProv" class="single_progress_bar">
                                                 <span>
                                                     <div>
-                                                        <label> <a href="<%=objeto.url_view_tramite%>"> <%= objeto.nombre_tramite %> </a> </label><br>
-                                                         Cod. trámite - <%= objeto.codigo_tramite_ge %>
+                                                        <label><u><a href="<%=objeto.url_view_tramite%>" class="enlBusq"> <%= objeto.nombre_tramite %> </a></u> </label>
+                                                         <h6><%= objeto.descripcion_tramite%></h6>
                                                     </div>
                                                 </span>
                                                 <br>
@@ -137,10 +137,10 @@
                                      </div>
                                      <div class="row breadcrumb">
                                         <ul class="nav nav-pills ">
-                                            <li role="presentation" class="btn-link">
+                                            <li role="presentation" class="btn-link bloq">
                                                 <a href="#resulBusq1" >( <%= organizacion.length %>) organizaciones encontradas</a>
                                             </li>
-                                            <li role="presentation" class="btn-link">
+                                            <li role="presentation" class="btn-link bloq">
                                                 <a href="#resulBusq2">( <%= tramite.length %>) trámites encontrados</a>
                                             </li>
                                         </ul>

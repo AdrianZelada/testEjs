@@ -28,154 +28,74 @@
                             </div>
                            
                             <br><hr>
-                            <div class="col-md-12">
-                                <div class="col-middle">
-                                    <hr>
-                                    <h4>Jerarquía ascendente</h4>
-
-                                        <div class="txtIzq">
-                                            <% 
-                                               for(var j=0; j < tramites.jerarquia.length; j++) {
-                                                var objeto = tramites.jerarquia[j];
-                                                %>
-                                            <div>
-                                                <!--h4> <b> <%= objeto.nombre_organizacion %> </b> - </h4-->
-                                                <b><a href="<%=objeto.url_organizacion%>"> <%= objeto.nombre_organizacion %></a></b>
-                                            </div>
-                                            <%
-                                                }
-                                            %>
-                                        </div>
-                                    
-                                </div>
-                            </div>
+                            
                         </div>
 
                         <div class="col-md-8 tab-content">
-                            <hr>
-                            <div class="txtIzq" id="seite1">
-                                <div class="form-group col-md-12 text-center">
-                                    <div class="form-group col-md-12">
-                                        <img alt="..." src=".png"/>
-                                    </div>
-                                    <div class="form-group col-md-12">                     
-                                        (logo)
-                                    </div>
-                                </div>
+                            
+                            <div class="txtIzq" >
+                                
                                 <div class="form-group col-md-12">                 
                                     <h5><label><%= tramites.nombre_tramite %></label></h5>
                                 </div>
                                 <hr>
                                 <div class="form-group col-md-12">
-                                  <label class="col-md-2 control-label">Descripción: </label>
-                                  <div class="col-md-10">                     
+                                  
+                                  <div class="col-md-12">                     
                                      <%= tramites.descripcion_tramite %>
                                   </div>
                                 </div>
+
                                 <hr>
-                                <div class="form-group col-md-12">
-                                  <label class="col-md-2 control-label">Dirección: </label>
-                                  <div class="col-md-10">                     
-                                       <p>--</p>
-                                  </div>
+                                <div class="form-group col-md-12"> 
+                                    <label class="col-md-2 control-label">Institución: </label>
+                                    <div class="col-md-10">                 
+                                        <h5><label><a href="<%=tramites.organizacion.url_view_organizacion%>" class="enlBusq"><%= tramites.organizacion.nombre_organizacion %></a></label></h5>
+                                    </div>
                                 </div>
                                 <hr>
+                                
                                 <div class="form-group col-md-12">
                                     <label class="col-md-2 control-label">Dirigido A: </label>
                                     <div class="col-md-10">
                                     <% 
-                                    for(var j=0; j < tramites.tramite_poblacion_objetos.length; j++) {
-                                        var objeto = tramites.tramite_poblacion_objetos[j];
+                                    for(var j=0; j < tramites.poblacion_objeto.length; j++) {
+                                        var objeto = tramites.poblacion_objeto[j];
                                     %>                                    
-                                    - <%= objeto.nombre_poblacion_obj %> - ( <%= objeto.id_poblacion_objeto %> )
+                                        <%= objeto %> 
                                     <br>
                                     <% } %>
                                     </div>
                                 </div>
-                                <hr>
-                                <div class="form-group col-md-12">
-                                    <label class="col-md-2 control-label">Costo y lugar de pago 1: </label>
-                                    <div class="col-md-10">                     
-                                        <p>--</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="form-group col-md-12">
-                                    <label class="col-md-2 control-label">Costo y lugar de pago 2: </label>
-                                    <div class="col-md-10">                     
-                                        <p>--</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="form-group col-md-12">
-                                    <label class="col-md-2 control-label">Vías de contacto institución: </label>
-                                     <div class="col-md-10">                     
-                                        <p>--</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="form-group col-md-12">
-                                    <label class="col-md-2 control-label">Horarios de atención: </label>
-                                    <div class="col-md-10">                     
-                                        <p>--</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="form-group col-md-12">
-                                    <label class="col-md-2 control-label">Duración del trámite: </label>
-                                    <div class="col-md-10">                     
-                                        <%= tramites.duracion %> 
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="form-group col-md-12">
-                                    <label class="col-md-2 control-label">Fecha de actualización: </label>
-                                    <div class="col-md-10">                     
-                                        <%= tramites.fecha_actualizacion %>
-                                    </div>
-                                </div>
+                               
                                 <hr><br>
                                 <div class="form-group col-md-12">                 
                                     <h5><label>REQUISITOS PARA REALIZAR EL TRAMITE</label></h5>
                                 </div>
                                 <hr>
-                                <p>(O:Original, C:Copia, CL:Copia Legalizada)</p>
-                                <div class="form-group col-md-12">
+                                 <div class="form-group col-md-12">
                                     
-                                    <div class="col-md-5">                     
-                                        <label>Requisitos</label>
-                                    </div>
-                                    <div class="col-md-4">                     
-                                        <label>Institución</label>
-                                    </div>
-                                    <div class="col-md-1">                     
-                                        <label>O</label>
-                                    </div>
-                                    <div class="col-md-1">                     
-                                        <label>C</label>
-                                    </div>
-                                    <div class="col-md-1">                     
-                                        <label>L</label>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-12">
+                                <% 
+                                    for(var j=0; j < tramites.requisitos.length; j++) {
+                                        var objeto = tramites.requisitos[j];
+                                        var papel ="Sin documento";
+
+                                        if(parseInt(objeto.papel_original)==1){ papel ="Documento original"; }
+                                        if(parseInt(objeto.papel_original)==1){ papel ="Documento en fotocopia"; }
+                                        if(parseInt(objeto.papel_original)==1){ papel ="Documento en fotocopia legalizada"; }
+                                        
+                                    %>  
                                     
-                                    <div class="col-md-5">                     
-                                        <p>--</p>
-                                    </div>
-                                    <div class="col-md-4">                     
-                                        <p>--</p>
-                                    </div>
-                                    <div class="col-md-1">                     
-                                        <p>--</p>
-                                    </div>
-                                    <div class="col-md-1">                     
-                                        <p>--</p>
-                                    </div>
-                                    <div class="col-md-1">                     
-                                        <p>--</p>
-                                    </div>
+                                        <div class="col-md-12">  <%= j+1%>                                
+                                            - <%= objeto.nombre_requisito %> <br>( <%= papel%> )
+                                        </div>
+                                        <hr>
+                                        <br>
+                                
+                                <% }%>
                                 </div>
+                                
+                               
                                 <hr><br>
                                 <div class="form-group col-md-12">                 
                                     <h5><label>INSTRUCCIONES PARA REALIZAR EL TRAMITE</label></h5>

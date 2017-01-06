@@ -1517,6 +1517,10 @@ body p {
     background-color: #6b6a6b;
     color: #fff;
 }
+.enlBusq{
+    font-size:18px; color: #000;
+}
+
 .bloq a{
     color: #fff;
 }

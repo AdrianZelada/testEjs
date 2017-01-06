@@ -32,8 +32,27 @@
                                 <div class="col-middle breadcrumb bloq">
                                     <hr>
                                     <h4 >Trámites ofrecidos </h4>
-                                    <p> Esta organización no cuenta con trámites por el momento</p>
-                                    <!-- aca va el codigo de tramites ofrecidos -->
+                                    
+                                    <div class="text-left">
+                                        <%  tramitesOfrecidos = organizacion.tramites;
+                                            if(tramitesOfrecidos.length !== 0){
+                                                for(var j=0; j < tramitesOfrecidos.length; j++){
+                                                    var objeto = tramitesOfrecidos[j];
+                                        %>
+                                        <div id="searchableProv" class="single_progress_bar">
+                                            <span>
+                                                <div>
+                                                    <h5> <b> <a href="<%=objeto.url_view_tramite%>"> <%= objeto.nombre_tramite %> </a></b> - </h5>
+                                                        
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <%      }
+                                            } else{
+                                        %>
+                                            <p> Esta organización no cuenta con trámites por el momento</p>
+                                        <%  } %>
+                                    </div>
                                     <hr>
                                 </div>
                             </div>

@@ -31,7 +31,7 @@
                                 <div class="col-middle breadcrumb bloq">
                                     <hr>
                                     <div class="small-text">
-                                        <h5><p>TRAMITES POR CATEGORÍAS</p></h5>
+                                        <h5 class="bloq"><p>TRAMITES POR CATEGORÍAS</p></h5>
                                     </div>
 
                                     <div class="txtIzq media text-left margart media-heading ">
@@ -39,11 +39,11 @@
                                                 for(var j=0; j < categorias.length; j++){
                                                     var objeto = categorias[j];
                                             %>
-                                            <div id="searchableProv" class="single_progress_bar">
+                                            <div id="searchableProv" class="">
                                                 <span>
                                                     <div>
                                                         
-                                                        <a href="<%= objeto.url_list_tramites %>"> <%= objeto.nombre_categoria_tramite %></a>
+                                                        <a href="<%= objeto.url_list_tramites %>" style="color:#fff; font-size:17px;"> <%= objeto.nombre_categoria_tramite %></a>
                                                     </div>
                                                     <br>
                                                 </span>
@@ -54,39 +54,42 @@
                                             <h4>Sin resultados</h4>
                                         <% } %>   
                                     </div>
-
+                                    <hr>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-8 tab-content">
+                        <div class="col-md-8">
 
-                            <div role="tabpanel" class="" id="seite1">
+                            <div  class="" id="seite1">
                   
                                     <div class="panel-body">
                                         <hr>
-                                        <div class="txtIzq media text-left margart media-heading ">
-                                            <header class="bloq">
-                                                <h4 class="text-muted">Contenidos de trámites por categoría - {{categoria}} </h4>
+                                        <div class="txtIzq  ">
+                                            <header class="">
+                                                <h4 class="text-muted breadcrumb">Contenidos de trámites por categoría  </h4>
                                             </header>
                                             <hr>
                                             <% if(tramites.length !== 0){
                                                     for(var j=0; j < tramites.length; j++){
                                                         var objeto = tramites[j];
                                                 %>
-                                                <div id="searchableProv" class="single_progress_bar">
+                                                <div id="" class="">
                                                     <span>
                                                         <div>
-                                                            <h3> <a href="<%=objeto.url_view_tramite%>" class="btn"> <%= objeto.nombre_tramite %> </a> </h3>
-                                                            <h5> <%= objeto.descripcion_tramite %> </h5>
-                                                            cod. trámite - <%= objeto.codigo_tramite_ge %>
+                                                            <h3> <u><a href="<%=objeto.url_view_tramite%>" class="enlBusq"> <%= objeto.nombre_tramite %> </a> </u></h3>
+                                                            <h6> <%= objeto.descripcion_tramite %> </h6>
+                                                            <h6>cod. trámite - <%= objeto.codigo_tramite_ge %></h6>
                                                         </div>
                                                         <br>
                                                     </span>
                                                 </div>
                                                 <%      
                                                         }
-                                                    } %>   
+                                                  }else{ %>
+                                                    <label> No se encuentran trámites registrados en esta categoría</label>
+                                                <% } %>
+
                                         </div>
                                         
                                     </div>
