@@ -1510,9 +1510,27 @@ body p {
 #tallModal .modal-body p { margin-bottom: 900px }
 
  /* -------------------------- nuevos css ----------------------------------------*/
+.bloq{
+    border-radius: 25px 25px 25px 25px;
+    -moz-border-radius: 25px 25px 25px 25px;
+    -webkit-border-radius: 25px 25px 25px 25px;
+    background-color: #6b6a6b;
+    color: #fff;
+}
+.enlBusq{
+    font-size:18px; color: #000;
+}
+
+.bloq a{
+    color: #fff;
+}
 
 .txtIzq{
     text-align: left;
+}
+
+.corregirTxt{
+    text-transform: capitalize;
 }
  .contenEntidOrgan{
     height:450px;
@@ -1548,12 +1566,6 @@ body p {
     font: 80% sans-serif;
 }
 
-.bloq{
-    padding-left: 10px;   font-weight: 700;
-    background-color: #f1f1f2;
-    COLOR: #354c6c;
-    font: 80% sans-serif;
-}
 
 .section-title,
 .entry-title {

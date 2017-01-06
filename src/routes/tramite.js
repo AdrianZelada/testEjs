@@ -35,7 +35,7 @@ module.exports = app => {
                 util.serverResponse(res,{
                     tramites:newTransc,
                     categorias:newCategories
-                },'')
+                },'pages/tramite')
             });
         })
     });
@@ -60,7 +60,7 @@ module.exports = app => {
                 };
                 util.serverResponse(res,{
                     tramites:transcBuild
-                },'')
+                },'pages/ficha_tramite')
             });
         });
 

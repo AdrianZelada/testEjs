@@ -1,78 +1,121 @@
-<div class="section">
-        <div class="container">
-            <div >
-                <div class="panel">
-                    <h3 class="title">DIRECCIÓN GENERAL DE MIGRACIÓN</h3>
-                </div>
+<div class="maginBod">        
+
+        <div class="container ">
+            <div class="row text-left">
+                <ol class="breadcrumb">
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="/tramites">Trámites</a></li>
+                    <li class="active">Ficha trámite</li>
+                </o>
             </div>
-            
-
             <div class="row">
-                <section id="features" class="feature-wrapper">
-                    <div class="container">
-                    
-                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 text-center animate-box">
-                            
-                                <div class="card card-member">
-                                            <div class="content">
-                                                <div class="">
-                                                    <img alt="..." class="" src="assets/img/segip.png"/>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        SITIO WEB          www.segip.gob.bo/
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    
-                                                    <p class="small-text">DESCRIPCIÓN: La Cédula de Identidad de Extranjero es un documento público, individual, único e intransferible que acredita la identificación de la persona extranjera con permanencia, temporal o definitiva vigente en el país, individualizándola del resto de personas extranjeras radicadas o que están de paso por el territorio nacional.
+                        <div class="col-md-4" >
+                            <!-- Blog Search Well -->
+                            <div class="ol-md-12">
+                           
+                                <h4>Buscar trámite o entidad</h4>
+                                <!-- buscador -->
+                                <div class="col-md-12" >
+                                    <div class="col-middle">
+                                        <form action="/buscar" method="get" >
 
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        DIRECCIÓN          
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        CORREO ELECTRÓNICO          lapaz@migracion.gob.bo
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        TELÉFONOS DE REFERENCIA          2110960
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        OFICIAL DE OPERACIONES Martín Nuñez Bellot
-                                                    </p>
-                                                </div>  
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        AEROPUERTO EL ALTO          Villa Bolivar - 2814441
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        REGIONAL CHARAÑA          Visviri (Chile) - 75273963
-                                                    </p>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                    <p class="small-text">
-                                                        REGIONAL DESAGUADERO          Puente Internacional - 71902966
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            <input type="text" name="busqueda" placeholder="Buscar Trámite u Organización" class="" style="color:#000; width:200px" autocomplete="off" required>
+                                            <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                                        </form>
+                                    </div>
                                 </div>
+
+                            </div>
+                           
+                            <br><hr>
                             
-                        </div><!-- end col-lg-6 -->
-                        
-                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                        </div>
+
+                        <div class="col-md-8 tab-content">
                             
-                        </div><!-- end col-lg-6 -->
-                    </div><!-- end container -->
-                </section><!-- end grey-wrapper -->
+                            <div class="txtIzq" >
+                                
+                                <div class="form-group col-md-12">                 
+                                    <h5><label><%= tramites.nombre_tramite %></label></h5>
+                                </div>
+                                <hr>
+                                <div class="form-group col-md-12">
+                                  
+                                  <div class="col-md-12">                     
+                                     <%= tramites.descripcion_tramite %>
+                                  </div>
+                                </div>
+
+                                <hr>
+                                <div class="form-group col-md-12"> 
+                                    <label class="col-md-2 control-label">Institución: </label>
+                                    <div class="col-md-10">                 
+                                        <h5><label><a href="<%=tramites.organizacion.url_view_organizacion%>" class="enlBusq"><%= tramites.organizacion.nombre_organizacion %></a></label></h5>
+                                    </div>
+                                </div>
+                                <hr>
+                                
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-2 control-label">Dirigido A: </label>
+                                    <div class="col-md-10">
+                                    <% 
+                                    for(var j=0; j < tramites.poblacion_objeto.length; j++) {
+                                        var objeto = tramites.poblacion_objeto[j];
+                                    %>                                    
+                                        <%= objeto %> 
+                                    <br>
+                                    <% } %>
+                                    </div>
+                                </div>
+                               
+                                <hr><br>
+                                <div class="form-group col-md-12">                 
+                                    <h5><label>REQUISITOS PARA REALIZAR EL TRAMITE</label></h5>
+                                </div>
+                                <hr>
+                                 <div class="form-group col-md-12">
+                                    
+                                <% 
+                                    for(var j=0; j < tramites.requisitos.length; j++) {
+                                        var objeto = tramites.requisitos[j];
+                                        var papel ="Sin documento";
+
+                                        if(parseInt(objeto.papel_original)==1){ papel ="Documento original"; }
+                                        if(parseInt(objeto.papel_original)==1){ papel ="Documento en fotocopia"; }
+                                        if(parseInt(objeto.papel_original)==1){ papel ="Documento en fotocopia legalizada"; }
+                                        
+                                    %>  
+                                    
+                                        <div class="col-md-12">  <%= j+1%>                                
+                                            - <%= objeto.nombre_requisito %> <br>( <%= papel%> )
+                                        </div>
+                                        <hr>
+                                        <br>
+                                
+                                <% }%>
+                                </div>
+                                
+                               
+                                <hr><br>
+                                <div class="form-group col-md-12">                 
+                                    <h5><label>INSTRUCCIONES PARA REALIZAR EL TRAMITE</label></h5>
+                                </div>
+                                <div class="form-group col-md-12">
+
+                                    <% 
+                                    for(var j=0; j < tramites.pasos.length; j++) {
+                                        var objeto = tramites.pasos[j];
+                                    %>                                    
+                                    <%= j+1 %>- <%= objeto.descripcion_paso %> 
+                                    <br>
+                                    <% } %>
+
+                                </div>
+                           </div>
+                           <br>
+                            <br>
+                        </div>       
             </div>
         </div>
-    </div>
+</div>
+<br><hr>

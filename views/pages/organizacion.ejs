@@ -1,0 +1,94 @@
+    <div class="maginBod ">        
+
+        <div class="container ">
+            <div class="row text-left">
+                <ol class="breadcrumb">
+                    <li><a href="/">Inicio</a></li>
+                    <li class="active">Organización</li>
+                </o>
+            </div>
+            <div class="row">
+                        <div class="col-md-4 " >
+                             <!-- Blog Search Well -->
+                            <div class="ol-md-12">
+                            <hr>
+                                <h4>Buscar trámite o entidad</h4>
+                                <!-- buscador -->
+                                <div class="col-md-12" >
+                                    <div class="col-middle">
+                                        <form action="/buscar" method="get" >
+
+                                            <input type="text" name="busqueda" placeholder="Buscar Trámite u Organización" class="" style="color:#000; width:200px" autocomplete="off" required>
+                                            <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- /.input-group -->
+                            </div>
+                            <br><hr>
+                            <div class="col-md-12">
+                                <div class="col-middle breadcrumb bloq">
+                                    <hr>
+                                    <h4>Poderes del estado</h4>
+
+                                        <div class="txtIzq">
+                                            <div class="txtIzq">
+                                            <% 
+                                               var cantList = 4;
+                                               for(var j=0; j < organos.length; j++) {
+                                                var objeto = organos[j];
+                                                %>
+                                            <div>
+                                                <b><%= j+1%>.- <a href="<%=objeto.url_list_organizacion%>"> <%= objeto.nombre_organizacion %></a></b>
+                                            </div>
+                                            <%
+                                                }
+                                            %>
+                                        </div>
+                                            <!--p>No se encontraron organizaciones.</p-->
+                                        <hr>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 tab-content">
+
+                            <div role="tabpanel" class="" id="seite1">
+                  
+                                    <div class="panel-body">
+                                        
+                                        <!-- Comment -->
+                                        <div class="text-left">
+                                            <% if(organizacion.length !== 0){
+                                                for(var j=0; j < organizacion.length; j++){
+                                                    var objeto = organizacion[j];
+                                            %>
+                                            <div id="searchableProv" class="single_progress_bar">
+                                                <span>
+                                                    <div>
+                                                        <h5> <b> <%= objeto.nombre_organizacion %> </b> - </h5>
+                                                        <a href="<%=objeto.url_view_organizacion%>"> <%= objeto.nombre_organizacion %></a>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <%      
+                                                    }
+                                                } else{%>
+                                            <h4>Sin resultados</h4>
+                                            <% } %>
+                                        </div>
+                                    </div>
+
+
+                           </div>
+                           <br>
+                           
+                            
+                        </div>       
+            </div>
+        </div>
+    </div>
+    <br><hr>
+    

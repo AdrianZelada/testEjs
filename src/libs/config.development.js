@@ -23,6 +23,6 @@ module.exports = {
   jwtSecret: "JuPa1986",
   jwtSession: { session: false },
   carpetaInstalacion: "",
-  jsonResponse:true
+  jsonResponse:false
 };
 

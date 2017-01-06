@@ -1,7 +1,12 @@
     <div class="maginBod">        
 
-
         <div class="container ">
+            <div class="row text-left">
+                <ol class="breadcrumb">
+                    <li><a href="/">Inicio</a></li>
+                    <li class="active">Busqueda</li>
+                </o>
+            </div>
             <div class="row">
                         <div class="col-md-4" >
                              <!-- Blog Search Well -->
@@ -13,16 +18,16 @@
                                     <div class="col-middle">
                                         <form action="/buscar" method="get" >
 
-                                            <input type="text" name="busqueda" placeholder="Busque Tramite o Entidad" class="" style="color:#000; width:200px" required>
+                                            <input type="text" name="busqueda" placeholder="Buscar Trámite u Organización" class="" style="color:#000; width:200px" autocomplete="off" required>
                                             <button type="submit" class="btn"><i class="fa fa-search"></i></button>
                                         </form>
                                     </div>
                                 </div>
                                 <!-- /.input-group -->
                             </div>
-                            <br><hr>
-                            <div class="col-md-12">
-                                <div class="col-middle">
+                            
+                            <!--div class="col-md-12">
+                                <div class="col-middle breadcrumb bloq">
 
                                     <h4>Jerarquía organización</h4>
 
@@ -33,7 +38,6 @@
                                                 var objeto = jerarquia_organizacion[j];
                                                 %>
                                             <div>
-                                                <!--h4> <b> <%= objeto.nombre_organizacion %> </b> - </h4-->
                                                 <b><a href="<%=objeto.url_view_organizacion%>"> <%= objeto.nombre_organizacion %></a></b>
                                             </div>
                                             <%
@@ -42,14 +46,24 @@
                                         </div>
 
                                 </div>
-                            </div>
+                            </div-->
                         </div>
 
                         <div class="col-md-8 tab-content">
-
-                            <div role="tabpanel" class="" id="seite1">
+                            <div class="row breadcrumb">
+                                <ul class="nav nav-pills ">
+                                    <li role="presentation" class="btn-link bloq">
+                                        <a href="#resulBusq1" >( <%= organizacion.length %>) organizaciones encontradas</a>
+                                    </li>
+                                    <li role="presentation" class="btn-link bloq">
+                                        <a href="#resulBusq2">( <%= tramite.length %>) trámites encontrados</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div role="tabpanel" class="" id="resulBusq1">
                                 
-                                        <h1 class="text-muted text-center"><p> Resultados de búsqueda de entidades </p></h1>
+                                <hr>
+                                <h5 class="text-left"><u> Resultados de la búsqueda de entidades </u></h5>
                   
                                     <div class="panel-body">
                                         
@@ -62,27 +76,38 @@
                                             <div id="searchableProv" class="single_progress_bar">
                                                 <span>
                                                     <div>
-                                                        <h5> <b> <%= objeto.nombre_organizacion %> </b> - </h5>
-                                                        <a href="<%=objeto.url_view_organizacion%>"> <%= objeto.nombre_organizacion %></a>
+                                                        <label><u> <a href="<%=objeto.url_view_organizacion%>" class="enlBusq"> <%= objeto.nombre_organizacion %> </a></u> </label>
+                                                         <h6><%= objeto.nombre_organizacion %></h6>
                                                     </div>
                                                 </span>
                                             </div>
-                                            <%      if(j === cantList){
+                                            <%      /*if(j === cantList){
                                                             break;
-                                                        }
+                                                      }*/
                                                     }
                                                 } else{%>
                                             <h4>Sin resultados</h4>
                                             <% } %>
                                         </div>
-                                     </div>
+                                        
+                                        <!--div class="text-right">
+
+                                            <a href="<%= organizacion.url_view_organizacion%>"> 
+                                            <% 
+                                                cantList =  organizacion.length %> 
+                                                Vér más
+                                            </a>
+                                        </div-->
+                                        <hr>
+                                    </div>
 
 
                            </div>
                            <br>
-                           <div role="tabpanel" class="" id="seite1">
+
+                           <div role="tabpanel" class="" id="resulBusq2">
                                 
-                                <h1 class="text-muted text-center"><p> Resultados de búsqueda de trámites </p></h1>
+                                <h5 class="text-left"><u> Resultados de la búsqueda de trámites </u></h5>
 
                                     <div class="panel-body">
                                         
@@ -96,14 +121,13 @@
                                             <div id="searchableProv" class="single_progress_bar">
                                                 <span>
                                                     <div>
-                                                        <h5> <b> <%= objeto.nombre_tramite %> </b> - </h5>
-                                                        <a href="<%=objeto.url_view_tramite%>"> <%= objeto.codigo_tramite_ge %></a>
+                                                        <label><u><a href="<%=objeto.url_view_tramite%>" class="enlBusq"> <%= objeto.nombre_tramite %> </a></u> </label>
+                                                         <h6><%= objeto.descripcion_tramite%></h6>
                                                     </div>
                                                 </span>
+                                                <br>
                                             </div>
-                                            <%      if(j === cantList){
-                                                            break;
-                                                        }
+                                            <%      
                                                     }
                                                 } else{%>
                                             <h4>Sin resultados</h4>
@@ -111,6 +135,18 @@
                                             
                                         </div>
                                      </div>
+                                     <div class="row breadcrumb">
+                                        <ul class="nav nav-pills ">
+                                            <li role="presentation" class="btn-link bloq">
+                                                <a href="#resulBusq1" >( <%= organizacion.length %>) organizaciones encontradas</a>
+                                            </li>
+                                            <li role="presentation" class="btn-link bloq">
+                                                <a href="#resulBusq2">( <%= tramite.length %>) trámites encontrados</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                     
+                                    <hr>
                             </div>
                             <br>
                         </div>       
