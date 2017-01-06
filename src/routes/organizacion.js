@@ -25,7 +25,7 @@ module.exports = app => {
                     // path:req.protocol + '://' + req.get('host'),
                     // pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
                     // organizacion:organizacionData,
-                    organizacion:buildOrganizacion(organizacionData),
+                    organizacion:buildOrganizacion(organizacionData,req),
                     jerarquia:hierarchy
                 },'pages/vist')
             });
@@ -87,7 +87,7 @@ module.exports = app => {
     //     });
     // })
 
-    function buildOrganizacion(array){
+    function buildOrganizacion(array,req){
         var org=array[0];
 
 
@@ -106,8 +106,7 @@ module.exports = app => {
             tipo_organizacion:{
                 nombre_tipo_organizacion: org.tipo_organizacion.nombre_tipo_organizacion,
                 codigo_tipo_organizacion: org.tipo_organizacion.codigo_tipo_organizacion
-            },
-            tramites:org.tramites
+            }
         };
 
         orgReturn.campo_organizacion=[];
@@ -122,18 +121,36 @@ module.exports = app => {
             )
         });
 
-
-        // var valorDatos=array[0].valor_campo_organizacions.map(function (orgData) {
-        //
-        //
-        //     org=orgData.valor_campo_organizacion.JSON();
-        //
+        orgReturn.tramites=[]
+        org.tramites.forEach((tramite)=>{
+            // let transcData=tramite.toJSON();
+            orgReturn.tramites.push(
+            //     {
+            //         nombre_tramite:transcData.nombre_tramite,
+            //         codigo_tramite_ge:transcData.codigo_tramite_ge,
+            //         codigo_tramite:transcData.id_tramite,
+            //         descripcion_tramite:transcData.descripcion_tramite,
+            //         url_view_tramite:req.protocol + '://' + req.get('host') +'/tramite/'+transcData.id_tramite
+            //     }
+                {
+                    nombre_tramite:tramite.nombre_tramite,
+                    codigo_tramite_ge:tramite.codigo_tramite_ge,
+                    codigo_tramite:tramite.id_tramite,
+                    descripcion_tramite:tramite.descripcion_tramite,
+                    url_view_tramite:req.protocol + '://' + req.get('host') +'/tramite/'+tramite.id_tramite
+                }
+            )
+        });
+        // orgReturn.tramites=tramites.map((transcData)=>{
+        //     // var transcData=tramite.toJSON();
         //     return{
-        //         valor_campo_organizacion:org.valor_campo_organizacion,
-        //         tipo_campo_organizacion:org.tipo_campo_organizacion
+        //         nombre_tramite:transcData.nombre_tramite,
+        //         codigo_tramite_ge:transcData.codigo_tramite_ge,
+        //         codigo_tramite:transcData.id_tramite,
+        //         descripcion_tramite:transcData.descripcion_tramite,
+        //         url_view_tramite:req.protocol + '://' + req.get('host') +'/tramite/'+transcData.id_tramite
         //     }
         // });
-        // array[0].valor_campo_organizacions=org;
         return orgReturn;
     }
 };
