@@ -20,12 +20,12 @@ module.exports = app => {
 
     app.route('/organizacion/:tipoOrganizacion/:idOrganizacion').get((req,res) =>{
         organizacion.getOrganizacion(req.params.tipoOrganizacion,req.params.idOrganizacion).then(function (organizacionData) {
-            organizacion.getHierarchy(req.params.idOrganizacion).then((hierarchy)=>{
+            organizacion.getHierarchy(req.params.idOrganizacion,req).then((hierarchy)=>{
                 util.serverResponse(res,{
-                    path:req.protocol + '://' + req.get('host'),
-                    pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-                    organizacion:organizacionData,
-                    // organizacion:buildOrganizacion(organizacionData),
+                    // path:req.protocol + '://' + req.get('host'),
+                    // pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
+                    // organizacion:organizacionData,
+                    organizacion:buildOrganizacion(organizacionData),
                     jerarquia:hierarchy
                 },'pages/ficha_organizacion')
             });
@@ -88,23 +88,52 @@ module.exports = app => {
     // })
 
     function buildOrganizacion(array){
-        console.info(array)
-        console.info('-------->')
-        console.info(array[0].codigo_organizacion_ge)
-        console.info('----------------->')
-        console.info(array[0].valor_campo_organizacions )
-        console.info('--------------------------->')
-        var valorDatos=array[0].valor_campo_organizacions.map(function (orgData) {
-            return{
-                valor_campo_organizacion:orgData.valor_campo_organizacion,
-                tipo_campo_organizacion:orgData.tipo_campo_organizacion
+        var org=array[0];
+
+
+        var orgReturn={
+            codigo_organizacion: org.codigo_organizacion,
+            nombre_organizacion: org.nombre_organizacion,
+            codigo_organizacion_ge: org.codigo_organizacion_ge,
+            codigo_organizacion_superior_ge:org.codigo_organizacion_superior_ge,
+            valor_campo_organizacion:org.valor_campo_organizacion,
+            mision: org.mision,
+            vision: org.vision,
+            codigo_sigma: org.codigo_sigma,
+            sigla_organizacion: org.sigla_organizacion,
+            autoridad: org.autoridad,
+            logo: org.logo,
+            tipo_organizacion:{
+                nombre_tipo_organizacion: org.tipo_organizacion.nombre_tipo_organizacion,
+                codigo_tipo_organizacion: org.tipo_organizacion.codigo_tipo_organizacion
             }
+        };
+
+        orgReturn.campo_organizacion=[];
+
+        org.valor_campo_organizacions.forEach((val)=>{
+            let tipoCampo=val.tipo_campo_organizacion.toJSON();
+
+            orgReturn.campo_organizacion.push(
+                {
+                    valor_campo:val.valor_campo_organizacion,
+                    nombre_campo:tipoCampo.tipo_campo_or
+                }
+            )
         });
 
-        console.info(valorDatos)
 
-        array[0].valor_campo_organizacions=valorDatos;
-        console.info(array[0])
-        return array;
+        // var valorDatos=array[0].valor_campo_organizacions.map(function (orgData) {
+        //
+        //
+        //     org=orgData.valor_campo_organizacion.JSON();
+        //
+        //     return{
+        //         valor_campo_organizacion:org.valor_campo_organizacion,
+        //         tipo_campo_organizacion:org.tipo_campo_organizacion
+        //     }
+        // });
+        // array[0].valor_campo_organizacions=org;
+        return orgReturn;
     }
 };
