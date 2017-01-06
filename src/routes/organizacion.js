@@ -42,6 +42,7 @@ module.exports = app => {
 
                     let organosMap = organos.map((organizacionItem)=>{
                        return{
+                           url_list_organizacion: req.protocol + '://' + req.get('host') + '/organizaciones/' + organizacionItem.id_organizacion,
                            url_view_organizacion: req.protocol + '://' + req.get('host') + '/organizacion/' + organizacionItem.tipo_organizacion.url_tipo_organizacion + '/' + organizacionItem.id_organizacion,
                            nombre_organizacion: organizacionItem.nombre_organizacion,
                            codigo_organizacion: organizacionItem.id_organizacion,
