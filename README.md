@@ -1,4 +1,4 @@
-## Portal Único de Información del Estado, Trámites e Instituciones, GOB.BO
+# Portal Único de Información del Estado, Trámites e Instituciones, GOB.BO
 
 Las tecnologias utilizadas son:
 
@@ -7,6 +7,9 @@ Las tecnologias utilizadas son:
 - **ApiDoc** documentacion del apiRest ejecutar como npm run apidoc
 - **Babel** como compilador de ecma6 a ecma 5
 - **ejs** como motor de plantillas
+
+Para la base de datos es necesario contar con:
+- **Postgresql** para el manejo de la base de datos, se recomienda usar la 9.6.1. o superior.
 
 ## Archivos de configuración
 

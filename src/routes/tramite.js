@@ -1,6 +1,6 @@
 import sequelizeHandlers from "sequelize-handlers";
 import _ from "lodash"
-import util from '../../src/libs/useful.js';
+import useful from '../../src/libs/useful.js';
 module.exports = app => {
   const tramite = app.src.db.models.tramite;
   const categoria_tramite = app.src.db.models.categoria_tramite;
@@ -14,7 +14,7 @@ module.exports = app => {
                 var newCategories=
                     resultCate.map((category)=> {
                         return{
-                            url_list_tramites:req.protocol + '://' + req.get('host') +'/tramites/'+category.id_categoria_tramite+'/'+category.url_categoria_tramite,
+                            url_list_tramites:useful.urlBuildListCategoria(req,category),
                             nombre_categoria_tramite: category.nombre_categoria_tramite,
                             codigo_categoria_tramite: category.codigo_categoria_tramite,
                             logo_categoria_tramite: category.logo_categoria_tramite,
@@ -29,13 +29,13 @@ module.exports = app => {
                             codigo_tramite_ge:transcData.codigo_tramite_ge,
                             codigo_tramite:transcData.id_tramite,
                             descripcion_tramite:transcData.descripcion_tramite,
-                            url_view_tramite:req.protocol + '://' + req.get('host') +'/tramite/'+transcData.id_tramite
+                            url_view_tramite:useful.urlBuildViewTramite(req,transcData)
                         }
                     });
-                util.serverResponse(res,{
+                useful.serverResponse(res,{
                     tramites:newTransc,
                     categorias:newCategories
-                },'pages/tramite')
+                },'pages/tramite',req)
             });
         })
     });
@@ -58,9 +58,9 @@ module.exports = app => {
                     poblacion_objeto:buildPoblacion(transc[0].tramite_poblacion_objetos,'poblacion_objeto'),
                     organizacion:buildOrganizacion(transc[0].organizacion)
                 };
-                util.serverResponse(res,{
+                useful.serverResponse(res,{
                     tramites:transcBuild
-                },'pages/ficha_tramite')
+                },'pages/ficha_tramite',req)
             });
         });
 
@@ -83,8 +83,8 @@ module.exports = app => {
 
         function buildOrganizacion(organizacionItem) {
             return{
-                url_list_organizacion:req.protocol + '://' + req.get('host') +'/organizaciones/'+organizacionItem.id_organizacion,
-                url_view_organizacion:req.protocol + '://' + req.get('host') +'/organizacion/'+organizacionItem.tipo_organizacion.url_tipo_organizacion+'/'+organizacionItem.id_organizacion,
+                url_list_organizacion:useful.urlBuildListOrganizacion(req,organizacionItem),
+                url_view_organizacion:useful.urlBuildViewOrganizacion(req,organizacionItem),
                 nombre_organizacion:organizacionItem.nombre_organizacion,
                 codigo_organizacion:organizacionItem.id_organizacion,
                 sigla_organizacion:organizacionItem.sigla_organizacion,
@@ -102,7 +102,7 @@ module.exports = app => {
                     papel_fotocopia:transcData.papel_fotocopia,
                     papel_fotocopia_legalizada:transcData.papel_fotocopia_legalizada,
                 };
-                required.url_view_tramite = transcData.id_tramite_requisito ? req.protocol + '://' + req.get('host') +'/tramite/'+transcData.id_tramite_requisito : transcData.id_tramite_requisito,
+                required.url_view_tramite = transcData.id_tramite_requisito ? useful.urlBuildViewTramite(req,transcData) : transcData.id_tramite_requisito;
 
                 newRequisito.push(required);
             });

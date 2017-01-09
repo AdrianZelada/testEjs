@@ -3,7 +3,8 @@ import multer from 'multer';
 import xlstojson from "xls-to-json-lc";
 import xlsxtojson from "xlsx-to-json-lc";
 import q from 'q';
-import util from '../../src/libs/useful.js';
+import os from 'os';
+import useful from '../../src/libs/useful.js';
 module.exports = app => {
     const dpa = app.src.db.models.dpa;
     const tipo_dpa = app.src.db.models.tipos_dpa;
@@ -18,6 +19,8 @@ module.exports = app => {
 
     app.route('/')
         .get((req,res)=>{
+
+            console.log(os.hostname());
             res.render('pages/inicio', {
 
             });
@@ -43,7 +46,7 @@ module.exports = app => {
                     organizacion.findJerarquia(2,1).then((jerarquiaData)=>{
                         var newResult=resultOrg.map((organizacionItem)=>{
                             return {
-                                url_view_organizacion:req.protocol + '://' + req.get('host') +'/organizacion/'+organizacionItem.tipo_organizacion.url_tipo_organizacion+'/'+organizacionItem.id_organizacion,
+                                url_view_organizacion:useful.urlBuildViewOrganizacion(req,organizacionItem),
                                 nombre_organizacion:organizacionItem.nombre_organizacion,
                                 codigo_organizacion:organizacionItem.id_organizacion,
                                 sigla_organizacion:organizacionItem.sigla_organizacion,
@@ -58,17 +61,14 @@ module.exports = app => {
                                     codigo_tramite_ge:transcData.codigo_tramite_ge,
                                     codigo_tramite:transcData.id_tramite,
                                     descripcion_tramite:transcData.descripcion_tramite,
-                                    url_view_tramite:req.protocol + '://' + req.get('host') +'/tramite/'+transcData.id_tramite
+                                    url_view_tramite:useful.urlBuildViewTramite(req,transcData)
                                 }
                             });
-                        util.serverResponse(res,{
-                            path:req.protocol + '://' + req.get('host'),
-                            pathOrganizacion:req.protocol + '://' + req.get('host') +'/organizacion',
-                            // pathJerarquia:req.protocol + '://' + req.get('host') +'/organizacion/jerarquia',
+                        useful.serverResponse(res,{
                             organizacion:newResult,
                             jerarquia_organizacion:jerarquiaData,
                             tramite:newTransc
-                        },'pages/busqueda');
+                        },'pages/busqueda',req);
                     });
 
                 });

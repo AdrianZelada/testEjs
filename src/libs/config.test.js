@@ -20,5 +20,5 @@ module.exports = {
   //configuracion con jwt poner una palabra secreta segura
   jwtSecret: "JuPa1986",
   jwtSession: { session: false },
-    jsonResponse:true
+  jsonResponse:false
 };
