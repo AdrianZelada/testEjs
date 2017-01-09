@@ -126,10 +126,15 @@
                                 <% 
                                     if(organizacion.campo_organizacion.length !== 0){
                                         for(var j=0; j < organizacion.campo_organizacion.length; j++) {
-                                             var objeto = organizacion.campo_organizacion[j];   
+                                            var objeto = organizacion.campo_organizacion[j];   
+                                            var cadena = objeto.nombre_campo.replace(/_/," ");
+                                            if(/telefono/.test(cadena)){ cadena = cadena.replace("telefono", "Teléfono"); }
+                                            if(/direccion/.test(cadena)){ cadena = cadena.replace("direccion", "Dirección"); }
+                                            if(/pagina/.test(cadena)){ cadena = cadena.replace("pagina", "Página"); }
+                                             
                                 %> 
                                 <div class="form-group col-md-12 corregirTxt">
-                                    <b class="col-md-4"><%= objeto.nombre_campo.replace(/_/," ") %>: </b>   
+                                    <b class="col-md-4"><%= cadena %>: </b>   
                                     <div class="col-md-7">            
                                         <%= objeto.valor_campo %>
                                     </div>
@@ -155,11 +160,3 @@
 </div>
 <br><hr>
 
-<script type="text/javascript">
-    function textoTilde(cadena){
-        var patron = ["Telefono","Direccion", "Pagina"],
-
-        nuevaCadena = if(cadena === "Telefono")? cadena.replace(patron, nuevoValor);
-        return nuevaCadena;
-    }
-</script>
