@@ -1517,16 +1517,23 @@ body p {
     background-color: #6b6a6b;
     color: #fff;
 }
+
+.fondoBlanco{
+    background-color: #fff;
+}
 .enlBusq{
-    font-size:18px; color: #000;
+    font-size:16px; color: #000;
+    font-family: sans-serif ;
 }
 
 .bloq a{
     color: #fff;
+    font-family: sans-serif ;
 }
 
 .txtIzq{
     text-align: left;
+    font-family: sans-serif ;
 }
 
 .corregirTxt{

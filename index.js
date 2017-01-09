@@ -3,7 +3,6 @@ import express from 'express';
 import consign from 'consign';
 // import cons from './src/console'
 // cons()
-
 const app = express();
 
 // var console = process.console;
@@ -26,4 +25,6 @@ consign()
   .then('src/libs/boot.js')
   .into(app);
 
+
 module.exports=app;
+// cons()

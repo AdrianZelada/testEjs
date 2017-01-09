@@ -3,13 +3,13 @@
 
         <div class="container ">
             <div class="row text-left">
-                <ol class="breadcrumb">
-                    <li><a href="/">Inicio</a></li>
-                    <li class="active">Trámite</li>
+                <ol class="breadcrumb fondoBlanco">
+                    <li class="btn-link"><a href="/">Inicio</a></li>
+                    <li class="active">Trámites</li>
                 </o>
             </div>
             <div class="row">
-                        <div class="col-md-4" >
+                        <div class="col-md-4 bloq" >
                              <!-- Blog Search Well -->
                             <div class="ol-md-12">
                             <hr>
@@ -20,7 +20,7 @@
                                         <form action="/buscar" method="get" >
 
                                             <input type="text" name="busqueda" placeholder="Buscar Trámite u Organización" class="" style="color:#000; width:180px" autocomplete="off" required>
-                                            <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+                                            <button type="submit" class="btn" style="background-color: #1C1C1C;"><i class="fa fa-search"></i></button>
                                         </form>
                                     </div>
                                 </div>
@@ -28,7 +28,7 @@
                             </div>
                             <br><hr>
                             <div class="col-md-12">
-                                <div class="col-middle breadcrumb bloq">
+                                <div class="col-middle">
                                     <hr>
                                     <div class="small-text">
                                         <h5 class="bloq"><p>TRAMITES POR CATEGORÍAS</p></h5>
@@ -42,7 +42,7 @@
                                             <div id="searchableProv" class="">
                                                 <span>
                                                     <div>
-                                                        <%= j+1 %>.- 
+                                                        <i class="fa fa-copy"></i>  &nbsp;
                                                         <a href="<%= objeto.url_list_tramites %>" style="color:#fff; font-size:17px;"> <%= objeto.nombre_categoria_tramite %></a>
                                                     </div>
                                                     <br>
@@ -60,16 +60,13 @@
                         </div>
 
                         <div class="col-md-8">
-
-                            <div  class="" id="seite1">
-                  
+                            <div  class="" id="seite1">                  
                                     <div class="panel-body">
-                                        <hr>
                                         <div class="txtIzq  ">
                                             <header class="">
                                                 <h4 class="text-muted breadcrumb">Contenidos de trámites por categoría  </h4>
                                             </header>
-                                            <hr>
+                                            
                                             <% if(tramites.length !== 0){
                                                     for(var j=0; j < tramites.length; j++){
                                                         var objeto = tramites[j];
@@ -77,9 +74,9 @@
                                                 <div id="" class="">
                                                     <span>
                                                         <div>
-                                                            <h3> <u><a href="<%=objeto.url_view_tramite%>" class="enlBusq"> <%= objeto.nombre_tramite %> </a> </u></h3>
-                                                            <h6> <%= objeto.descripcion_tramite %> </h6>
-                                                            <h6>cod. trámite - <%= objeto.codigo_tramite_ge %></h6>
+                                                            <h3> <u><a href="<%=objeto.url_view_tramite%>" class="enlBusq"> <%= objeto.nombre_tramite %> </a> </u><i class="fa fa-angle-down"></i></h3>
+                                                            <%= objeto.descripcion_tramite %> </br>
+                                                            cod. trámite - <%= objeto.codigo_tramite_ge %></br>
                                                         </div>
                                                         <br>
                                                     </span>
@@ -87,7 +84,7 @@
                                                 <%      
                                                         }
                                                   }else{ %>
-                                                    <label> No se encuentran trámites registrados en esta categoría</label>
+                                                    <b> No se encuentran trámites registrados en esta categoría</b>
                                                 <% } %>
 
                                         </div>
