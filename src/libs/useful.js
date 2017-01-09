@@ -15,18 +15,23 @@ module.exports={
     },
 
     urlBuildViewOrganizacion : (req,organizacionItem) => {
-        return  req.protocol + '://' + req.get('host') + '/organizacion/' + organizacionItem.tipo_organizacion.url_tipo_organizacion + '/' + organizacionItem.id_organizacion
+        let isJson=req.query.type=='json'?'?type=json':'';
+        // return  req.protocol + '://' + req.get('host') + '/organizacion/' + organizacionItem.tipo_organizacion.url_tipo_organizacion + '/' + organizacionItem.id_organizacion
+        return  req.protocol + '://' + req.get('host') + '/organizacion/' + organizacionItem.url_organizacion + '/' + organizacionItem.id_organizacion+isJson
     },
 
     urlBuildListOrganizacion : (req,organizacionItem) => {
-        return req.protocol + '://' + req.get('host') + '/organizaciones/' + organizacionItem.id_organizacion
+        let isJson=req.query.type=='json'?'?type=json':'';
+        return req.protocol + '://' + req.get('host') + '/organizaciones/' + organizacionItem.id_organizacion+isJson
     },
 
-    urlBuildViewTramite :  (req, transcData) => {
-        return req.protocol + '://' + req.get('host') +'/tramite/'+transcData.id_tramite
+    urlBuildViewTramite :  (req, transcData,key='id_tramite') => {
+        let isJson=req.query.type=='json'?'?type=json':'';
+        return req.protocol + '://' + req.get('host') +'/tramite/'+transcData[key]+isJson
     },
 
     urlBuildListCategoria: (req, category) => {
-        return req.protocol + '://' + req.get('host') +'/tramites/'+category.id_categoria_tramite+'/'+category.url_categoria_tramite
+        let isJson=req.query.type=='json'?'?type=json':'';
+        return req.protocol + '://' + req.get('host') +'/tramites/'+category.id_categoria_tramite+'/'+category.url_categoria_tramite+isJson
     }
 };

@@ -27,28 +27,6 @@
                                 <!-- /.input-group -->
                                 <br>
                             </div>
-                            
-                            <!--div class="col-md-12">
-                                <div class="col-middle">
-
-                                    <h4>Jerarquía organización</h4>
-
-                                        <div class="txtIzq">
-                                            <% 
-                                               var cantList = 4;
-                                               for(var j=0; j < jerarquia_organizacion.length; j++) {
-                                                var objeto = jerarquia_organizacion[j];
-                                                %>
-                                            <div>
-                                                <b><a href="<%=objeto.url_view_organizacion%>"> <%= objeto.nombre_organizacion %></a></b>
-                                            </div>
-                                            <%
-                                                }
-                                            %>
-                                        </div>
-
-                                </div>
-                            </div-->
                         </div>
 
                         <div class="col-md-8 tab-content">
@@ -58,7 +36,7 @@
                                         <a href="#resulBusq1" >( <%= organizaciones.length %>) organizaciones encontradas</a>
                                     </li>
                                     <li role="presentation" class="btn-link bloq">
-                                        <a href="#resulBusq2">( <%= tramite.length %>) trámites encontrados</a>
+                                        <a href="#resulBusq2">( <%= tramites.length %>) trámites encontrados</a>
                                     </li>
                                 </ul>
                             </div>
@@ -73,7 +51,7 @@
                                         <div class="text-left">
                                             <% if(organizaciones.length !== 0){
                                                 for(var j=0; j < organizaciones.length; j++){
-                                                    var objeto = organizacion[j];
+                                                    var objeto = organizaciones[j];
                                             %>
                                             <div id="searchableProv" class="single_progress_bar">
                                                 <span>
@@ -84,23 +62,12 @@
                                                     </div>
                                                 </span>
                                             </div>
-                                            <%      /*if(j === cantList){
-                                                            break;
-                                                      }*/
-                                                    }
+                                            <%
+                                            }
                                                 } else{%>
                                             <h5>Sin resultados</h5>
                                             <% } %>
                                         </div>
-                                        
-                                        <!--div class="text-right">
-
-                                            <a href="<%= organizacion.url_view_organizacion%>"> 
-                                            <% 
-                                                cantList =  organizacion.length %> 
-                                                Vér más
-                                            </a>
-                                        </div-->
                                         <hr>
                                     </div>
 
@@ -119,7 +86,7 @@
                                             <% 
                                             if(tramites.length != 0){
                                               for(var j=0; j < tramites.length; j++){
-                                                var objeto = tramite[j];
+                                                var objeto = tramites[j];
                                             %>
                                             <div id="searchableProv" class="single_progress_bar">
                                                 <span>

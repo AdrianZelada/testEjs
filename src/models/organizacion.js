@@ -3,6 +3,8 @@
  */
 
 import q from 'q';
+import useful from '../../src/libs/useful.js';
+
 
 module.exports = (sequelize, DataTypes) => {
     const organizacion = sequelize.define("organizacion", {
@@ -124,7 +126,7 @@ module.exports = (sequelize, DataTypes) => {
                 return _buildJoinOrganization(where)
             },
 
-            getOrganizacion:(urlType,idOrg)=>{
+            getOrganizacion:(urlType=1,idOrg)=>{
                 return _buildJoinOrganization({
                     id_organizacion:idOrg,
                 },{
@@ -142,7 +144,7 @@ module.exports = (sequelize, DataTypes) => {
                             codigo_organizacion: org.codigo_organizacion,
                             nombre_organizacion: org.nombre_organizacion,
                             codigo_organizacion_ge: org.codigo_organizacion_ge,
-                            url_view_organizacion:req.protocol + '://' + req.get('host') +'/organizacion/'+org.tipo_organizacion.url_tipo_organizacion+'/'+org.id_organizacion,
+                            url_view_organizacion:useful.urlBuildViewOrganizacion(req,org)
                         }
                     }));
                 });
