@@ -89,6 +89,8 @@ module.exports = app => {
                 codigo_organizacion:organizacionItem.id_organizacion,
                 sigla_organizacion:organizacionItem.sigla_organizacion,
                 codigo_sigma:organizacionItem.codigo_sigma,
+                mision:organizacionItem.mision,
+                vision:organizacionItem.vision,
             }
         }
         function buildRequisito(array) {
