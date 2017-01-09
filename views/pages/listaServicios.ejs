@@ -1,0 +1,30 @@
+    <div class="maginBod ">        
+        <div class="container ">
+            <div class="panel-body">
+                    <div class="txtIzq  ">
+                        <header class="">
+                            <h4 class="text-muted breadcrumb">Lista de  Servicios (json) </h4>
+                        </header>
+                        <% if(tramites.length !== 0){
+                            for(var j=0; j < tramites.length; j++){
+                                                        var objeto = tramites[j];
+                        %>
+                        <div id="" class="">
+                            <span>
+                                <div>
+                                    <h3> <u><a href="<%=objeto.url_view_tramite%>" class="enlBusq"> <%= objeto.nombre_tramite %> </a> </u><i class="fa fa-angle-down"></i></h3>
+                                    <%= objeto.descripcion_tramite %> </br>
+                                    cod. trámite - <%= objeto.codigo_tramite_ge %></br>
+                                </div>
+                                <br>
+                            </span>
+                        </div>
+                        <%      
+                                }
+                        }else{ %>
+                            <b> No se encuentrarón servicios.</b>
+                        <% } %>
+                    </div>                        
+            </div>
+        </div>
+    </div>
