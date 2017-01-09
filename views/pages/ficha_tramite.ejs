@@ -5,7 +5,7 @@
                 <ol class="breadcrumb fondoBlanco">
                     <li class="btn-link"><a href="/">Inicio</a></li>
                     <li class="btn-link"><a href="/tramites">Trámites</a></li>
-                    <li class="active"><%= tramites.nombre_tramite %></li>
+                    <li class="active"><%= tramites.organizacion.nombre_organizacion %></li>
                 </o>
             </div>
             <div class="row">
@@ -29,7 +29,7 @@
                                 <div class="col-md-12 bloq">
                                     <hr>
                                     <div class="form-group col-md-12"> 
-                                        <!--label class="col-md-2 control-label">Institución: </label-->
+                                        <!--label class="col-md-2">Institución: </label-->
                                                         
                                             <h5><u><a href="<%=tramites.organizacion.url_view_organizacion%>" class="enlBusq"><%= tramites.organizacion.nombre_organizacion %></a></u></h5>
                                         
@@ -40,9 +40,9 @@
                                     <hr>
                                     <% if(tramites.organizacion.mision !== null ){ %>
                                         <div class="form-group col-md-12"> 
-                                            <label class="col-md-2 control-label">Misión: </label>
-                                            <div class="col-md-10">                 
-                                                <h5><%= tramites.organizacion.mision %></h5>
+                                            <p class="col-md-2 ">Misión: </p>
+                                            <div class="col-md-10 text-left">                 
+                                                <h6><%= tramites.organizacion.mision %></h6>
                                             </div>
                                         </div>
                                     <hr>
@@ -52,9 +52,9 @@
                                     <% if(tramites.organizacion.vision !== null ){ %>
                                     <hr>
                                     <div class="form-group col-md-12"> 
-                                        <label class="col-md-2 control-label">Visión: </label>
-                                        <div class="col-md-10">                 
-                                            <h5><%= tramites.organizacion.vision %></h5>
+                                        <p class="col-md-2 ">Visión: </p>
+                                        <div class="col-md-10 text-left">                 
+                                            <h6><%= tramites.organizacion.vision %></h6>
                                         </div>
                                         <hr>
                                     </div>

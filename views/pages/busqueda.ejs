@@ -55,7 +55,7 @@
                             <div class="row breadcrumb">
                                 <ul class="nav nav-pills ">
                                     <li role="presentation" class="btn-link bloq">
-                                        <a href="#resulBusq1" >( <%= organizacion.length %>) organizaciones encontradas</a>
+                                        <a href="#resulBusq1" >( <%= organizaciones.length %>) organizaciones encontradas</a>
                                     </li>
                                     <li role="presentation" class="btn-link bloq">
                                         <a href="#resulBusq2">( <%= tramite.length %>) trámites encontrados</a>
@@ -71,8 +71,8 @@
                                         
                                         <!-- Comment -->
                                         <div class="text-left">
-                                            <% if(organizacion.length !== 0){
-                                                for(var j=0; j < organizacion.length; j++){
+                                            <% if(organizaciones.length !== 0){
+                                                for(var j=0; j < organizaciones.length; j++){
                                                     var objeto = organizacion[j];
                                             %>
                                             <div id="searchableProv" class="single_progress_bar">
@@ -117,14 +117,14 @@
                                         <!-- Comment -->
                                         <div class="text-left">
                                             <% 
-                                            if(tramite.length != 0){
-                                              for(var j=0; j < tramite.length; j++){
+                                            if(tramites.length != 0){
+                                              for(var j=0; j < tramites.length; j++){
                                                 var objeto = tramite[j];
                                             %>
                                             <div id="searchableProv" class="single_progress_bar">
                                                 <span>
                                                     <div>
-                                                        <b><u><a href="<%=objeto.url_view_tramite%>" class="enlBusq"> <%= objeto.nombre_tramite %> </a></u></b> 
+                                                        <b><u><a href="<%=objeto.url_view_tramite%>" class="enlBusq"> <%= objeto.nombre_tramite %> </a></u><i class="fa fa-angle-down"></i></b> 
                                                          <h5><%= objeto.descripcion_tramite%></h5>
                                                     </div>
                                                 </span>
@@ -141,10 +141,10 @@
                                      <div class="row breadcrumb">
                                         <ul class="nav nav-pills ">
                                             <li role="presentation" class="btn-link bloq">
-                                                <a href="#resulBusq1" >( <%= organizacion.length %>) organizaciones encontradas</a>
+                                                <a href="#resulBusq1" >( <%= organizaciones.length %>) organizaciones encontradas</a>
                                             </li>
                                             <li role="presentation" class="btn-link bloq">
-                                                <a href="#resulBusq2">( <%= tramite.length %>) trámites encontrados</a>
+                                                <a href="#resulBusq2">( <%= tramites.length %>) trámites encontrados</a>
                                             </li>
                                         </ul>
                                     </div>
