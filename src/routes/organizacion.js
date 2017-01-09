@@ -14,10 +14,9 @@ module.exports = app => {
     app.route('/organizacion/:tipoOrganizacion/:idOrganizacion').get((req,res) =>{
         organizacion.getOrganizacion(req.params.tipoOrganizacion,req.params.idOrganizacion).then(function (organizacionData) {
             organizacion.getHierarchy(req.params.idOrganizacion,req).then((hierarchy)=>{
-
                 util.serverResponse(res,{
                     organizacion:buildOrganizacion(organizacionData,req),
-                    jerarquia:hierarchy
+                    jerarquia:hierarchy.reverse()
                 },'pages/ficha_organizacion')
             });
         })
