@@ -51,3 +51,19 @@ Importar la base de datos, un backup se encuentra en la carpeta _db_ dentro del 
 Para más detalle de configuración de __postgresql__ ir a su [documentación](https://www.postgresql.org/docs/9.6/static/auth-methods.html) oficial.
     
 
+## Instalación del proyecto (Backend - Frontend)
+
+Para Instalar el proyecto es necesario clonarlo de gitlab:
+
+    $ git clone git@gitlab.geo.gob.bo:agetic/agetic-portal-tramites.git
+
+
+## Ejecución del proyecto
+
+Para instalar las dependencias de la aplicación, se ejecuta el siguiente comando, en la raiz de la carpeta donde se clono el proyecto:
+
+    $ npm install
+
+Para ejecutar los servicios del backend y al mismo tiempo ejecutar el frontend, ingresamos el siguiente comando:
+
+    $ npm start
