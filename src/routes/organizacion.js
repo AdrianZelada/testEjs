@@ -6,7 +6,7 @@ import multer from 'multer';
 import xlstojson from "xls-to-json-lc";
 import xlsxtojson from "xlsx-to-json-lc";
 import q from 'q';
-import util from '../../src/libs/useful.js';
+import useful from '../../src/libs/useful.js';
 module.exports = app => {
 
     const organizacion = app.src.db.models.organizacion;
@@ -14,10 +14,10 @@ module.exports = app => {
     app.route('/organizacion/:tipoOrganizacion/:idOrganizacion').get((req,res) =>{
         organizacion.getOrganizacion(req.params.tipoOrganizacion,req.params.idOrganizacion).then(function (organizacionData) {
             organizacion.getHierarchy(req.params.idOrganizacion,req).then((hierarchy)=>{
-                util.serverResponse(res,{
+                useful.serverResponse(res,{
                     organizacion:buildOrganizacion(organizacionData,req),
                     jerarquia:hierarchy.reverse()
-                },'pages/ficha_organizacion')
+                },'pages/ficha_organizacion',req)
             });
         })
     });
@@ -30,8 +30,8 @@ module.exports = app => {
 
                     let organizaciones = organizacionData.map((organizacionItem) => {
                         return {
-                            url_list_organizacion: req.protocol + '://' + req.get('host') + '/organizaciones/' + organizacionItem.id_organizacion,
-                            url_view_organizacion: req.protocol + '://' + req.get('host') + '/organizacion/' + organizacionItem.tipo_organizacion.url_tipo_organizacion + '/' + organizacionItem.id_organizacion,
+                            url_list_organizacion: useful.urlBuildListOrganizacion(req,organizacionItem),
+                            url_view_organizacion: useful.urlBuildViewOrganizacion(req,organizacionItem),
                             nombre_organizacion: organizacionItem.nombre_organizacion,
                             codigo_organizacion: organizacionItem.id_organizacion,
                             sigla_organizacion: organizacionItem.sigla_organizacion,
@@ -41,8 +41,8 @@ module.exports = app => {
 
                     let organosMap = organos.map((organizacionItem)=>{
                        return{
-                           url_list_organizacion: req.protocol + '://' + req.get('host') + '/organizaciones/' + organizacionItem.id_organizacion,
-                           url_view_organizacion: req.protocol + '://' + req.get('host') + '/organizacion/' + organizacionItem.tipo_organizacion.url_tipo_organizacion + '/' + organizacionItem.id_organizacion,
+                           url_list_organizacion: useful.urlBuildListOrganizacion(req,organizacionItem),
+                           url_view_organizacion: useful.urlBuildViewOrganizacion(req,organizacionItem),
                            nombre_organizacion: organizacionItem.nombre_organizacion,
                            codigo_organizacion: organizacionItem.id_organizacion,
                            sigla_organizacion: organizacionItem.sigla_organizacion,
@@ -50,12 +50,12 @@ module.exports = app => {
                        }
                     });
 
-                    util.serverResponse(res, {
+                    useful.serverResponse(res, {
                         path: req.protocol + '://' + req.get('host'),
                         pathOrganizacion: req.protocol + '://' + req.get('host') + '/organizacion',
                         organizacion: organizaciones,
                         organos:organosMap
-                    }, 'pages/organizacion')
+                    }, 'pages/organizacion',req)
             })
         })
     });
@@ -104,7 +104,7 @@ module.exports = app => {
                     codigo_tramite_ge:tramite.codigo_tramite_ge,
                     codigo_tramite:tramite.id_tramite,
                     descripcion_tramite:tramite.descripcion_tramite,
-                    url_view_tramite:req.protocol + '://' + req.get('host') +'/tramite/'+tramite.id_tramite
+                    url_view_tramite:useful.urlBuildViewTramite(req,tramite)
                 }
             )
         });
