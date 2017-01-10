@@ -1,0 +1,28 @@
+    <div class="maginBod ">        
+        <div class="container ">
+            <div class="panel-body">
+                    <div class="txtIzq  ">
+                        <header class="">
+                            <h4 class="text-muted breadcrumb">Lista de  Servicios (json) </h4>
+                        </header>
+                        <% 
+                            for(var j=0; j < listadoServicios.length; j++){
+                                var objeto = listadoServicios.tramites[j];
+                        %>
+                        <div class="">
+                            <span>
+                                <div>                                    
+                                    Nombre de Servicio:  <%= objeto.nombre_servicio %></br>
+                                    Formato URL:  <%= objeto."formato_url %></br>
+                                    Descripción:  <%= objeto."formato_url %></br>
+                                    <h5> Ejemplo: <u><a href="<%=objeto.ejemplo%>" class="enlBusq"> <%= objeto.ejemplo %> </a> </u><i class="fa fa-angle-down"></i></h5>
+                                </div>
+                                <br>
+                            </span>
+                        </div>
+                        <%  }
+                        } %>
+                    </div>                        
+            </div>
+        </div>
+    </div>

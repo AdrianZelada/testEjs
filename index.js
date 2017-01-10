@@ -26,5 +26,7 @@ consign()
   .then('src/libs/boot.js')
   .into(app);
 
+module.exports=app;
 
 module.exports=app;
+// cons()

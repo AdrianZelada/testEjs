@@ -11,13 +11,19 @@ module.exports = app => {
 
     const organizacion = app.src.db.models.organizacion;
 
-    app.route('/organizacion/:tipoOrganizacion/:idOrganizacion').get((req,res) =>{
+    app.route('/organizacion/:tipoOrganizacion?/:idOrganizacion').get((req,res) =>{
         organizacion.getOrganizacion(req.params.tipoOrganizacion,req.params.idOrganizacion).then(function (organizacionData) {
             organizacion.getHierarchy(req.params.idOrganizacion,req).then((hierarchy)=>{
-                useful.serverResponse(res,{
+                let objReturn={
                     organizacion:buildOrganizacion(organizacionData,req),
                     jerarquia:hierarchy.reverse()
-                },'pages/ficha_organizacion',req)
+                };
+
+                if(req.query.type=='json'){
+                    delete objReturn.jerarquia
+                }
+
+                useful.serverResponse(res,objReturn,'pages/ficha_organizacion',req)
             });
         })
     });
@@ -50,12 +56,16 @@ module.exports = app => {
                        }
                     });
 
-                    useful.serverResponse(res, {
-                        path: req.protocol + '://' + req.get('host'),
-                        pathOrganizacion: req.protocol + '://' + req.get('host') + '/organizacion',
+                    let objResponse={
                         organizacion: organizaciones,
-                        organos:organosMap
-                    }, 'pages/organizacion',req)
+                        organos:organosMap,
+                    };
+
+                    if(req.query.type=='json'){
+                        delete objResponse.organos;
+                    }
+
+                    useful.serverResponse(res, objResponse, 'pages/organizacion',req)
             })
         })
     });

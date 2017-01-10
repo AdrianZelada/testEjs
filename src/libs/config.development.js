@@ -11,8 +11,6 @@ module.exports = {
     //password: "123456", // server
      password: "030883", // victor
 
-    // password: "030883", // victor
-
     // password: "", // Adrian
   params: {
     dialect: "postgres",

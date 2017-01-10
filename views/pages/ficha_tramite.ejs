@@ -5,7 +5,7 @@
                 <ol class="breadcrumb fondoBlanco">
                     <li class="btn-link"><a href="/">Inicio</a></li>
                     <li class="btn-link"><a href="/tramites">Trámites</a></li>
-                    <li class="active"><%= tramites.organizacion.nombre_organizacion %></li>
+                    <li class="active"><%= organizacion.nombre_organizacion %></li>
                 </o>
             </div>
             <div class="row">
@@ -31,30 +31,30 @@
                                     <div class="form-group col-md-12"> 
                                         <!--label class="col-md-2">Institución: </label-->
                                                         
-                                            <h5><u><a href="<%=tramites.organizacion.url_view_organizacion%>" class="enlBusq"><%= tramites.organizacion.nombre_organizacion %></a></u></h5>
+                                            <h5><u><a href="<%=organizacion.url_view_organizacion%>" class="enlBusq"><%= organizacion.nombre_organizacion %></a></u></h5>
                                         
                                     </div>
                                     <hr>
                                     <hr>
                                 
                                     <hr>
-                                    <% if(tramites.organizacion.mision !== null ){ %>
+                                    <% if(organizacion.mision !== null ){ %>
                                         <div class="form-group col-md-12"> 
                                             <p class="col-md-2 ">Misión: </p>
                                             <div class="col-md-10 text-left">                 
-                                                <h6><%= tramites.organizacion.mision %></h6>
+                                                <h6><%= organizacion.mision %></h6>
                                             </div>
                                         </div>
                                     <hr>
                                     <%}%>
                                
                                     <hr>
-                                    <% if(tramites.organizacion.vision !== null ){ %>
+                                    <% if(organizacion.vision !== null ){ %>
                                     <hr>
                                     <div class="form-group col-md-12"> 
                                         <p class="col-md-2 ">Visión: </p>
                                         <div class="col-md-10 text-left">                 
-                                            <h6><%= tramites.organizacion.vision %></h6>
+                                            <h6><%= organizacion.vision %></h6>
                                         </div>
                                         <hr>
                                     </div>
@@ -73,14 +73,14 @@
                             <div class="txtIzq" >
                                 
                                 <div class="form-group col-md-12">                 
-                                    <h3><b><%= tramites.nombre_tramite %></b></h3>
-                                    <h4 class="text-right"><b><%= tramites.organizacion.nombre_organizacion %></b></h4>
+                                    <h3><b><%= nombre_tramite %></b></h3>
+                                    <h4 class="text-right"><b><%= organizacion.nombre_organizacion %></b></h4>
                                 </div>
                                 <hr>
                                 <div class="form-group col-md-12">
                                   
                                   <div class="col-md-12">                     
-                                     <%= tramites.descripcion_tramite %>
+                                     <%= descripcion_tramite %>
                                   </div>
                                 </div>
 
@@ -91,8 +91,8 @@
                                     <label class="col-md-2 control-label">Dirigido A: </label>
                                     <div class="col-md-10">
                                     <% 
-                                    for(var j=0; j < tramites.poblacion_objeto.length; j++) {
-                                        var objeto = tramites.poblacion_objeto[j];
+                                    for(var j=0; j < poblacion_objeto.length; j++) {
+                                        var objeto = poblacion_objeto[j];
                                     %>                                    
                                         <%= objeto %> 
                                     <br>
@@ -109,8 +109,8 @@
                                  <div class="form-group col-md-12">
                                     
                                 <% 
-                                    for(var j=0; j < tramites.requisitos.length; j++) {
-                                        var objeto = tramites.requisitos[j];
+                                    for(var j=0; j < requisitos.length; j++) {
+                                        var objeto = requisitos[j];
                                         var papel ="Sin documento";
 
                                         if(parseInt(objeto.papel_original)==1){ papel ="Documento original"; }
@@ -140,8 +140,8 @@
                                 <div class="form-group col-md-12">
 
                                     <% 
-                                    for(var j=0; j < tramites.pasos.length; j++) {
-                                        var objeto = tramites.pasos[j];
+                                    for(var j=0; j < pasos.length; j++) {
+                                        var objeto = pasos[j];
                                     %>                                    
                                     <%= j+1 %>- <%= objeto.descripcion_paso %> 
                                     <br><br>

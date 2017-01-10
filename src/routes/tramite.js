@@ -16,7 +16,7 @@ module.exports = app => {
                         return{
                             url_list_tramites:useful.urlBuildListCategoria(req,category),
                             nombre_categoria_tramite: category.nombre_categoria_tramite,
-                            codigo_categoria_tramite: category.codigo_categoria_tramite,
+                            codigo_categoria_tramite: category.id_categoria_tramite,
                             logo_categoria_tramite: category.logo_categoria_tramite,
                             descripcion_categoria_tramite: category.descripcion_categoria_tramite
                         }
@@ -46,21 +46,19 @@ module.exports = app => {
         tramite.getOneTransc(idTransc).then((transc)=>{
             organizacion.getHierarchy(transc[0].organizacion.id_organizacion,req).then((hierarchy)=>{
                 var transcBuild={
-                    codigo_tramite:transc[0].codigo_tramite,
+                    codigo_tramite:transc[0].id_tramite,
                     codigo_tramite_ge:transc[0].codigo_tramite_ge,
                     nombre_tramite:transc[0].nombre_tramite,
                     descripcion_tramite:transc[0].descripcion_tramite,
                     duracion:transc[0].duracion,
                     fecha_actualizacion:transc[0].fecha_actualizacion,
-                    tramite_categoria_tramites:buildArray(transc[0].tramite_categoria_tramites,'categoria_tramite'),
+                    categoria_tramite:buildArray(transc[0].tramite_categoria_tramites,'categoria_tramite'),
                     requisitos:buildRequisito(transc[0].requisitos),
                     pasos:transc[0].pasos,
                     poblacion_objeto:buildPoblacion(transc[0].tramite_poblacion_objetos,'poblacion_objeto'),
                     organizacion:buildOrganizacion(transc[0].organizacion)
                 };
-                useful.serverResponse(res,{
-                    tramites:transcBuild
-                },'pages/ficha_tramite',req)
+                useful.serverResponse(res,transcBuild,'pages/ficha_tramite',req)
             });
         });
 
@@ -102,7 +100,9 @@ module.exports = app => {
                     papel_fotocopia:transcData.papel_fotocopia,
                     papel_fotocopia_legalizada:transcData.papel_fotocopia_legalizada,
                 };
-                required.url_view_tramite = transcData.id_tramite_requisito ? useful.urlBuildViewTramite(req,transcData) : transcData.id_tramite_requisito;
+                required.url_view_tramite = transcData.id_tramite_requisito ? req.protocol + '://' + req.get('host') +'/tramite/'+transcData.id_tramite_requisito : transcData.id_tramite_requisito,
+
+                required.url_view_tramite = transcData.id_tramite_requisito ? useful.urlBuildViewTramite(req,transcData,'id_tramite_requisito') : transcData.id_tramite_requisito;
 
                 newRequisito.push(required);
             });

@@ -7,13 +7,6 @@ import os from 'os';
 import useful from '../../src/libs/useful.js';
 module.exports = app => {
     const dpa = app.src.db.models.dpa;
-    const tipo_dpa = app.src.db.models.tipos_dpa;
-    const lugar_pago = app.src.db.models.lugar_pago;
-    const moneda = app.src.db.models.moneda;
-    const tipo_tramite = app.src.db.models.tipo_tramite;
-    const categoria_tramite = app.src.db.models.categoria_tramite;
-    const poblacion_objeto = app.src.db.models.poblacion_objeto;
-    const tipo_organizacion = app.src.db.models.tipo_organizacion;
     const organizacion = app.src.db.models.organizacion;
     const tramite = app.src.db.models.tramite;
 
@@ -25,53 +18,48 @@ module.exports = app => {
 
             });
         });
-    // app.get('/*', function(req, res) {
-    //     res.render('pages/404');
-    // });
 
     app.route('/buscar')
         .get((req,res)=>{
-            var busqueda=req.query.busqueda.replace(" ","_").toLowerCase();
+            var busqueda='';
+            if(req.query.busqueda){
+                busqueda=req.query.busqueda.replace(" ","_").toLowerCase();
+            }
 
             res.redirect('/buscar/'+busqueda);
         });
 
-    app.route('/buscar/:busqueda')
+    app.route('/buscar/:busqueda?')
         .get((req,res)=>{
             // aun falta integrar las busqueda de tramites
             var textToSearch=req.params.busqueda.replace("_"," ");
             organizacion.searchOrganizacion(textToSearch).then((resultOrg)=>{
                 tramite.searchTramite(textToSearch).then((resultTramite)=>{
-
-                    organizacion.findJerarquia(2,1).then((jerarquiaData)=>{
-                        var newResult=resultOrg.map((organizacionItem)=>{
-                            return {
-                                url_view_organizacion:useful.urlBuildViewOrganizacion(req,organizacionItem),
-                                nombre_organizacion:organizacionItem.nombre_organizacion,
-                                codigo_organizacion:organizacionItem.id_organizacion,
-                                sigla_organizacion:organizacionItem.sigla_organizacion,
-                                codigo_sigma:organizacionItem.codigo_sigma,
-                                tramites:organizacionItem.tramites
+                    var newResult=resultOrg.map((organizacionItem)=>{
+                        return {
+                            url_view_organizacion:useful.urlBuildViewOrganizacion(req,organizacionItem),
+                            nombre_organizacion:organizacionItem.nombre_organizacion,
+                            codigo_organizacion:organizacionItem.id_organizacion,
+                            sigla_organizacion:organizacionItem.sigla_organizacion,
+                            codigo_sigma:organizacionItem.codigo_sigma
+                        }
+                    });
+                    var newTransc=
+                        resultTramite.map((transcData)=>{
+                            return{
+                                nombre_tramite:transcData.nombre_tramite,
+                                codigo_tramite_ge:transcData.codigo_tramite_ge,
+                                codigo_tramite:transcData.id_tramite,
+                                descripcion_tramite:transcData.descripcion_tramite,
+                                url_view_tramite:useful.urlBuildViewTramite(req,transcData)
                             }
                         });
-                        var newTransc=
-                            resultTramite.map((transcData)=>{
-                                return{
-                                    nombre_tramite:transcData.nombre_tramite,
-                                    codigo_tramite_ge:transcData.codigo_tramite_ge,
-                                    codigo_tramite:transcData.id_tramite,
-                                    descripcion_tramite:transcData.descripcion_tramite,
-                                    url_view_tramite:useful.urlBuildViewTramite(req,transcData)
-                                }
-                            });
-                        useful.serverResponse(res,{
-                            organizacion:newResult,
-                            jerarquia_organizacion:jerarquiaData,
-                            tramite:newTransc
-                        },'pages/busqueda',req);
-                    });
-
+                    useful.serverResponse(res,{
+                        organizaciones:newResult,
+                        tramites:newTransc
+                    },'pages/busqueda',req);
                 });
+
             });
         });
     app.route('/api/v1/dpas/:id')
